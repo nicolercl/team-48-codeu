@@ -19,4 +19,4 @@ public class StatsPageServlet extends HttpServlet{
 
         response.getOutputStream().println("hello world");
     }
-}
+} 
