@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.codeu.data.Datastore;
 import com.google.gson.JsonObject;
+
 /**
  * Handles fetching site statistics.
  */
-@WebServlet("/status")
+@WebServlet("/stats")
 public class StatsPageServlet extends HttpServlet{
 
     private Datastore datastore;
