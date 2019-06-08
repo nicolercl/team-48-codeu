@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exchanged students' info</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {packages: ['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var book_data = new google.visualization.DataTable();
+            //define columns for the DataTable instance
+            book_data.addColumn('string', 'Country');
+            book_data.addColumn('number', 'people');
+
+            //add data to book_data
+            book_data.addRows([
+                ["USA", 6],
+                ["Singapore", 10],
+                ["France", 7],
+                ["Japan", 4],
+                ["Germany", 8]
+            ]);
+            var chart = new google.visualization.BarChart(document.getElementById('country_chart'));
+            chart.draw(book_data);
+        }
+    </script>
+
+</head>
+<body>
+<h1>Chart Project</h1>
+<div id="country_chart"></div>
+</body>
+</html>
