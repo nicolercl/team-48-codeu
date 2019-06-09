@@ -14,6 +14,9 @@
         document.getElementById('address').addEventListener("change", function() {
             geocodeAddress(geocoder, map);
         });
+        map.addListener('click', function(event) {
+            addLandmark(map, event.latLng);
+        });
     }
 
     function geocodeAddress(geocoder, resultsMap) {
@@ -30,6 +33,20 @@
           }
         });
     }
+    function addLandmark(map, latlng){
+        const marker = new google.maps.Marker({
+            position: latlng,
+            map: map,
+        });
+        var infoWindow = new google.maps.InfoWindow({
+            content: '<h1 id="header">Type to Edit</h1><input type="text" id="input" value="type something..."><button id="button">Save</button>'
+        });
+        marker.addListener('click', function() {
+            infoWindow.open(map, marker);
+        });
+     }
+
+
     </script>
     <style>
         #map {
@@ -37,6 +54,7 @@
             height: 400px;
             border: thin solid black;
         }
+
 
     </style>
 </head>
