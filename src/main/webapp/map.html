@@ -5,33 +5,47 @@
     <title>Map</title>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7I56a-GC6HwwpF7OIpFa61WR7lqNfzJE"></script>
     <script>
+    var map;
     function createMap(){
-        const map = new google.maps.Map(document.getElementById('map'), {
+        map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 25.0340, lng: 121.5645},
             zoom: 16
         });
     }
+    var coord = {
+        THU: {lat: 40.0, lng: 116.3226653},
+        NCKU: {lat: 23.0, lng: 120.2166658},
+        NTU: {lat: 25.014947, lng: 121.535549},
+        NCTU: {lat: 24.789071, lng: 120.999645}
+    }
 
-
+    function updateMap(){
+        key = document.getElementById('area').value;
+        map.setCenter(coord[key]);
+    }
 
 
     </script>
     <style>
         #map {
-            width: 500px;
-            height: 500px;
+            width: 400px;
+            height: 400px;
             border: thin solid black;
         }
-
-
-
-
 
     </style>
 </head>
 <body onload="createMap();">
-<h1>Hello Google Maps</h1>
+<h1>Google Maps for 4 Schools</h1>
+<div>
+    <select id="area" onchange="updateMap();">
+        <option value="THU" selected>Tsinghua University University</option>
+        <option value="NCKU">National Cheng Kong University</option>
+        <option value="NTU">National Taiwan University</option>
+        <option value="NCTU">National Chiao Tung University</option>
+    </select>
+</div>
 <div id="map"></div>
-<p>This page shows a Google Map!</p>
+<p>Select a school to show its Google map!</p>
 </body>
 </html>
