@@ -5,32 +5,46 @@
     <title>Map</title>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7I56a-GC6HwwpF7OIpFa61WR7lqNfzJE"></script>
     <script>
-    var map;
-    var schoolMarker;
     function createMap(){
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 39.9999223, lng: 116.3265296},
             zoom: 16
         });
-        schoolMarker = new google.maps.Marker({
-            position: {lat: 39.9999223, lng: 116.3265296},
-            map: map,
-            title: 'Tsinghua University'
+        var geocoder = new google.maps.Geocoder();
+        document.getElementById('address').addEventListener("change", function() {
+            geocodeAddress(geocoder, map);
+        });
+        map.addListener('click', function(event) {
+            addLandmark(map, event.latLng);
         });
     }
-    var coord = {
-        THU: {lat: 39.9999223, lng: 116.3265296},
-        NCKU: {lat: 22.997064, lng: 120.2196033},
-        NTU: {lat: 25.0181041, lng: 121.5401464},
-        NCTU: {lat: 24.7896271, lng: 120.9996964}
-    }
 
-    function updateMap(){
-        e = document.getElementById('area');
-        map.setCenter(coord[e.value]);
-        schoolMarker.setPosition(coord[e.value]);
-        schoolMarker.setTitle(e.text);
+    function geocodeAddress(geocoder, resultsMap) {
+        var address = document.getElementById('address').value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
     }
+    function addLandmark(map, latlng){
+        const marker = new google.maps.Marker({
+            position: latlng,
+            map: map,
+        });
+        var infoWindow = new google.maps.InfoWindow({
+            content: '<h1 id="header">Type to Edit</h1><input type="text" id="input" value="type something..."><button id="button">Save</button>'
+        });
+        marker.addListener('click', function() {
+            infoWindow.open(map, marker);
+        });
+     }
 
 
     </script>
@@ -41,16 +55,17 @@
             border: thin solid black;
         }
 
+
     </style>
 </head>
 <body onload="createMap();">
 <h1>Google Maps for 4 Schools</h1>
 <div>
-    <select id="area" onchange="updateMap();">
-        <option value="THU" selected>Tsinghua University</option>
-        <option value="NCKU">National Cheng Kong University</option>
-        <option value="NTU">National Taiwan University</option>
-        <option value="NCTU">National Chiao Tung University</option>
+    <select id="address">
+        <option value="Tsinghua University" selected>Tsinghua University</option>
+        <option value="National Cheng Kong University">National Cheng Kong University</option>
+        <option value="National Taiwan University">National Taiwan University</option>
+        <option value="National Chiao Tung University">National Chiao Tung University</option>
     </select>
 </div>
 <div id="map"></div>
