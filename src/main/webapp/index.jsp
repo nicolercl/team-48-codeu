@@ -10,14 +10,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Blobstore JSP Example</title>
+    <title>Profile setup page</title>
 </head>
 <body>
-<h1>Blobstore JSP Example</h1>
-<p>Type a message and click submit:</p>
+<h1>Profile setup page</h1>
+<p>Type your intro and click submit:</p>
 
 <form method="POST" enctype="multipart/form-data" action="<%= uploadUrl %>">
-    <p>Type some text:</p>
+    <p>write something about yourself:</p>
     <textarea name="message"></textarea>
     <br/>
     <p>Upload an image:</p>

@@ -38,11 +38,10 @@ public class FormHandlerServlet extends HttpServlet {
         // Output some HTML that shows the data the user entered.
         // A real codebase would probably store these in Datastore.
         ServletOutputStream out = response.getOutputStream();
-        out.println("<p>Here's the image you uploaded:</p>");
         out.println("<a href=\"" + imageUrl + "\">");
         out.println("<img src=\"" + imageUrl + "\" />");
         out.println("</a>");
-        out.println("<p>Here's the text you entered:</p>");
+        out.println("<p>INTRO</p>");
         out.println(message);
     }
 
