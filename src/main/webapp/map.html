@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>UFO Sightings</title>
+    <title>Sightings</title>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7I56a-GC6HwwpF7OIpFa61WR7lqNfzJE"></script>
     <script>
-    function createUfoSightingsMap(){
-      fetch('/ufo-data').then(function(response) {
+    function createSightingsMap(){
+      fetch('/map-data').then(function(response) {
         return response.json();
-      }).then((ufoSightings) => {
+      }).then((Sightings) => {
 
         const map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 24.943325, lng: 121.297187},
-          zoom:7
+          zoom:8
         });
 
-        ufoSightings.forEach((ufoSighting) => {
+        Sightings.forEach((Sighting) => {
           new google.maps.Marker({
-            position: {lat: ufoSighting.lat, lng: ufoSighting.lng},
+            position: {lat: Sighting.lat, lng: Sighting.lng},
             map: map
           });
         });
@@ -32,8 +32,8 @@
 
     </style>
 </head>
-<body onload="createUfoSightingsMap();">
-<h1>UFO Sightings</h1>
+<body onload="createSightingsMap();">
+<h1>Sightings for students</h1>
 <div id="map"></div>
 </body>
 </html>

@@ -13,14 +13,14 @@ import java.util.Scanner;
 /**
  * Returns UFO data as a JSON array, e.g. [{"lat": 38.4404675, "lng": -122.7144313}]
  */
-@WebServlet("/ufo-data")
+@WebServlet("/map-data")
 public class MapDataServlet extends HttpServlet {
 
-    private JsonArray ufoSightingArray;
+    private JsonArray SightingArray;
 
     @Override
     public void init() {
-        ufoSightingArray = new JsonArray();
+        SightingArray = new JsonArray();
         Gson gson = new Gson();
         Scanner scanner = new Scanner(getServletContext().getResourceAsStream("/WEB-INF/mapdata.csv"));
         while(scanner.hasNextLine()) {
@@ -30,7 +30,7 @@ public class MapDataServlet extends HttpServlet {
             double lat = Double.parseDouble(cells[0]);
             double lng = Double.parseDouble(cells[1]);
 
-            ufoSightingArray.add(gson.toJsonTree(new UfoSighting(lat, lng)));
+            SightingArray.add(gson.toJsonTree(new Sighting(lat, lng)));
         }
         scanner.close();
     }
@@ -38,15 +38,15 @@ public class MapDataServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
-        response.getOutputStream().println(ufoSightingArray.toString());
+        response.getOutputStream().println(SightingArray.toString());
     }
 
     // This class could be its own file if we needed it outside this servlet
-    private static class UfoSighting{
+    private static class Sighting{
         double lat;
         double lng;
 
-        private UfoSighting(double lat, double lng) {
+        private Sighting(double lat, double lng) {
             this.lat = lat;
             this.lng = lng;
         }
