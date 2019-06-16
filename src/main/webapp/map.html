@@ -1,74 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Map</title>
+    <title>Sightings</title>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7I56a-GC6HwwpF7OIpFa61WR7lqNfzJE"></script>
     <script>
-    function createMap(){
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 39.9999223, lng: 116.3265296},
-            zoom: 16
-        });
-        var geocoder = new google.maps.Geocoder();
-        document.getElementById('address').addEventListener("change", function() {
-            geocodeAddress(geocoder, map);
-        });
-        map.addListener('click', function(event) {
-            addLandmark(map, event.latLng);
-        });
-    }
+    
+    function createSightingsMap(){
+      fetch('/map-data').then(function(response) {
+        return response.json();
+      }).then((Sightings) => {
 
-    function geocodeAddress(geocoder, resultsMap) {
-        var address = document.getElementById('address').value;
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status === 'OK') {
-            resultsMap.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
-              map: resultsMap,
-              position: results[0].geometry.location
-            });
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
+        const map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 24.943325, lng: 121.297187}, // the first data in mapdata.csv, Hunya chocolate factory
+          zoom:8
         });
-    }
-    function addLandmark(map, latlng){
-        const marker = new google.maps.Marker({
-            position: latlng,
-            map: map,
-        });
-        var infoWindow = new google.maps.InfoWindow({
-            content: '<h1 id="header">Type to Edit</h1><input type="text" id="input" value="type something..."><button id="button">Save</button>'
-        });
-        marker.addListener('click', function() {
-            infoWindow.open(map, marker);
-        });
-     }
 
+        Sightings.forEach((Sighting) => {
+          new google.maps.Marker({
+            position: {lat: Sighting.lat, lng: Sighting.lng},
+            map: map
+          });
+        });
+      });
+    }
 
     </script>
     <style>
-        #map {
-            width: 400px;
-            height: 400px;
-            border: thin solid black;
-        }
-
+    #map{
+      width: 500px;
+      height: 500px;
+    }
 
     </style>
 </head>
-<body onload="createMap();">
-<h1>Google Maps for 4 Schools</h1>
-<div>
-    <select id="address">
-        <option value="Tsinghua University" selected>Tsinghua University</option>
-        <option value="National Cheng Kong University">National Cheng Kong University</option>
-        <option value="National Taiwan University">National Taiwan University</option>
-        <option value="National Chiao Tung University">National Chiao Tung University</option>
-    </select>
-</div>
+<body onload="createSightingsMap();">
+<h1>Sightings for students</h1>
 <div id="map"></div>
-<p>Select a school to show its Google map!</p>
 </body>
 </html>

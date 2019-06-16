@@ -38,7 +38,6 @@ import org.jsoup.safety.Whitelist;
 /**
  * Handles fetching and saving {@link Message} instances.
  */
-        
 
 /** Handles fetching and saving {@link Message} instances. */
 
