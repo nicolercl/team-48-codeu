@@ -4,6 +4,46 @@
     <title>Sightings</title>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7I56a-GC6HwwpF7OIpFa61WR7lqNfzJE"></script>
     <script>
+    /*function createMap(){
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 39.9999223, lng: 116.3265296},
+            zoom: 16
+        });
+        var geocoder = new google.maps.Geocoder();
+        document.getElementById('address').addEventListener("change", function() {
+            geocodeAddress(geocoder, map);
+        });
+        map.addListener('click', function(event) {
+            addLandmark(map, event.latLng);
+        });
+    }
+
+    function geocodeAddress(geocoder, resultsMap) {
+        var address = document.getElementById('address').value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+    }
+    function addLandmark(map, latlng){
+        const marker = new google.maps.Marker({
+            position: latlng,
+            map: map,
+        });
+        var infoWindow = new google.maps.InfoWindow({
+            content: '<h1 id="header">Type to Edit</h1><input type="text" id="input" value="type something..."><button id="button">Save</button>'
+        });
+        marker.addListener('click', function() {
+            infoWindow.open(map, marker);
+        });
+     }*/
     function createSightingsMap(){
       fetch('/map-data').then(function(response) {
         return response.json();
