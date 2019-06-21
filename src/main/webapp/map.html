@@ -7,7 +7,8 @@
         let map;
         /* Editable marker that displays when a user clicks in the map. */
         let editMarker;
-        function createMap(){
+
+        function createMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 25.0181041, lng: 121.5401464}, //location of NTU
                 zoom: 16
@@ -18,8 +19,9 @@
             });
             fetchMarkers();
         }
+
         /** Fetches markers from the backend and adds them to the map. */
-        function fetchMarkers(){
+        function fetchMarkers() {
             fetch('/markers').then((response) => {
                 return response.json();
             }).then((markers) => {
@@ -28,8 +30,9 @@
                 });
             });
         }
+
         /** Creates a marker that shows a read-only info window when clicked. */
-        function createMarkerForDisplay(lat, lng, content){
+        function createMarkerForDisplay(lat, lng, content) {
             const marker = new google.maps.Marker({
                 position: {lat: lat, lng: lng},
                 map: map
@@ -41,8 +44,9 @@
                 infoWindow.open(map, marker);
             });
         }
+
         /** Sends a marker to the backend for saving. */
-        function postMarker(lat, lng, content){
+        function postMarker(lat, lng, content) {
             const params = new URLSearchParams();
             params.append('lat', lat);
             params.append('lng', lng);
@@ -52,10 +56,11 @@
                 body: params
             });
         }
+
         /** Creates a marker that shows a textbox the user can edit. */
-        function createMarkerForEdit(lat, lng){
+        function createMarkerForEdit(lat, lng) {
             // If we're already showing an editable marker, then remove it.
-            if(editMarker){
+            if (editMarker) {
                 editMarker.setMap(null);
             }
             editMarker = new google.maps.Marker({
@@ -71,8 +76,9 @@
             });
             infoWindow.open(map, editMarker);
         }
+
         /** Builds and returns HTML elements that show an editable textbox and a submit button. */
-        function buildInfoWindowInput(lat, lng){
+        function buildInfoWindowInput(lat, lng) {
             const textBox = document.createElement('textarea');
             const button = document.createElement('button');
             button.appendChild(document.createTextNode('Submit'));
@@ -89,7 +95,7 @@
         }
     </script>
     <style>
-        #map{
+        #map {
             width: 500px;
             height: 500px;
         }
