@@ -98,8 +98,10 @@ function buildUI() {
     showMessageFormIfViewingSelf();
     fetchMessages();
     fetchAboutMe();
-    ClassicEditor.create( document.getElementById('message-input') );
-    ClassicEditor.create( document.getElementById('about-me-textarea') );
+    //blocking the image and quoting function
+    const config = {removePlugins: [ 'ImageUpload']};
+    ClassicEditor.create(document.getElementById('message-input'), config );
+    ClassicEditor.create( document.getElementById('about-me-textarea'),config );
 }
 
 function fetchAboutMe() {
