@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStreamReader;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,9 +37,8 @@ public class TextToSpeech extends HttpServlet {
     public void init() {
 //        ttsClient = TextToSpeechClient.create();
         try {
-            System.out.println("Creating...");
             ttsClient = TextToSpeechClient.create();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.getCause().getStackTrace();
         }
     }

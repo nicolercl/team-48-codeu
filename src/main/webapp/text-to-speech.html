@@ -17,7 +17,6 @@
                                     }
                     let resp = await fetch("/a11y/tts", settings);
 
-                    console.log('fetched resp');
                     let audioBlob = await resp.blob();
                     let audioUrl = URL.createObjectURL(audioBlob);
 
@@ -30,14 +29,16 @@
                 }
             }
         }
+
     </script>
 </head>
 <body>
-    <h1>Text to Speech</h1>
-    <form>
-        <input type="text" name="msg" id="message-form">
-        <button id="submit-btn" onclick="getMessage();">Submit</button>
-    </form><br>
-    <audio id="audio" controls src="" rel="noreferrer"></audio>
+<h1>Text to Speech</h1>
+<form>
+    <input type="text" name="msg" id="message-form">
+    <button id="submit-btn" onclick="getMessage();">Submit</button>
+</form>
+<br>
+<audio id="audio" controls src="" rel="noreferrer"></audio>
 </body>
 </html>
