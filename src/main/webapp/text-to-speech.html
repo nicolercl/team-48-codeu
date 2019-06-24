@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        async function getMessage(){
+            let message = document.getElementById("message-form").value;
+            if (message === "") {
+                // Do nothing; consider showing a simple error to the user.
+            }
+            else{
+                try {
+                    let settings = { method: "POST",
+                                     body: message,
+                                     headers: { "Content-Type": "text/plain" }
+                                    }
+                    let resp = await fetch("/a11y/tts", settings);
+
+                    console.log('fetched resp');
+                    let audioBlob = await resp.blob();
+                    let audioUrl = URL.createObjectURL(audioBlob);
+
+                    let elem = document.getElementById("audio");
+                    elem.src = audioUrl;
+                    elem.load();
+
+                } catch (e) {
+                    console.log(`error: ${e}`);
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Text to Speech</h1>
+    <form>
+        <input type="text" name="msg" id="message-form">
+        <button id="submit-btn" onclick="getMessage();">Submit</button>
+    </form><br>
+    <audio id="audio" controls src="" rel="noreferrer"></audio>
+</body>
+</html>
