@@ -17,25 +17,88 @@ limitations under the License.
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>CodeU 2019 Starter Project</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="/js/navigation-loader.js"></script>
 </head>
 <body onload="addLoginOrLogoutLinkToNavigation();">
-<nav>
-    <ul id="navigation">
-        <li><a href="/">Home</a></li>
-        <li><a href="/aboutus.html">About Our Team</a></li>
-        <li><a href="/feed.html">Public Feeds</a></li>
-    </ul>
-</nav>
-<h1>CodeU Starter Project</h1>
-<p>This is the CodeU starter project. Click the links above to login and visit your page.
-    You can post messages on your page, and you can visit other user pages if you have
-    their URL.</p>
-<p>This is your code now! Feel free to make changes, and don't be afraid to get creative!
-    You could start by modifying this page to tell the world more about your team.</p>
+<div id="app">
+    <v-app>
+        <v-content>
+            <v-toolbar dark color="blue-grey lighten-5" class="elevation-0">
+                <v-toolbar-side-icon @click="toggleDrawer" light
+                ></v-toolbar-side-icon>
+
+                <v-toolbar-title class="black--text">CodeU 2019 Starter Project</v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+                <v-btn icon>
+                    <v-icon>search</v-icon>
+                </v-btn>
+
+                <v-btn icon>
+                    <v-icon>apps</v-icon>
+                </v-btn>
+
+            </v-toolbar>
+            <v-navigation-drawer permanent hide-overlay v-show="drawer.open">
+                <v-toolbar flat>
+                    <v-list>
+                        <v-list-tile>
+                            <v-list-tile-title class="title">
+                                Application
+                            </v-list-tile-title>
+                        </v-list-tile>
+                    </v-list>
+                </v-toolbar>
+
+                <v-divider></v-divider>
+
+                <v-list id="navigation" dense class="pt-0">
+                    <v-list-tile
+                            v-for="item in items"
+                            :key="item.title"
+                            :href="item.url"
+                    >
+                        <v-list-tile-action>
+                            <v-icon>{{ item.icon }}</v-icon>
+                        </v-list-tile-action>
+
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </v-list>
+            </v-navigation-drawer>
+        </v-content>
+    </v-app>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: () => ({
+        items: [
+          { title: 'Home', icon: 'dashboard', url: '/' },
+          { title: 'About Our Team', icon: 'question_answer', url: '/aboutus.html' },
+          { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' }
+        ],
+        drawer: {
+            open : false,
+        }
+      }),
+
+      methods: {
+        toggleDrawer(){
+            this.drawer.open = !this.drawer.open
+        }
+      }
+    })
+</script>
 </body>
 </html>
 
