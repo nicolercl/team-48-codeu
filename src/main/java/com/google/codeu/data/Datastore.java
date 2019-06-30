@@ -150,6 +150,19 @@ public class Datastore {
         datastore.put(userEntity);
     }
 
+    public void storeUserTest(UserTest user) { //for new class Usertest
+        Entity userEntity = new Entity("UserTest", user.getEmail());
+        userEntity.setProperty("email", user.getEmail());
+        userEntity.setProperty("aboutMe", user.getAboutMe());
+        userEntity.setProperty("learnCategory", user.getLearnCategory());
+        userEntity.setProperty("teachCategory", user.getTeachCategory());
+        userEntity.setProperty("skillLevel", user.getSkillLevel());
+        userEntity.setProperty("school", user.getSchool());
+        userEntity.setProperty("age", user.getAge());
+        userEntity.setProperty("gender", user.getGender());
+        datastore.put(userEntity);
+    }
+
     /**
      * Returns the User owned by the email address, or
      * null if no matching User was found.
@@ -166,6 +179,27 @@ public class Datastore {
 
         String aboutMe = (String) userEntity.getProperty("aboutMe");
         User user = new User(email, aboutMe);
+
+        return user;
+    }
+
+    public UserTest getUserTest(String email) { //get user of UserTest class
+        Query query = new Query("UserTest")
+                .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
+        PreparedQuery results = datastore.prepare(query);
+        Entity userEntity = results.asSingleEntity();
+        if (userEntity == null) {
+            return null;
+        }
+        String aboutMe = (String) userEntity.getProperty("aboutMe");
+        String learnCategory = (String) userEntity.getProperty("learnCategory");
+        String teachCategory = (String) userEntity.getProperty("teachCategory");
+        String school = (String) userEntity.getProperty("school");
+        String gender = (String) userEntity.getProperty("gender");
+        String age = (String) userEntity.getProperty("age");
+        String skillLevel = (String) userEntity.getProperty("skillLevel");
+        UserTest user = new UserTest(email, aboutMe, learnCategory, teachCategory,
+                school, gender, age, skillLevel);
 
         return user;
     }

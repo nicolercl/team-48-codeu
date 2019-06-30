@@ -2,18 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Modity</title>
+    <title>Modify</title>
 </head>
 <script>
-     let testUsers = [];
      function create() {
-        testUsers = [];
-        const submit = document.getElementById('submitUser')
-        submit.addEventListener("click", function(){
-            newUser = saveTestUser();
-            testUsers.push(newUser);
-        });
-    }
+        const i = 0;
+     }
      function saveTestUser(){
         let user = new Object();
         user.email = document.getElementById('email').value;
@@ -26,8 +20,18 @@
         user.gender = document.getElementById('gender').value;
         return user;
       }
- </script>>
-<body onload="create();>
+     function submitData() {
+        newUser = saveTestUser();
+        const params = new URLSearchParams();
+        params.append('userData', JSON.stringify(newUser));
+        const resultContainer = document.getElementById('result');
+        fetch('/user-info', {
+            method: 'POST',
+            body: params
+        });
+     }
+ </script>
+<body onload="create();">
 <h1> Modify your profile</h1>
 <p>Customize your own user test data.</p>
 <form>
@@ -47,9 +51,9 @@
     <input type="text" id="age" value="18"><br>
     Gender:
     <input type="text" id="gender" value="female"><br>
-    <input type="button" id="submitUser" value="submit"><br>
+    <input type="submit" id="submitUser" value="submit" onclick="submitData();"><br>
 </form>
-
+<div id="result"></div>
 
 </body>
 </html>
