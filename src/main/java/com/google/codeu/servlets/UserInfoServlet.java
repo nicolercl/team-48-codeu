@@ -35,7 +35,8 @@ public class UserInfoServlet extends HttpServlet {
             throws IOException {
         String userData = request.getParameter("userData");
         Gson gson = new Gson();
-        Type type = new TypeToken<UserTest>() {}.getType();
+        Type type = new TypeToken<UserTest>() {
+        }.getType();
         UserTest user = gson.fromJson(userData, type);
 
         //add user to datastore

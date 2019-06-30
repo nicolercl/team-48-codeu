@@ -50,8 +50,7 @@ public class LoginServlet extends HttpServlet {
             String user = userService.getCurrentUser().getEmail();
             if (datastore.getUserTest(user) == null) {
                 response.sendRedirect("/user-info.html");
-            }
-            else response.sendRedirect("/user-page.html?user=" + user);
+            } else response.sendRedirect("/user-page.html?user=" + user);
             return;
         }
 
