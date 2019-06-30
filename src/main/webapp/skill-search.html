@@ -41,11 +41,11 @@
         fetch('/sksrch', {
             method: 'POST',
             body: params
-            }).then(response => response.text())
-            .then((results) => {
+        }).then(response => response.text())
+          .then((results) => {
                 resultContainer.innerText = results;
-            });
-        }
+          });
+    }
 
     </script>
 
