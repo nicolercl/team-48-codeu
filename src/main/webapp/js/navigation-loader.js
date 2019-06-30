@@ -48,8 +48,9 @@ function addLoginOrLogoutLinkToNavigation() {
  * @param {Element} childElement
  * @return {Element} li element
  */
-function createListItem(childElement) {
-  const listItemElement = document.createElement('li');
+function createListItem(childElement) {;
+  const listItemElement = document.createElement('div');
+  listItemElement.setAttribute("role", "listitem");
   listItemElement.appendChild(childElement);
   return listItemElement;
 }
@@ -62,7 +63,25 @@ function createListItem(childElement) {
  */
 function createLink(url, text) {
   const linkElement = document.createElement('a');
-  linkElement.appendChild(document.createTextNode(text));
   linkElement.href = url;
+  linkElement.setAttribute("class", "v-list__tile v-list__tile--link theme--light");
+  const listAction = document.createElement('div');
+  listAction.setAttribute("class", "v-list__tile__action");
+  const listContent = document.createElement('div');
+  listContent.setAttribute("class", "v-list__tile__content");
+
+  const icon = document.createElement('i');
+  icon.setAttribute("class", "v-icon material-icons theme--light");
+  icon.setAttribute("aria-hidden", "true");
+  icon.innerHTML = 'person';
+  listAction.appendChild(icon);
+
+  const textContent = document.createElement('div');
+  textContent.setAttribute("class", "v-list__tile__title");
+  textContent.innerHTML = text;
+  listContent.appendChild(textContent);
+
+  linkElement.appendChild(listAction);
+  linkElement.appendChild(listContent);
   return linkElement;
 }
