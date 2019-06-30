@@ -182,4 +182,30 @@ public class Datastore {
 
         return user;
     }
+
+    /**
+     * Returns users with the same teaching skill, or
+     * null if no matching User was found.
+     */
+    public Set<User> getSkilledUsers(String skill) {
+        Set<User> users = new HashSet<>();
+        Query query = new Query("User").setFilter(new Query.FilterPredicate("teachCategory",
+                FilterOperator.EQUAL, skill));
+        PreparedQuery results = datastore.prepare(query);
+        for (Entity entity : results.asIterable()) {
+
+            String email = (String) entity.getProperty("email");
+            String aboutMe = (String) entity.getProperty("aboutMe");
+            String learnCategory = (String) entity.getProperty("learnCategory");
+            String school = (String) entity.getProperty("school");
+            String gender = (String) entity.getProperty("gender");
+            String age = (String) entity.getProperty("age");
+            String skillLevel = (String) entity.getProperty("skillLevel");
+            User user = new User(email, aboutMe, learnCategory, skill,
+                    school, gender, age, skillLevel);
+
+            users.add(user);
+        }
+        return users;
+    }
 }

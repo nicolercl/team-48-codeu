@@ -11,10 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletOutputStream;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Arrays;
-import java.util.ArrayList;
+import java.util.*;
 import java.lang.reflect.Type;
 
 import com.google.gson.reflect.TypeToken;
@@ -32,30 +29,10 @@ public class SkillSearchServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         String targetSkill = request.getParameter("skill");
-        String paramUsers = request.getParameter("testUsers");
-        System.out.println(paramUsers);
         Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<User>>() {
-        }.getType();
-        ArrayList<User> arr = gson.fromJson(paramUsers, type);
 
-        //all users
-        ArrayList<User> users = new ArrayList<User>(arr.size());
-
-        for (int i = 0; i < arr.size(); i++) {
-            HashMap<String, String> info = new HashMap<>();
-            User user = arr.get(i);
-            users.add(user);
-        }
-
-        //all categories
-        String[] categories = {"Design", "Photo", "Sports", "Music", "Technology", "Language", "Culinary"};
-
-        //users categorized by learnCategory
-        HashMap<String, ArrayList<User>> cat_users = categorizeUsers(users, categories);
-
-        //select targetskill users
-        ArrayList<User> selected = cat_users.get(targetSkill);
+        //all users with required skill
+        Set<User> selected = datastore.getSkilledUsers(targetSkill);
 
         response.setContentType("application/json");
 
@@ -69,23 +46,4 @@ public class SkillSearchServlet extends HttpServlet {
             response.getOutputStream().println(json);
         }
     }
-
-    //categorize users
-    private HashMap<String, ArrayList<User>> categorizeUsers(ArrayList<User> users,
-                                                                 String[] categories) {
-        HashMap<String, ArrayList<User>> cat_users = new HashMap<>();
-        users.forEach((user) -> {
-            String skill = user.getTeachCategory();
-            if (cat_users.get(skill) == null) {
-                ArrayList<User> userList = new ArrayList<>();
-                userList.add(user);
-                cat_users.put(skill, userList);
-            } else {
-                cat_users.get(skill).add(user);
-            }
-        });
-
-        return cat_users;
-    }
-
 }

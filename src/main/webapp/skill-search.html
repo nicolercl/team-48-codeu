@@ -6,36 +6,11 @@
 
     <script>
 
-    let testUsers = [];
-
-    function create() {
-        testUsers = [];
-        const submit = document.getElementById('submitUser')
-        submit.addEventListener("click", function(){
-            newUser = saveTestUser();
-            testUsers.push(newUser);
-        });
-    }
-
-    function saveTestUser(){
-        let user = new Object();
-        user.email = document.getElementById('email').value;
-        user.aboutme = document.getElementById('aboutme').value;
-        user.learnCategory = document.getElementById('learnCategory').value;
-        user.teachCategory = document.getElementById('teachCategory').value;
-        user.skillLevel = document.getElementById('skillLevel').value;
-        user.school = document.getElementById('school').value;
-        user.age = document.getElementById('age').value;
-        user.gender = document.getElementById('gender').value;
-        return user;
-      }
-
     function getSkillSharer() {
         const skill = document.getElementById('text').value;
 
         const params = new URLSearchParams();
         params.append('skill', skill);
-        params.append('testUsers', JSON.stringify(testUsers));
         const resultContainer = document.getElementById('result');
 
         fetch('/sksrch', {
@@ -60,26 +35,6 @@
 </head>
 <body onload="create();">
 <h1>Skill Sharer Search</h1>
-<p>Customize your own user test data.</p>
-<form>
-    Email:
-    <input type="text" id="email" value="1@gmail.com"><br>
-    About me:
-    <input type="text" id="aboutme" value=""><br>
-    Interested Skill Category:
-    <input type="text" id="learnCategory" value="Design"><br>
-    Sharing Skill Category:
-    <input type="text" id="teachCategory" value="Photo"><br>
-    Sharing Skill Level:
-    <input type="text" id="skillLevel" value="Junior"><br>
-    School:
-    <input type="text" id="school" value="NTU"><br>
-    Age:
-    <input type="text" id="age" value="18"><br>
-    Gender:
-    <input type="text" id="gender" value="female"><br>
-    <input type="button" id="submitUser" value="submit"><br>
-</form>
 
 <p>Select a skill to find available skill sharers.</p>
 <select id="text">
