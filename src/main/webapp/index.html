@@ -53,6 +53,7 @@ limitations under the License
    /*border-color: transparent!important;*/
  }
 
+
 </style>
 
 <body onload="addLoginOrLogoutLinkToNavigation();">
@@ -76,7 +77,6 @@ limitations under the License
 
         </v-toolbar>
         <v-content class="container">
-          
             <v-navigation-drawer permanent hide-overlay class="transparent" v-show="drawer.open">
                 <v-toolbar flat>
                     <v-list>
@@ -111,7 +111,8 @@ limitations under the License
             <session class="description">
                 Exchange - Trade Your Talent!
                 <!--                <p class="title">title</p>>-->
-                <p class="content">Join our community and exchange your skills! Find people who have skills and talents you are interested in here. Visit your profile or look at your matches feed to get started!</p>
+                <p class="content">Join our community and exchange your skills! Find people who have skills and talents
+                    you are interested in here. Visit your profile or look at your matches feed to get started!</p>
             </session>
 
 
@@ -150,7 +151,6 @@ limitations under the License
 </div>
 
 
-
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 <script>
@@ -159,8 +159,13 @@ limitations under the License
       data: () => ({
         items: [
           { title: 'Home', icon: 'dashboard', url: '/' },
-          { title: 'About Our Team', icon: 'question_answer', url: '/aboutus.html' },
-          { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' }
+          { title: 'My-info', icon: 'edit', url: '/user-info.html' },
+          { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' },
+          { title: 'Map', icon: 'place', url: '/map.html' },
+          { title: 'Chart', icon: 'bar_chart', url: '/chart.html' },
+          { title: 'Community', icon: 'mode_comment', url: '/community.html' },
+          { title: 'Status', icon: 'pie_chart', url: '/stats.html' },
+          { title: 'Translate', icon: 'translate', url: '/translate.html' }
         ],
         drawer: {
             open : false,
@@ -173,6 +178,7 @@ limitations under the License
         }
       }
     })
+
 
 
 </script>
