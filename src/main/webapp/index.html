@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License
 -->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,16 +24,21 @@ limitations under the License
 </head>
 <style>
 .container{
-    background-image: url("https://carleton.ca/studentaccounts/wp-content/uploads/studentaccountsban.jpg");
+    background-image: url("https://imgur.com/PpjU1up.png");
+    no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
   }
 
 .description{
   auto-grow:true;
   position: absolute;
-  right: 250px;
-  bottom: 120px;
+  right: 20px;
+  bottom: 20px;
   width: 500px;
-  background-color:yellow;
+  background-color:#F9E7E7;
   opacity: 0.6;
   font-family: 'Gochi Hand', cursive;
   font-size: 32px;
@@ -43,14 +47,18 @@ limitations under the License
 .description .content{
     font-size: 24px;
 }
-
+.transparent {
+   background-color: white!important;
+   opacity: 0.8;
+   /*border-color: transparent!important;*/
+ }
 
 </style>
 
 <body onload="addLoginOrLogoutLinkToNavigation();">
 <div id="app">
     <v-app>
-        <v-toolbar dark color="blue-grey lighten-5" class="elevation-0">
+        <v-toolbar dark color="white" class="elevation-0">
             <v-toolbar-side-icon @click="toggleDrawer" light
             ></v-toolbar-side-icon>
 
@@ -69,7 +77,7 @@ limitations under the License
         </v-toolbar>
         <v-content class="container">
           
-            <v-navigation-drawer permanent hide-overlay v-show="drawer.open">
+            <v-navigation-drawer permanent hide-overlay class="transparent" v-show="drawer.open">
                 <v-toolbar flat>
                     <v-list>
                         <v-list-tile>
@@ -105,7 +113,7 @@ limitations under the License
                 <!--                <p class="title">title</p>>-->
                 <p class="content">Join our community and exchange your skills! Find people who have skills and talents you are interested in here. Visit your profile or look at your matches feed to get started!</p>
             </session>
-            >
+
 
             <!--            <v-parallax-->
             <!--                    dark-->
