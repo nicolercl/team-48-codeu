@@ -106,19 +106,19 @@ limitations under the License.
         el: '#app',
         data: () => ({
             items: [
-                { title: 'Home', icon: 'dashboard', url: '/' },
-                { title: 'About Our Team', icon: 'question_answer', url: '/aboutus.html' },
-                { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' }
+                {title: 'Home', icon: 'dashboard', url: '/'},
+                {title: 'About Our Team', icon: 'question_answer', url: '/aboutus.html'},
+                {title: 'Public Feed', icon: 'question_answer', url: '/feed.html'}
             ],
             drawer: {
-                open : false,
+                open: false,
             },
             lorem: 'Join our community and exchange your skills! Find people who have skills and talents you are interested in here.\n' +
                 'Visit your profile or look at your matches feed to get started!'
         }),
 
         methods: {
-            toggleDrawer(){
+            toggleDrawer() {
                 this.drawer.open = !this.drawer.open
             }
         }
