@@ -27,8 +27,14 @@
         const resultContainer = document.getElementById('result');
         fetch('/user-info', {
             method: 'POST',
-            body: params
-        });
+            body: params,
+            redirect: 'follow'
+        }).then(response => response.text())
+          .then((results) => {
+              //redirect back to personal page
+              resultContainer.innerText = results;
+              window.location.href = "/user-page.html?user=" + newUser.email;
+          });
      }
  </script>
 <body onload="create();">
@@ -51,7 +57,7 @@
     <input type="text" id="age" value="18"><br>
     Gender:
     <input type="text" id="gender" value="female"><br>
-    <input type="submit" id="submitUser" value="submit" onclick="submitData();"><br>
+    <input type="button" id="submitUser" value="submit" onclick="submitData();"><br>
 </form>
 <div id="result"></div>
 

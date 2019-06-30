@@ -34,15 +34,18 @@ public class UserInfoServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         String userData = request.getParameter("userData");
-        System.out.println(userData);
         Gson gson = new Gson();
         Type type = new TypeToken<UserTest>() {}.getType();
         UserTest user = gson.fromJson(userData, type);
 
         //add user to datastore
         datastore.storeUserTest(user);
-        System.out.println(user);
         //maybe store into a certain category too?
 
+        String userEmail = user.getEmail();
+        response.setContentType("application/json");
+        String selected = "Redirecting to Personal Page...";
+        String json = gson.toJson(selected);
+        response.getOutputStream().println(json);
     }
 }
