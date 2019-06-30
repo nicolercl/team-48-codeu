@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modify</title>
+</head>
+<script>
+     function saveTestUser(){
+        let user = new Object();
+        user.email = document.getElementById('email').value;
+        user.aboutme = document.getElementById('aboutme').value;
+        user.learnCategory = document.getElementById('learnCategory').value;
+        user.teachCategory = document.getElementById('teachCategory').value;
+        user.skillLevel = document.getElementById('skillLevel').value;
+        user.school = document.getElementById('school').value;
+        user.age = document.getElementById('age').value;
+        user.gender = document.getElementById('gender').value;
+        return user;
+      }
+     function submitData() {
+        newUser = saveTestUser();
+        const params = new URLSearchParams();
+        params.append('userData', JSON.stringify(newUser));
+        const resultContainer = document.getElementById('result');
+        fetch('/user-info', {
+            method: 'POST',
+            body: params,
+            redirect: 'follow'
+        }).then(response => response.text())
+          .then((results) => {
+              //redirect back to personal page
+              resultContainer.innerText = results;
+              window.location.href = "/user-page.html?user=" + newUser.email;
+          });
+     }
+</script>
+<body>
+<h1> Modify your profile</h1>
+<p>Customize your own user test data.</p>
+<form>
+    Email:
+    <input type="text" id="email" value="test@gmail.com"><br>
+    About me:
+    <input type="text" id="aboutme" value=""><br>
+    Interested Skill Category:
+    <input type="text" id="learnCategory" value="Design"><br>
+    Sharing Skill Category:
+    <input type="text" id="teachCategory" value="Photo"><br>
+    Sharing Skill Level:
+    <input type="text" id="skillLevel" value="Junior"><br>
+    School:
+    <input type="text" id="school" value="NTU"><br>
+    Age:
+    <input type="text" id="age" value="18"><br>
+    Gender:
+    <input type="text" id="gender" value="female"><br>
+    <input type="button" id="submitUser" value="submit" onclick="submitData();"><br>
+</form>
+<div id="result"></div>
+
+</body>
+</html>

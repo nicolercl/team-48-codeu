@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skill Search</title>
+
+    <script>
+
+    function getSkillSharer() {
+        const skill = document.getElementById('text').value;
+
+        const params = new URLSearchParams();
+        params.append('skill', skill);
+        const resultContainer = document.getElementById('result');
+
+        fetch('/sksrch', {
+            method: 'POST',
+            body: params
+        }).then(response => response.text())
+          .then((results) => {
+                resultContainer.innerText = results;
+          });
+    }
+
+    </script>
+
+    <style>
+      #text {
+        width: 500px;
+        height: 125px;
+      }
+
+    </style>
+
+</head>
+<body onload="create();">
+<h1>Skill Sharer Search</h1>
+
+<p>Select a skill to find available skill sharers.</p>
+<select id="text">
+    <option value="Photo">Photo & Films</option>
+    <option value="Design">Design & Illustrations</option>
+    <option value="Sports">Sports</option>
+    <option value="Music">Music</option>
+    <option value="Technology">Technology</option>
+    <option value="Language">Language</option>
+    <option value="Culinary">Culinary</option>
+</select>
+<button onclick="getSkillSharer();">Search</button>
+<hr/>
+<div id="result"></div>
+</body>
+</html>
