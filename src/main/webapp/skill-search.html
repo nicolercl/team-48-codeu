@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta charset="UTF-8">
+    <script src="/js/skillsearch-loader.js"></script>
+    <title>Skill Search</title>
+    <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+    <script type='text/javascript'>
+    //for geo chart
+        var schoolMap = new Map();
+        var chart;
+        function drawGeoChart()
+        {
+            console.log("draw map");
+            google.charts.load('current', {
+           'packages': ['geochart'],
+           'mapsApiKey': 'AIzaSyCEXVLOEkX6RVDBXRRJQX4a7Ay_Uny_WZ8'
+            });
+            google.charts.setOnLoadCallback(drawMarkersMap);
+        }
+
+        function drawMarkersMap() {
+            console.log("drawMarkersMap");
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Number');
+            data.addColumn('number', 'Number');
+            for (var [key, value] of schoolMap.entries()) {
+                console.log(key + ' = ' + value);
+                data.addRow([key, value]);
+            }
+
+            var options = {
+                sizeAxis: { minValue: 0, maxValue: 100 },
+                region: 'world',
+                displayMode: 'markers',
+                colorAxis: {colors: ['#e7711c', '#4374e0']} // orange to blue
+            };
+
+            chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        };
+
+       /* google.visualization.events.addListener(chart, 'select', function() {
+            var selection = chart.getSelection();
+
+            // if same city is clicked twice in a row
+            // it is "unselected", and selection = []
+            if(typeof selection[0] !== "undefined") {
+                var value = newInfo.getValue(selection[0].row, 0);
+                alert('School name is: ' + value);
+            }
+        });*/
+     </script>
+</head>
+<body>
+<div id="app">
+    <v-app>
+        <v-content>
+            <v-toolbar light class="elevation-0">
+                <v-toolbar-side-icon @click="toggleDrawer" light
+                ></v-toolbar-side-icon>
+
+                <v-toolbar-title>CodeU 2019 Starter Project</v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+                <v-btn icon>
+                    <v-icon>search</v-icon>
+                </v-btn>
+
+                <v-btn icon>
+                    <v-icon>apps</v-icon>
+                </v-btn>
+
+            </v-toolbar>
+            <v-navigation-drawer permanent hide-overlay v-show="drawer.open">
+                <v-toolbar flat>
+                    <v-list>
+                        <v-list-tile>
+                            <v-list-tile-title class="title">
+                                Application
+                            </v-list-tile-title>
+                        </v-list-tile>
+                    </v-list>
+                </v-toolbar>
+
+                <v-divider></v-divider>
+
+                <v-list id="navigation" dense class="pt-0">
+                    <v-list-tile
+                            v-for="item in items"
+                            :key="item.title"
+                            :href="item.url"
+                    >
+                        <v-list-tile-action>
+                            <v-icon>{{ item.icon }}</v-icon>
+                        </v-list-tile-action>
+
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </v-list>
+            </v-navigation-drawer>
+            <v-container class="mx-8">
+                <h1 class=" display-3 font-weight-bold mu-4 mb-4 grey--text text--darken-2">Skill Search</h1>
+                <p class="subheading">fill in the form for adding new data</p>
+
+
+                <div id="form">
+                    <v-form>
+                        <v-text-field
+                                label="E-mail"
+                                required
+                                v-model="email"
+                        >
+                        </v-text-field>
+                        <v-textarea
+                                label="About me"
+                                v-model="aboutme"
+                        >
+                        </v-textarea>
+                        <v-select
+                                v-model="learncategory"
+                                :items="categories"
+                                label="Learning category"
+                                required
+                        ></v-select>
+                        <v-select
+                                v-model="sharecategory"
+                                :items="categories"
+                                label="Sharing category"
+                                required
+                        ></v-select>
+                        <v-select
+                                v-model="shareskilllevel"
+                                :items="skilllevel"
+                                label="Sharing Skill level"
+                                required
+                        ></v-select>
+                        <v-text-field
+                                label="School (full name required)"
+                                v-model="school"
+                        >
+                        </v-text-field>
+                        <v-select
+                                v-model="gender"
+                                :items="gend"
+                                label="Gender"
+                                required
+                        ></v-select>
+                        <v-text-field
+                                label="Age"
+                                v-model="age"
+                        >
+                        </v-text-field>
+                        <v-flex class="text-xs-right">
+                            <v-btn  @click="submit">submit</v-btn>
+                        </v-flex>
+
+                    </v-form>
+                </div>
+            </v-container>
+
+            <v-container class="mt-20 mx-8">
+                <p class="subheading">choose specific category to see the result</p>
+                <v-layout row wrap justify-space-around>
+                    <v-flex xs1 md1>
+                        <v-btn flat small @click="photobtnclick">Photography</v-btn>
+                    </v-flex>
+                    <v-flex xs1 md1>
+                        <v-btn flat small @click="designbtnclick">Design</v-btn>
+                    </v-flex>
+                    <v-flex xs1 md1>
+                        <v-btn flat small @click="sportbtnclick">Sports</v-btn>
+                    </v-flex>
+                    <v-flex xs1 md1>
+                        <v-btn flat small @click="musicbtnclick">Music</v-btn>
+                    </v-flex>
+                    <v-flex xs1 md1>
+                        <v-btn flat small @click="techbtnclick">Technology</v-btn>
+                    </v-flex>
+                    <v-flex xs1 md1>
+                        <v-btn flat small @click="languagebtnclick">Language</v-btn>
+                    </v-flex>
+                    <v-flex xs1 md1>
+                        <v-btn flat small @click="culinarybtnclick">Culinary</v-btn>
+                    </v-flex>
+
+                </v-layout>
+                <v-container class="mx-10">
+                <div align="center" id="chart_div" style="width: 1100px; height: 800px;"></div>
+            </v-container>
+            </v-container>
+
+
+        </v-content>
+    </v-app>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+<script>
+    //for the tool bar
+    new Vue({ el: '#app',
+     data: () => ({
+        items: [
+          { title: 'Home', icon: 'dashboard', url: '/' },
+          { title: 'About Our Team', icon: 'question_answer', url: '/aboutus.html' },
+          { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' }
+        ],
+        drawer: {
+            open : false,
+        },
+        email:'',
+        aboutme:'',
+        school:'',
+        age:'',
+        learncategory: null,
+        sharecategory: null,
+        shareskilllevel:null,
+        gender:null,
+        categories: [
+        'Photography',
+        'Design',
+        'Sports',
+        'Music',
+        'Technology',
+        'Language',
+        'Culinary'
+         ],
+        skilllevel: [
+        'Junior',
+        'Mid-level',
+        'Senior',
+        'Proficient',
+        'Expert'
+         ],
+         gend: [
+        'female',
+        'male',
+        'rather not say',
+         ]
+      }),
+      methods: {
+        toggleDrawer(){
+            this.drawer.open = !this.drawer.open
+        },
+        submit () {
+            //console.log(this.email,this.aboutme,this.learncategory);
+            newUser = saveTestUser(this.email,this.aboutme,this.learncategory
+                                   ,this.sharecategory,this.shareskilllevel,
+                                   this.school,this.age,this.gender);
+            testUsers.push(newUser);
+        },
+        photobtnclick()
+        {
+             getSkillSharer("Photography");
+        },
+        designbtnclick()
+        {
+        getSkillSharer("Design");
+        },
+        sportbtnclick()
+        {getSkillSharer("Sports");
+        },
+        musicbtnclick()
+        {getSkillSharer("Music");
+        },
+        techbtnclick()
+        {getSkillSharer("Technology");
+        },
+        languagebtnclick()
+        {getSkillSharer("Language");
+        },
+        culinarybtnclick()
+        {getSkillSharer("Culinary");
+        },
+
+
+
+      }
+    })
+</script>
+</body>
+</html>
