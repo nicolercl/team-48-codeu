@@ -176,8 +176,7 @@
             this.drawer.open = !this.drawer.open
         },
         submit () {
-            //console.log(this.email,this.aboutme,this.learncategory);
-            newUser = saveTestUser(this.email,this.aboutme,this.learncategory
+            newUser = saveUser(this.email,this.aboutme,this.learncategory
                                    ,this.sharecategory,this.shareskilllevel,
                                    this.school,this.age,this.gender);
             submitData(newUser);

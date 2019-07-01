@@ -1,8 +1,6 @@
 let infobyschool = [];
 var userobj;
 function getSkillSharer(skill) {
-    console.log("getSkillSharer");
-    console.log(skill);
     const params = new URLSearchParams();
     params.append('skill', skill);
     fetch('/sksrch', {

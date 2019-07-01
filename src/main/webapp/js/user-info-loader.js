@@ -1,4 +1,4 @@
-function saveTestUser(email,aboutme,learncategory,sharecategory,skilllevel,school,age,gender){
+function saveUser(email,aboutme,learncategory,sharecategory,skilllevel,school,age,gender){
     let user = new Object();
     user.email = email;
     user.aboutMe = aboutme;

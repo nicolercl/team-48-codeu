@@ -18,7 +18,6 @@
         var shown=false;
         function drawGeoChart()
         {
-            console.log("draw map");
             google.charts.load('current', {
            'packages': ['geochart'],
            'mapsApiKey': 'AIzaSyCEXVLOEkX6RVDBXRRJQX4a7Ay_Uny_WZ8'
@@ -27,12 +26,10 @@
         }
 
         function drawMarkersMap() {
-            console.log("drawMarkersMap");
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Number');
             data.addColumn('number', 'Number');
             for (var [key, value] of schoolMap.entries()) {
-                console.log(key + ' = ' + value);
                 data.addRow([key, value]);
             }
 
@@ -53,11 +50,9 @@
                      var value = data.getValue(selection[0].row, 0);
                      getinfobyschool(value);
                      carddatanum = data.getValue(selection[0].row,1);
-                     console.log("carddatanum = "+carddatanum);
                      index=0;
                      loadcardinfo();
                      vue.dialog=true;
-                     console.log("vue.dialog = "+vue.dialog);
                  }
 
             });
