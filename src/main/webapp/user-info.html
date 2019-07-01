@@ -70,11 +70,7 @@
                                 v-model="email"
                         >
                         </v-text-field>
-                        <v-textarea
-                                label="About me"
-                                v-model="aboutme"
-                        >
-                        </v-textarea>
+
                         <v-select
                                 v-model="learncategory"
                                 :items="categories"
@@ -109,6 +105,12 @@
                                 v-model="age"
                         >
                         </v-text-field>
+                        <v-textarea
+                                label="About me"
+                                v-model="aboutme"
+                        >
+                        </v-textarea>
+
                         <v-flex class="text-xs-right">
                             <v-btn  @click="submit">submit</v-btn>
                         </v-flex>

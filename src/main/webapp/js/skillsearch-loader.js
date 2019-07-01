@@ -1,18 +1,16 @@
-let testUsers = [];
+let infobyschool = [];
+var userobj;
 function getSkillSharer(skill) {
     console.log("getSkillSharer");
-    //const skill = document.getElementById('text').value;
     console.log(skill);
     const params = new URLSearchParams();
     params.append('skill', skill);
-    //params.append('testUsers', JSON.stringify(testUsers));
-    //const resultContainer = document.getElementById('result');
     fetch('/sksrch', {
         method: 'POST',
         body: params})
         .then(response => response.text())
         .then((results) => {
-            let userobj = JSON.parse(results);
+            userobj = JSON.parse(results);
 
             schoolMap.clear();
             for(u in userobj)
@@ -24,10 +22,45 @@ function getSkillSharer(skill) {
                 else
                     schoolMap.set(userobj[u].school,1);
             }
-           /* for (var [key, value] of schoolMap.entries()) {
-                console.log(key + ' = ' + value);
-            }*/
             drawGeoChart();
         });
 }
+
+function getinfobyschool(sch)
+{
+    infobyschool = [];
+    for(u in userobj)
+        {
+            if(userobj[u].school===sch)
+            {
+                 infobyschool.push(userobj[u]);
+            }
+        }
+}
+
+function loadcardinfo()
+{
+     if(index==(carddatanum-1))
+     {
+        vue.nextisdisable = true;
+        vue.isdisable = false;
+     }
+    else
+        vue.nextisdisable = false;
+    if(index==0)
+        vue.previsdisable = true;
+    else
+        vue.previsdisable = false;
+
+    vue.card_title="information    "+(index+1)+"/"+carddatanum;
+    vue.card_shareskill=infobyschool[index].teachCategory;
+    vue.card_skilllevel=infobyschool[index].skillLevel;
+    vue.card_email=infobyschool[index].email;
+    vue.card_school=infobyschool[index].school;
+    vue.card_age=infobyschool[index].age;
+    vue.card_gender=infobyschool[index].gender;
+    vue.card_aboutme=infobyschool[index].aboutMe;
+}
+
+
 

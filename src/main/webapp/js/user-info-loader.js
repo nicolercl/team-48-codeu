@@ -1,8 +1,7 @@
 function saveTestUser(email,aboutme,learncategory,sharecategory,skilllevel,school,age,gender){
     let user = new Object();
     user.email = email;
-    user.aboutme = aboutme;
-    console.log(aboutme);
+    user.aboutMe = aboutme;
     user.learnCategory = learncategory;
     user.teachCategory = sharecategory;
     user.skillLevel =skilllevel;
@@ -24,7 +23,7 @@ function submitData(newUser) {
     }).then(response => response.text())
      .then((results) => {
           //redirect back to personal page
-          resultContainer.innerText = results;
+          //resultContainer.innerText = results;
           window.location.href = "/user-page.html?user=" + newUser.email;
       });
 }

@@ -39,11 +39,11 @@ public class SkillSearchServlet extends HttpServlet {
 
         if (selected != null) {
             String json = gson.toJson(selected);
-            System.out.println(json);
+            //System.out.println(json);
             response.getOutputStream().println(json);
         } else {
             String json = gson.toJson("No matches");
-            System.out.println(json);
+            //System.out.println(json);
             response.getOutputStream().println(json);
         }
     }
