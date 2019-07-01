@@ -1,62 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <meta charset="UTF-8">
-    <title>Modify</title>
+    <script src="/js/user-info-loader.js"></script>
+    <title>Skill Search</title>
 </head>
-<script>
-     function saveTestUser(){
-        let user = new Object();
-        user.email = document.getElementById('email').value;
-        user.aboutme = document.getElementById('aboutme').value;
-        user.learnCategory = document.getElementById('learnCategory').value;
-        user.teachCategory = document.getElementById('teachCategory').value;
-        user.skillLevel = document.getElementById('skillLevel').value;
-        user.school = document.getElementById('school').value;
-        user.age = document.getElementById('age').value;
-        user.gender = document.getElementById('gender').value;
-        return user;
-      }
-     function submitData() {
-        newUser = saveTestUser();
-        const params = new URLSearchParams();
-        params.append('userData', JSON.stringify(newUser));
-        const resultContainer = document.getElementById('result');
-        fetch('/user-info', {
-            method: 'POST',
-            body: params,
-            redirect: 'follow'
-        }).then(response => response.text())
-          .then((results) => {
-              //redirect back to personal page
-              resultContainer.innerText = results;
-              window.location.href = "/user-page.html?user=" + newUser.email;
-          });
-     }
-</script>
 <body>
-<h1> Modify your profile</h1>
-<p>Customize your own user test data.</p>
-<form>
-    Email:
-    <input type="text" id="email" value="test@gmail.com"><br>
-    About me:
-    <input type="text" id="aboutme" value=""><br>
-    Interested Skill Category:
-    <input type="text" id="learnCategory" value="Design"><br>
-    Sharing Skill Category:
-    <input type="text" id="teachCategory" value="Photo"><br>
-    Sharing Skill Level:
-    <input type="text" id="skillLevel" value="Junior"><br>
-    School:
-    <input type="text" id="school" value="NTU"><br>
-    Age:
-    <input type="text" id="age" value="18"><br>
-    Gender:
-    <input type="text" id="gender" value="female"><br>
-    <input type="button" id="submitUser" value="submit" onclick="submitData();"><br>
-</form>
-<div id="result"></div>
+<div id="app">
+    <v-app>
+        <v-content>
+            <v-toolbar light class="elevation-0">
+                <v-toolbar-side-icon @click="toggleDrawer" light
+                ></v-toolbar-side-icon>
 
+                <v-toolbar-title>CodeU 2019 Starter Project</v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+                <v-btn icon>
+                    <v-icon>search</v-icon>
+                </v-btn>
+
+                <v-btn icon>
+                    <v-icon>apps</v-icon>
+                </v-btn>
+
+            </v-toolbar>
+            <v-navigation-drawer permanent hide-overlay v-show="drawer.open">
+                <v-toolbar flat>
+                    <v-list>
+                        <v-list-tile>
+                            <v-list-tile-title class="title">
+                                Application
+                            </v-list-tile-title>
+                        </v-list-tile>
+                    </v-list>
+                </v-toolbar>
+
+                <v-divider></v-divider>
+
+                <v-list id="navigation" dense class="pt-0">
+                    <v-list-tile
+                            v-for="item in items"
+                            :key="item.title"
+                            :href="item.url"
+                    >
+                        <v-list-tile-action>
+                            <v-icon>{{ item.icon }}</v-icon>
+                        </v-list-tile-action>
+
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </v-list>
+            </v-navigation-drawer>
+            <v-container class="mx-8">
+                <h1 class=" display-3 font-weight-bold mu-4 mb-4 grey--text text--darken-2">User Info</h1>
+                <p class="subheading">fill in the form for adding user data</p>
+
+                <div id="form">
+                    <v-form>
+                        <v-text-field
+                                label="E-mail"
+                                required
+                                v-model="email"
+                        >
+                        </v-text-field>
+
+                        <v-select
+                                v-model="learncategory"
+                                :items="categories"
+                                label="Learning category"
+                                required
+                        ></v-select>
+                        <v-select
+                                v-model="sharecategory"
+                                :items="categories"
+                                label="Sharing category"
+                                required
+                        ></v-select>
+                        <v-select
+                                v-model="shareskilllevel"
+                                :items="skilllevel"
+                                label="Sharing Skill level"
+                                required
+                        ></v-select>
+                        <v-text-field
+                                label="School (full name required)"
+                                v-model="school"
+                        >
+                        </v-text-field>
+                        <v-select
+                                v-model="gender"
+                                :items="gend"
+                                label="Gender"
+                                required
+                        ></v-select>
+                        <v-text-field
+                                label="Age"
+                                v-model="age"
+                        >
+                        </v-text-field>
+                        <v-textarea
+                                label="About me"
+                                v-model="aboutme"
+                        >
+                        </v-textarea>
+
+                        <v-flex class="text-xs-right">
+                            <v-btn  @click="submit">submit</v-btn>
+                        </v-flex>
+
+                    </v-form>
+                </div>
+            </v-container>
+        </v-content>
+    </v-app>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+<script>
+    //for the tool bar
+    new Vue({ el: '#app',
+     data: () => ({
+        items: [
+          { title: 'Home', icon: 'dashboard', url: '/' },
+          { title: 'My-info', icon: 'edit', url: '/user-info.html' },
+          { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' },
+          { title: 'Map', icon: 'place', url: '/map.html' },
+          { title: 'Chart', icon: 'bar_chart', url: '/chart.html' },
+          { title: 'Community', icon: 'mode_comment', url: '/community.html' },
+          { title: 'Status', icon: 'pie_chart', url: '/stats.html' },
+          { title: 'Translate', icon: 'translate', url: '/translate.html' }
+        ],
+        drawer: {
+            open : false,
+        },
+        email:'',
+        aboutme:'',
+        school:'',
+        age:'',
+        learncategory: null,
+        sharecategory: null,
+        shareskilllevel:null,
+        gender:null,
+        categories: [
+        'Photography',
+        'Design',
+        'Sports',
+        'Music',
+        'Technology',
+        'Language',
+        'Culinary'
+         ],
+        skilllevel: [
+        'Junior',
+        'Mid-level',
+        'Senior',
+        'Proficient',
+        'Expert'
+         ],
+         gend: [
+        'female',
+        'male',
+        'rather not say',
+         ]
+      }),
+      methods: {
+        toggleDrawer(){
+            this.drawer.open = !this.drawer.open
+        },
+        submit () {
+            newUser = saveUser(this.email,this.aboutme,this.learncategory
+                                   ,this.sharecategory,this.shareskilllevel,
+                                   this.school,this.age,this.gender);
+            submitData(newUser);
+        }
+      }
+    })
+</script>
 </body>
-</html>
+</html>>
