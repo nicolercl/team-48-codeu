@@ -24,18 +24,12 @@ limitations under the License
     <script src="/js/navigation-loader.js"></script>
 </head>
 <style>
-#app{
-    background-attachment: scroll;
-}
-.layout wrap{
-    padding=0px;
-    margin=0px;
-}
-.container{
-    background-image: url("https://carleton.ca/studentaccounts/wp-content/uploads/studentaccountsban.jpg");
+
+.containerBackground{
+    background: url("https://carleton.ca/studentaccounts/wp-content/uploads/studentaccountsban.jpg");
 }
 .aboutus{
-    background-color: white;
+    background: #FFF !important;
 }
 .home{
     overflow: auto;
@@ -68,8 +62,8 @@ position: absolute;
 width: 100%;
 }
 .fillin{
-width:800px;
-height:800px;
+width:700px;
+height:700px;
 }
 
 
@@ -84,7 +78,7 @@ height:800px;
 
 <body onload="addLoginOrLogoutLinkToNavigation();">
 <div id="app">
-    <v-app class="home">
+    <v-app>
         <v-content>
             <v-toolbar dark color="blue-grey lighten-5" class="elevation-0">
                 <v-toolbar-side-icon @click="toggleDrawer" light
@@ -104,10 +98,10 @@ height:800px;
 
             </v-toolbar>
         </v-content>
-        <div class="layout wrap">
-            <main class="v-content container" style="padding: 0px;" data-booted="true">
+        <div>
+            <main class="v-content  containerBackground" style="padding: 0px;" data-booted="true">
                 <div class="v-content__wrap">
-                    <v-content class="container" style="height: 700px;">
+                    <v-content style="height: 700px;">
                         <v-navigation-drawer permanent hide-overlay v-show="drawer.open">
                             <v-toolbar flat>
                                 <v-list>
@@ -159,7 +153,6 @@ height:800px;
                     <v-flex v-for="i in 4" :key="`3${i}`" xs3>
 
                         <v-hover>
-
                             <v-card
                                     slot-scope="{ hover }"
                                     class="mx-auto"
