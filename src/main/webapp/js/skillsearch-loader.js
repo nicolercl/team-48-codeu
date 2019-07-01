@@ -1,28 +1,12 @@
 let testUsers = [];
-
-function saveTestUser(email,aboutme,learncategory,sharecategory,skilllevel,school,age,gender){
-    let user = new Object();
-    user.email = email;
-    user.aboutme = aboutme;
-    console.log(aboutme);
-    user.learnCategory = learncategory;
-    user.teachCategory = sharecategory;
-    user.skillLevel =skilllevel;
-    user.school = school;
-    user.age = age;
-    user.gender = gender;
-    return user;
-}
-
-
 function getSkillSharer(skill) {
     console.log("getSkillSharer");
     //const skill = document.getElementById('text').value;
     console.log(skill);
     const params = new URLSearchParams();
     params.append('skill', skill);
-    params.append('testUsers', JSON.stringify(testUsers));
-    const resultContainer = document.getElementById('result');
+    //params.append('testUsers', JSON.stringify(testUsers));
+    //const resultContainer = document.getElementById('result');
     fetch('/sksrch', {
         method: 'POST',
         body: params})

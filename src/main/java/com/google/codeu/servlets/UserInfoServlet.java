@@ -8,17 +8,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletOutputStream;
 
 import java.io.IOException;
-import java.util.*;
 import java.lang.reflect.Type;
 
 import com.google.gson.reflect.TypeToken;
 
 
-@WebServlet("/sksrch")
-public class SkillSearchServlet extends HttpServlet {
+@WebServlet("/user-info")
+public class UserInfoServlet extends HttpServlet {
     private Datastore datastore;
 
     @Override
@@ -26,25 +24,21 @@ public class SkillSearchServlet extends HttpServlet {
         datastore = new Datastore();
     }
 
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        String targetSkill = request.getParameter("skill");
-
+        String userData = request.getParameter("userData");
         Gson gson = new Gson();
+        Type type = new TypeToken<User>() {
+        }.getType();
+        User user = gson.fromJson(userData, type);
 
-        //all users with required skill
-        Set<User> selected = datastore.getSkilledUsers(targetSkill);
+        //add user to datastore
+        datastore.storeUser(user);
 
         response.setContentType("application/json");
-
-        if (selected != null) {
-            String json = gson.toJson(selected);
-            System.out.println(json);
-            response.getOutputStream().println(json);
-        } else {
-            String json = gson.toJson("No matches");
-            System.out.println(json);
-            response.getOutputStream().println(json);
-        }
+        String selected = "Redirecting to Personal Page...";
+        String json = gson.toJson(selected);
+        response.getOutputStream().println(json);
     }
 }

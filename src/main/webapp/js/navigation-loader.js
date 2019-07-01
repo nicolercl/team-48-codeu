@@ -32,13 +32,14 @@ function addLoginOrLogoutLinkToNavigation() {
       .then((loginStatus) => {
         if (loginStatus.isLoggedIn) {
           navigationElement.appendChild(createListItem(createLink(
-              '/user-page.html?user=' + loginStatus.username, 'Your Page')));
-
+              '/user-page.html?user=' + loginStatus.username, 'Your Page', 'person')));
+          navigationElement.appendChild(createListItem(createLink(
+                        '/skill-search.html', 'Skill Search', 'search')));
           navigationElement.appendChild(
-              createListItem(createLink('/logout', 'Logout')));
+              createListItem(createLink('/logout', 'Logout', 'person')));
         } else {
           navigationElement.appendChild(
-              createListItem(createLink('/login', 'Login')));
+              createListItem(createLink('/login', 'Login', 'person')));
         }
       });
 }
@@ -61,7 +62,7 @@ function createListItem(childElement) {;
  * @param {string} text
  * @return {Element} Anchor element
  */
-function createLink(url, text) {
+function createLink(url, text, iconName) {
   const linkElement = document.createElement('a');
   linkElement.href = url;
   linkElement.setAttribute("class", "v-list__tile v-list__tile--link theme--light");
@@ -73,7 +74,7 @@ function createLink(url, text) {
   const icon = document.createElement('i');
   icon.setAttribute("class", "v-icon material-icons theme--light");
   icon.setAttribute("aria-hidden", "true");
-  icon.innerHTML = 'person';
+  icon.innerHTML = iconName;
   listAction.appendChild(icon);
 
   const textContent = document.createElement('div');
