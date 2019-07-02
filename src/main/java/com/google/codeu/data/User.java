@@ -58,4 +58,29 @@ public class User {
     public void setAboutMe(String aboutMe) {
         this.aboutMe = aboutMe;
     }
+
+    public void setLearnCategory(String learnCategory) {
+        this.learnCategory = learnCategory;
+    }
+
+    public void setTeachCategory(String teachCategory) {
+        this.teachCategory = teachCategory;
+    }
+
+    public void setSchool(String school){
+        this.school = school;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setAge(String age){
+        this.age = age;
+    }
+
+    public void setSkillLevel(String skillLevel){
+        this.skillLevel = skillLevel;
+    }
+
 }
