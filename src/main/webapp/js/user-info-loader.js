@@ -12,7 +12,6 @@ function saveUser(name, email,aboutme,learncategory,sharecategory,skilllevel,sch
 }
 
 function submitData(newUser) {
-    //newUser = saveTestUser();
     const params = new URLSearchParams();
     params.append('userData', JSON.stringify(newUser));
     const resultContainer = document.getElementById('result');
@@ -20,10 +19,10 @@ function submitData(newUser) {
         method: 'POST',
         body: params,
         redirect: 'follow'
-    }).then(response => response.text())
+    }).then(response => response.json())
      .then((results) => {
           //redirect back to personal page
-          //resultContainer.innerText = results;
+          newUser.email = results.userEmail;
           window.location.href = "/user-page.html?user=" + newUser.email;
       });
 }

@@ -55,6 +55,10 @@ public class User {
         return skillLevel;
     }
 
+    public void setEmail(String email){
+        this.email = email;
+    }
+
     public void setAboutMe(String aboutMe) {
         this.aboutMe = aboutMe;
     }
