@@ -151,8 +151,8 @@ public class Datastore {
         userEntity.setProperty("teachCategory", user.getTeachCategory());
         userEntity.setProperty("skillLevel", user.getSkillLevel());
         userEntity.setProperty("school", user.getSchool());
+        userEntity.setProperty("name", user.getName());
         userEntity.setProperty("age", user.getAge());
-        userEntity.setProperty("gender", user.getGender());
         datastore.put(userEntity);
     }
 
@@ -174,11 +174,11 @@ public class Datastore {
         String learnCategory = (String) userEntity.getProperty("learnCategory");
         String teachCategory = (String) userEntity.getProperty("teachCategory");
         String school = (String) userEntity.getProperty("school");
-        String gender = (String) userEntity.getProperty("gender");
         String age = (String) userEntity.getProperty("age");
+        String name = (String) userEntity.getProperty("name");
         String skillLevel = (String) userEntity.getProperty("skillLevel");
         User user = new User(email, aboutMe, learnCategory, teachCategory,
-                school, gender, age, skillLevel);
+                school, age, name, skillLevel);
 
         return user;
     }
@@ -198,11 +198,11 @@ public class Datastore {
             String aboutMe = (String) entity.getProperty("aboutMe");
             String learnCategory = (String) entity.getProperty("learnCategory");
             String school = (String) entity.getProperty("school");
-            String gender = (String) entity.getProperty("gender");
             String age = (String) entity.getProperty("age");
+            String name = (String) entity.getProperty("name");
             String skillLevel = (String) entity.getProperty("skillLevel");
             User user = new User(email, aboutMe, learnCategory, skill,
-                    school, gender, age, skillLevel);
+                    school, age, name, skillLevel);
 
             users.add(user);
         }

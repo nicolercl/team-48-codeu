@@ -1,5 +1,6 @@
-function saveUser(email,aboutme,learncategory,sharecategory,skilllevel,school,age,gender){
+function saveUser(name, email,aboutme,learncategory,sharecategory,skilllevel,school,age){
     let user = new Object();
+    user.name = name;
     user.email = email;
     user.aboutMe = aboutme;
     user.learnCategory = learncategory;
@@ -7,7 +8,6 @@ function saveUser(email,aboutme,learncategory,sharecategory,skilllevel,school,ag
     user.skillLevel =skilllevel;
     user.school = school;
     user.age = age;
-    user.gender = gender;
     return user;
 }
 
