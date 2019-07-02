@@ -11,31 +11,170 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License.
+limitations under the License
 -->
 
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>CodeU 2019 Starter Project</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Gochi+Hand&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="/js/navigation-loader.js"></script>
 </head>
+<style>
+.container{
+    background-image: url("https://carleton.ca/studentaccounts/wp-content/uploads/studentaccountsban.jpg");
+  }
+
+.description{
+  auto-grow:true;
+  position: absolute;
+  right: 250px;
+  bottom: 120px;
+  width: 500px;
+  background-color:yellow;
+  opacity: 0.6;
+  font-family: 'Gochi Hand', cursive;
+  font-size: 32px;
+
+}
+.description .content{
+    font-size: 24px;
+}
+
+
+
+</style>
+
 <body onload="addLoginOrLogoutLinkToNavigation();">
-<nav>
-    <ul id="navigation">
-        <li><a href="/">Home</a></li>
-        <li><a href="/aboutus.html">About Our Team</a></li>
-        <li><a href="/feed.html">Public Feeds</a></li>
-    </ul>
-</nav>
-<h1>CodeU Starter Project</h1>
-<p>This is the CodeU starter project. Click the links above to login and visit your page.
-    You can post messages on your page, and you can visit other user pages if you have
-    their URL.</p>
-<p>This is your code now! Feel free to make changes, and don't be afraid to get creative!
-    You could start by modifying this page to tell the world more about your team.</p>
+<div id="app">
+    <v-app>
+        <v-toolbar dark color="blue-grey lighten-5" class="elevation-0">
+            <v-toolbar-side-icon @click="toggleDrawer" light
+            ></v-toolbar-side-icon>
+
+            <v-toolbar-title class="black--text">CodeU 2019 Starter Project</v-toolbar-title>
+
+            <v-spacer></v-spacer>
+
+            <v-btn icon>
+                <v-icon>search</v-icon>
+            </v-btn>
+
+            <v-btn icon>
+                <v-icon>apps</v-icon>
+            </v-btn>
+
+        </v-toolbar>
+        <v-content class="container">
+
+            <v-navigation-drawer permanent hide-overlay v-show="drawer.open">
+                <v-toolbar flat>
+                    <v-list>
+                        <v-list-tile>
+                            <v-list-tile-title class="title">
+                                Application
+                            </v-list-tile-title>
+                        </v-list-tile>
+                    </v-list>
+                </v-toolbar>
+
+                <v-divider></v-divider>
+
+                <v-list id="navigation" dense class="pt-0">
+                    <v-list-tile
+                            v-for="item in items"
+                            :key="item.title"
+                            :href="item.url"
+                    >
+                        <v-list-tile-action>
+                            <v-icon>{{ item.icon }}</v-icon>
+                        </v-list-tile-action>
+
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </v-list>
+            </v-navigation-drawer>
+
+
+            <session class="description">
+                Exchange - Trade Your Talent!
+                <!--                <p class="title">title</p>>-->
+                <p class="content">Join our community and exchange your skills! Find people who have skills and talents
+                    you are interested in here. Visit your profile or look at your matches feed to get started!</p>
+            </session>
+            >
+
+            <!--            <v-parallax-->
+            <!--                    dark-->
+            <!--                    src="https://carleton.ca/studentaccounts/wp-content/uploads/studentaccountsban.jpg"-->
+            <!--            >-->
+            <!--                <v-layout-->
+            <!--                        align-center-->
+            <!--                        column-->
+            <!--                        justify-center-->
+            <!--                >-->
+            <!--                    <h1 class="display-2 font-weight-thin mb-3">Vuetify.js</h1>-->
+            <!--                    <h4 class="subheading">Build your application today!</h4>-->
+            <!--                </v-layout>-->
+            <!--            </v-parallax>-->
+            <!--            <v-img-->
+            <!--                    -->
+            <!--                    src="https://carleton.ca/studentaccounts/wp-content/uploads/studentaccountsban.jpg">-->
+            <!--                                    <v-expand-transition>-->
+            <!--                                        <div-->
+            <!--                                                v-if="hover"-->
+            <!--                                                class="d-flex transition-fast-in-fast-out orange darken-2 v-card&#45;&#45;reveal display-3 white&#45;&#45;text"-->
+            <!--                                                style="height: 100%;"-->
+            <!--                                        >-->
+            <!--                                            $14.99-->
+            <!--                                        </div>-->
+            <!--                                </v-expand-transition>-->
+            <!--            </v-img>-->
+
+
+        </v-content>
+
+
+    </v-app>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: () => ({
+          items: [
+          { title: 'Home', icon: 'dashboard', url: '/' },
+          { title: 'My-info', icon: 'edit', url: '/user-info.html' },
+          { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' },
+          { title: 'Map', icon: 'place', url: '/map.html' },
+          { title: 'Chart', icon: 'bar_chart', url: '/chart.html' },
+          { title: 'Community', icon: 'mode_comment', url: '/community.html' },
+          { title: 'Status', icon: 'pie_chart', url: '/stats.html' },
+          { title: 'Translate', icon: 'translate', url: '/translate.html' }
+        ],
+        drawer: {
+            open : false,
+        }
+      }),
+
+      methods: {
+        toggleDrawer(){
+            this.drawer.open = !this.drawer.open
+        }
+      }
+    })
+
+
+
+</script>
 </body>
 </html>
 
