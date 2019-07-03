@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License
 -->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +25,13 @@ limitations under the License
 <style>
 
 .containerBackground{
-    background: url("https://carleton.ca/studentaccounts/wp-content/uploads/studentaccountsban.jpg");
+    /* background: url("https://carleton.ca/studentaccounts/wp-content/uploads/studentaccountsban.jpg"); */
+    background: url("https://imgur.com/PpjU1up.png");
+    no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 .aboutus{
     background: #FFF !important;
@@ -38,10 +43,10 @@ limitations under the License
 .description{
   auto-grow:true;
   position: absolute;
-  right: 250px;
-  bottom: 120px;
+  right: 20px;
+  bottom: 20px;
   width: 500px;
-  background-color:yellow;
+  background-color:#F9E7E7;
   opacity: 0.6;
   font-family: 'Gochi Hand', cursive;
   font-size: 32px;
@@ -66,13 +71,10 @@ width:700px;
 height:700px;
 }
 
-
-
-
-
-
-
-
+.transparent {
+   background-color: white!important;
+   opacity: 0.9;
+ }
 
 </style>
 
@@ -80,7 +82,7 @@ height:700px;
 <div id="app">
     <v-app>
         <v-content>
-        <v-toolbar light color="blue-grey lighten-5" class="elevation-0">
+        <v-toolbar light color="white" class="elevation-0">
             <v-toolbar-side-icon @click="toggleDrawer"
             ></v-toolbar-side-icon>
 
@@ -127,7 +129,7 @@ height:700px;
             <main class="v-content  containerBackground" style="padding: 0px;" data-booted="true">
                 <div class="v-content__wrap">
                     <v-content style="height: 700px;">
-                        <v-navigation-drawer permanent hide-overlay v-show="drawer.open">
+                        <v-navigation-drawer permanent class="transparent" hide-overlay v-show="drawer.open">
                             <v-toolbar flat>
                                 <v-list>
                                     <v-list-tile>
