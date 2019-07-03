@@ -24,9 +24,16 @@ limitations under the License
     <script src="/js/navigation-loader.js"></script>
 </head>
 <style>
-.container{
-    background-image: url("https://carleton.ca/studentaccounts/wp-content/uploads/studentaccountsban.jpg");
-  }
+
+.containerBackground{
+    background: url("https://carleton.ca/studentaccounts/wp-content/uploads/studentaccountsban.jpg");
+}
+.aboutus{
+    background: #FFF !important;
+}
+.home{
+    overflow: auto;
+}
 
 .description{
   auto-grow:true;
@@ -42,7 +49,28 @@ limitations under the License
 }
 .description .content{
     font-size: 24px;
+    z-index: 100px;
+    opacity: 1.0;<!-- Do Not Work-->
+
 }
+.v-card--reveal {
+align-items: center;
+bottom: 0;
+justify-content: center;
+opacity: .5;
+position: absolute;
+width: 100%;
+}
+.fillin{
+width:700px;
+height:700px;
+}
+
+
+
+
+
+
 
 
 
@@ -51,6 +79,7 @@ limitations under the License
 <body onload="addLoginOrLogoutLinkToNavigation();">
 <div id="app">
     <v-app>
+        <v-content>
         <v-toolbar light color="blue-grey lighten-5" class="elevation-0">
             <v-toolbar-side-icon @click="toggleDrawer"
             ></v-toolbar-side-icon>
@@ -87,54 +116,116 @@ limitations under the License
                     </template>
                 </template>
             </v-autocomplete>
+            
+                <v-btn icon>
+                    <v-icon>apps</v-icon>
+                </v-btn>
 
-            <v-btn icon>
-                <v-icon>apps</v-icon>
-            </v-btn>
-
-        </v-toolbar>
-        <v-content class="container">
-
-            <v-navigation-drawer permanent hide-overlay v-show="drawer.open">
-                <v-toolbar flat>
-                    <v-list>
-                        <v-list-tile>
-                            <v-list-tile-title class="title">
-                                Application
-                            </v-list-tile-title>
-                        </v-list-tile>
-                    </v-list>
-                </v-toolbar>
-
-                <v-divider></v-divider>
-
-                <v-list id="navigation" dense class="pt-0">
-                    <v-list-tile
-                            v-for="item in pages"
-                            :key="item.title"
-                            :href="item.url"
-                    >
-                        <v-list-tile-action>
-                            <v-icon>{{ item.icon }}</v-icon>
-                        </v-list-tile-action>
-
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                </v-list>
-            </v-navigation-drawer>
-
-
-            <session class="description">
-                Exchange - Trade Your Talent!
-                <!--                <p class="title">title</p>>-->
-                <p class="content">Join our community and exchange your skills! Find people who have skills and talents
-                    you are interested in here. Visit your profile or look at your matches feed to get started!</p>
-            </session>
+            </v-toolbar>
         </v-content>
+        <div>
+            <main class="v-content  containerBackground" style="padding: 0px;" data-booted="true">
+                <div class="v-content__wrap">
+                    <v-content style="height: 700px;">
+                        <v-navigation-drawer permanent hide-overlay v-show="drawer.open">
+                            <v-toolbar flat>
+                                <v-list>
+                                    <v-list-tile>
+                                        <v-list-tile-title class="title">
+                                            Application
+                                        </v-list-tile-title>
+                                    </v-list-tile>
+                                </v-list>
+                            </v-toolbar>
 
+                            <v-divider></v-divider>
 
+                            <v-list id="navigation" dense class="pt-0">
+                                <v-list-tile
+                                        v-for="item in pages"
+                                        :key="item.title"
+                                        :href="item.url"
+                                >
+                                    <v-list-tile-action>
+                                        <v-icon>{{ item.icon }}</v-icon>
+                                    </v-list-tile-action>
+
+                                    <v-list-tile-content>
+                                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                </v-list-tile>
+                            </v-list>
+                        </v-navigation-drawer>
+                    </v-content>
+                </div>
+                <v-content>
+                    <div class="fillin">
+                        <div class="description">
+                            Exchange - Trade Your Talent!
+                            <p class="content">Join our community and exchange your skills! Find people who have skills
+                                and
+                                talents
+                                you are interested in here. Visit your profile or look at your matches feed to get
+                                started!</p>
+                        </div>
+                    </div>
+                </v-content>
+            </main>
+        </div>
+        <v-content>
+            <v-container grid-list-md text-xs-center>
+                <v-layout align-center justify-center row fill-height>
+                    <v-flex v-for="i in 4" :key="`3${i}`" xs3>
+
+                        <v-hover>
+                            <v-card
+                                    slot-scope="{ hover }"
+                                    class="mx-auto"
+                                    color="grey lighten-4"
+                                    max-width="600"
+                            >
+                                <v-img
+                                        :aspect-ratio="16/9"
+                                        src="https://avatars1.githubusercontent.com/u/40991040?s=400&u=28089b2471ddf447c12ce912fc123fc36d8c13ce&v=4"
+                                >
+                                    <v-expand-transition>
+                                        <div
+                                                v-if="hover"
+                                                class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
+                                                style="height: 100%;"
+                                        >
+                                            Brandy
+                                        </div>
+                                    </v-expand-transition>
+                                </v-img>
+                                <v-card-text
+                                        class="pt-4"
+                                        style="position: relative;"
+                                >
+                                    <v-btn
+                                            absolute
+                                            color="orange"
+                                            class="white--text"
+                                            fab
+                                            large
+                                            right
+                                            top
+                                            href="https://www.facebook.com/profile.php?id=100021710384904"
+                                    >
+                                        <v-icon>person_add</v-icon>
+                                    </v-btn>
+
+                                    <h3 class="display-1 font-weight-light orange--text mb-2">SIN YU, HUANG</h3>
+                                    <br class="font-weight-light title mb-2">
+                                    You can call me Brandy.<br>Hope to make friends with you guys!!
+
+                                </v-card-text>
+                            </v-card>
+                        </v-hover>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </v-content>
     </v-app>
 </div>
 
