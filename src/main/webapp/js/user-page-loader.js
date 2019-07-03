@@ -102,9 +102,10 @@ function buildUI() {
     fetchMessages();
     fetchAboutMe();
     //blocking the image and quoting function
-    const config = {removePlugins: [ 'ImageUpload']};
+
+    const config = {removePlugins: ['ImageUpload']};
     ClassicEditor.create(document.getElementById('message-input'), config );
-    ClassicEditor.create( document.getElementById('about-me-textarea'),config );
+    ClassicEditor.create(document.getElementById('about-me-textarea'),config );
 }
 
 function fetchAboutMe() {
