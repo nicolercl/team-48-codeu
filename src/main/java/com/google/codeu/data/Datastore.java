@@ -25,11 +25,7 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * Provides access to the data stored in Datastore.
@@ -205,6 +201,26 @@ public class Datastore {
                     school, age, name, skillLevel);
 
             users.add(user);
+        }
+        return users;
+    }
+
+    /**
+     * Returns all users' name and email
+     */
+    public HashSet<HashMap<String, String>> getAllUsers() {
+
+        HashSet<HashMap<String, String>> users = new HashSet<HashMap<String, String>>();
+        Query query = new Query("User");
+        PreparedQuery results = datastore.prepare(query);
+        for (Entity entity : results.asIterable()) {
+
+            String email = (String) entity.getProperty("email");
+            String name = (String) entity.getProperty("name");
+            HashMap<String, String> tmp = new HashMap<>();
+            tmp.put("name", name);
+            tmp.put("email", email);
+            users.add(tmp);
         }
         return users;
     }

@@ -51,17 +51,42 @@ limitations under the License
 <body onload="addLoginOrLogoutLinkToNavigation();">
 <div id="app">
     <v-app>
-        <v-toolbar dark color="blue-grey lighten-5" class="elevation-0">
-            <v-toolbar-side-icon @click="toggleDrawer" light
+        <v-toolbar light color="blue-grey lighten-5" class="elevation-0">
+            <v-toolbar-side-icon @click="toggleDrawer"
             ></v-toolbar-side-icon>
 
             <v-toolbar-title class="black--text">CodeU 2019 Starter Project</v-toolbar-title>
-
             <v-spacer></v-spacer>
-
-            <v-btn icon>
-                <v-icon>search</v-icon>
-            </v-btn>
+            <v-autocomplete
+                    v-model="select"
+                    :items="userData"
+                    :search-input.sync="search"
+                    cache-items
+                    class="mx-3"
+                    flat
+                    hide-no-data
+                    hide-details
+                    item-text="email"
+                    :filter="customFilter"
+                    label="Search user by name or email..."
+                    solo-inverted
+                    @change="redirectPersonalPage()"
+            >
+                <template v-slot:selection="data">
+                    {{ data.item.name }}
+                </template>
+                <template v-slot:item="data">
+                    <template>
+                        <v-list-tile-avatar>
+                            <img :src="data.item.avatar">
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                            <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                            <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
+                        </v-list-tile-content>
+                    </template>
+                </template>
+            </v-autocomplete>
 
             <v-btn icon>
                 <v-icon>apps</v-icon>
@@ -85,7 +110,7 @@ limitations under the License
 
                 <v-list id="navigation" dense class="pt-0">
                     <v-list-tile
-                            v-for="item in items"
+                            v-for="item in pages"
                             :key="item.title"
                             :href="item.url"
                     >
@@ -107,36 +132,6 @@ limitations under the License
                 <p class="content">Join our community and exchange your skills! Find people who have skills and talents
                     you are interested in here. Visit your profile or look at your matches feed to get started!</p>
             </session>
-            >
-
-            <!--            <v-parallax-->
-            <!--                    dark-->
-            <!--                    src="https://carleton.ca/studentaccounts/wp-content/uploads/studentaccountsban.jpg"-->
-            <!--            >-->
-            <!--                <v-layout-->
-            <!--                        align-center-->
-            <!--                        column-->
-            <!--                        justify-center-->
-            <!--                >-->
-            <!--                    <h1 class="display-2 font-weight-thin mb-3">Vuetify.js</h1>-->
-            <!--                    <h4 class="subheading">Build your application today!</h4>-->
-            <!--                </v-layout>-->
-            <!--            </v-parallax>-->
-            <!--            <v-img-->
-            <!--                    -->
-            <!--                    src="https://carleton.ca/studentaccounts/wp-content/uploads/studentaccountsban.jpg">-->
-            <!--                                    <v-expand-transition>-->
-            <!--                                        <div-->
-            <!--                                                v-if="hover"-->
-            <!--                                                class="d-flex transition-fast-in-fast-out orange darken-2 v-card&#45;&#45;reveal display-3 white&#45;&#45;text"-->
-            <!--                                                style="height: 100%;"-->
-            <!--                                        >-->
-            <!--                                            $14.99-->
-            <!--                                        </div>-->
-            <!--                                </v-expand-transition>-->
-            <!--            </v-img>-->
-
-
         </v-content>
 
 
@@ -147,10 +142,10 @@ limitations under the License
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 <script>
-    new Vue({
+    var indexVue = new Vue({
       el: '#app',
       data: () => ({
-          items: [
+          pages: [
           { title: 'Home', icon: 'dashboard', url: '/' },
           { title: 'My-info', icon: 'edit', url: '/user-info.html' },
           { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' },
@@ -162,15 +157,32 @@ limitations under the License
         ],
         drawer: {
             open : false,
-        }
+        },
+        search: null,
+        select: null,
+        userData: [],
       }),
-
       methods: {
         toggleDrawer(){
             this.drawer.open = !this.drawer.open
+        },
+        customFilter (item, queryText, itemText) {
+            const name = item.name.toLowerCase()
+            const email = item.email.toLowerCase()
+            const searchText = queryText.toLowerCase()
+
+            return name.indexOf(searchText) > -1 ||
+              email.indexOf(searchText) > -1
+          },
+        redirectPersonalPage(){
+            window.location.href = "/user-page.html?user=" + this.select
         }
+      },
+      mounted(){
+    	getUserNameEmail();
       }
     })
+
 
 
 
