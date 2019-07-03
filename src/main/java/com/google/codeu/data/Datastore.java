@@ -167,7 +167,6 @@ public class Datastore {
         PreparedQuery results = datastore.prepare(query);
         Entity userEntity = results.asSingleEntity();
         if (userEntity == null) {
-            System.out.println("UserEntity = null");
             return null;
         }
 
