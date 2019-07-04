@@ -263,13 +263,6 @@ height:700px;
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 <script>
-    /*create chart card dynamically on load*/
-    var link = document.querySelector('link[rel="import"]');
-    var content = link.import;
-    var el = content.querySelector('.chart');
-    document.getElementById('v-app').appendChild(el.cloneNode(true));
-</script>
-<script>
     var indexVue = new Vue({
       el: '#app',
       data: () => ({
@@ -278,7 +271,7 @@ height:700px;
           { title: 'My-info', icon: 'edit', url: '/user-info.html' },
           { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' },
           { title: 'Map', icon: 'place', url: '/map.html' },
-          { title: 'Chart', icon: 'bar_chart', url: '/chart.html' },
+          //{ title: 'Chart', icon: 'bar_chart', url: '/chart.html' },
           { title: 'Community', icon: 'mode_comment', url: '/community.html' },
           { title: 'Status', icon: 'pie_chart', url: '/stats.html' },
           { title: 'Translate', icon: 'translate', url: '/translate.html' }
