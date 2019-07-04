@@ -20,6 +20,8 @@ limitations under the License
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Gochi+Hand&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="/js/chart-loader.js"></script>
     <script src="/js/navigation-loader.js"></script>
 </head>
 <style>
@@ -80,9 +82,9 @@ height:700px;
 
 <body onload="addLoginOrLogoutLinkToNavigation();">
 <div id="app">
-    <v-app>
+    <v-app id="v-app">
         <v-content>
-        <v-toolbar light color="white" class="elevation-0">
+            <v-toolbar light color="white" class="elevation-0">
             <v-toolbar-side-icon @click="toggleDrawer"
             ></v-toolbar-side-icon>
 
@@ -174,6 +176,32 @@ height:700px;
                 </v-content>
             </main>
         </div>
+        <v-container class="chart">
+            <v-card>
+                <v-layout row>
+                    <v-flex md6>
+                        <v-card flat>
+                            <v-card-title primary-title class="justify-center">
+                                <div>
+                                    <h3 class="headline mb-0">Skills Users Are Interested In</h3>
+                                    <div id="learn_chart"></div>
+                                </div>
+                            </v-card-title>
+                        </v-card>
+                    </v-flex>
+                    <v-flex md6>
+                        <v-card flat>
+                            <v-card-title primary-title class="justify-center">
+                                <div>
+                                    <h3 class="headline mb-0">Skills Shared By Users</h3>
+                                    <div id="share_chart"></div>
+                                </div>
+                            </v-card-title>
+                        </v-card>
+                    </v-flex>
+                </v-layout>
+            </v-card>
+        </v-container>
         <v-content>
             <v-container grid-list-md text-xs-center>
                 <v-layout align-center justify-center row fill-height>
@@ -234,6 +262,13 @@ height:700px;
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+<script>
+    /*create chart card dynamically on load*/
+    var link = document.querySelector('link[rel="import"]');
+    var content = link.import;
+    var el = content.querySelector('.chart');
+    document.getElementById('v-app').appendChild(el.cloneNode(true));
+</script>
 <script>
     var indexVue = new Vue({
       el: '#app',
