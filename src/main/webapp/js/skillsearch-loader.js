@@ -56,7 +56,7 @@ function loadcardinfo()
     vue.card_email=infobyschool[index].email;
     vue.card_school=infobyschool[index].school;
     vue.card_age=infobyschool[index].age;
-    vue.card_gender=infobyschool[index].gender;
+    vue.card_name=infobyschool[index].name;
     vue.card_aboutme=infobyschool[index].aboutMe;
 }
 

@@ -3,6 +3,8 @@ package com.google.codeu.servlets;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.User;
 import com.google.gson.Gson;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +15,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonObject;
 
 
 @WebServlet("/user-info")
@@ -33,12 +36,17 @@ public class UserInfoServlet extends HttpServlet {
         }.getType();
         User user = gson.fromJson(userData, type);
 
+        //set email by userservice instead of user input
+        UserService userService = UserServiceFactory.getUserService();
+        String email = userService.getCurrentUser().getEmail();
+        user.setEmail(email);
+
         //add user to datastore
         datastore.storeUser(user);
 
         response.setContentType("application/json");
-        String selected = "Redirecting to Personal Page...";
-        String json = gson.toJson(selected);
-        response.getOutputStream().println(json);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("userEmail", email);
+        response.getOutputStream().println(jsonObject.toString());
     }
 }

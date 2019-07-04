@@ -1,5 +1,6 @@
-function saveUser(email,aboutme,learncategory,sharecategory,skilllevel,school,age,gender){
+function saveUser(name, email,aboutme,learncategory,sharecategory,skilllevel,school,age){
     let user = new Object();
+    user.name = name;
     user.email = email;
     user.aboutMe = aboutme;
     user.learnCategory = learncategory;
@@ -7,12 +8,10 @@ function saveUser(email,aboutme,learncategory,sharecategory,skilllevel,school,ag
     user.skillLevel =skilllevel;
     user.school = school;
     user.age = age;
-    user.gender = gender;
     return user;
 }
 
 function submitData(newUser) {
-    //newUser = saveTestUser();
     const params = new URLSearchParams();
     params.append('userData', JSON.stringify(newUser));
     const resultContainer = document.getElementById('result');
@@ -20,10 +19,10 @@ function submitData(newUser) {
         method: 'POST',
         body: params,
         redirect: 'follow'
-    }).then(response => response.text())
+    }).then(response => response.json())
      .then((results) => {
           //redirect back to personal page
-          //resultContainer.innerText = results;
+          newUser.email = results.userEmail;
           window.location.href = "/user-page.html?user=" + newUser.email;
       });
 }

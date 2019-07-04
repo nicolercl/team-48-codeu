@@ -7,18 +7,18 @@ public class User {
     private String learnCategory;
     private String teachCategory;
     private String school;
-    private String gender;
+    private String name;
     private String age;
     private String skillLevel;
 
     public User(String email, String aboutMe, String learnCategory, String teachCategory, String school,
-                String gender, String age, String skillLevel) {
+                String age, String name, String skillLevel) {
         this.email = email;
         this.aboutMe = aboutMe;
         this.learnCategory = learnCategory;
         this.teachCategory = teachCategory;
         this.school = school;
-        this.gender = gender;
+        this.name = name;
         this.age = age;
         this.skillLevel = skillLevel;
     }
@@ -43,8 +43,8 @@ public class User {
         return school;
     }
 
-    public String getGender() {
-        return gender;
+    public String getName() {
+        return name;
     }
 
     public String getAge() {
@@ -55,7 +55,36 @@ public class User {
         return skillLevel;
     }
 
+    public void setEmail(String email){
+        this.email = email;
+    }
+
     public void setAboutMe(String aboutMe) {
         this.aboutMe = aboutMe;
     }
+
+    public void setLearnCategory(String learnCategory) {
+        this.learnCategory = learnCategory;
+    }
+
+    public void setTeachCategory(String teachCategory) {
+        this.teachCategory = teachCategory;
+    }
+
+    public void setSchool(String school){
+        this.school = school;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setAge(String age){
+        this.age = age;
+    }
+
+    public void setSkillLevel(String skillLevel){
+        this.skillLevel = skillLevel;
+    }
+
 }
