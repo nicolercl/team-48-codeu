@@ -85,42 +85,42 @@ height:700px;
     <v-app id="v-app">
         <v-content>
             <v-toolbar light color="white" class="elevation-0">
-            <v-toolbar-side-icon @click="toggleDrawer"
-            ></v-toolbar-side-icon>
+                <v-toolbar-side-icon @click="toggleDrawer"
+                ></v-toolbar-side-icon>
 
-            <v-toolbar-title class="black--text">CodeU 2019 Starter Project</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-autocomplete
-                    v-model="select"
-                    :items="userData"
-                    :search-input.sync="search"
-                    cache-items
-                    class="mx-3"
-                    flat
-                    hide-no-data
-                    hide-details
-                    item-text="email"
-                    :filter="customFilter"
-                    label="Search user by name or email..."
-                    solo-inverted
-                    @change="redirectPersonalPage()"
-            >
-                <template v-slot:selection="data">
-                    {{ data.item.name }}
-                </template>
-                <template v-slot:item="data">
-                    <template>
-                        <v-list-tile-avatar>
-                            <img :src="data.item.avatar">
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                            <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-                            <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
-                        </v-list-tile-content>
+                <v-toolbar-title class="black--text">CodeU 2019 Starter Project</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-autocomplete
+                        v-model="select"
+                        :items="userData"
+                        :search-input.sync="search"
+                        cache-items
+                        class="mx-3"
+                        flat
+                        hide-no-data
+                        hide-details
+                        item-text="email"
+                        :filter="customFilter"
+                        label="Search user by name or email..."
+                        solo-inverted
+                        @change="redirectPersonalPage()"
+                >
+                    <template v-slot:selection="data">
+                        {{ data.item.name }}
                     </template>
-                </template>
-            </v-autocomplete>
-            
+                    <template v-slot:item="data">
+                        <template>
+                            <v-list-tile-avatar>
+                                <img :src="data.item.avatar">
+                            </v-list-tile-avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                                <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
+                            </v-list-tile-content>
+                        </template>
+                    </template>
+                </v-autocomplete>
+
                 <v-btn icon>
                     <v-icon>apps</v-icon>
                 </v-btn>
