@@ -150,7 +150,7 @@ height:700px;
         <v-content>
             <v-container grid-list-md text-xs-center>
                 <v-layout align-center justify-center row fill-height>
-                    <v-flex v-for="i in 4" :key="`3${i}`" xs3>
+                    <v-flex v-for="i in members" :key="`3${i}`" xs3>
 
                         <v-hover>
                             <v-card
@@ -161,7 +161,7 @@ height:700px;
                             >
                                 <v-img
                                         :aspect-ratio="16/9"
-                                        src="https://avatars1.githubusercontent.com/u/40991040?s=400&u=28089b2471ddf447c12ce912fc123fc36d8c13ce&v=4"
+                                        src={{ members.photo　}}
                                 >
                                     <v-expand-transition>
                                         <div
