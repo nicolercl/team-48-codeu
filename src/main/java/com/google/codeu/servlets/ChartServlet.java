@@ -37,10 +37,14 @@ public class ChartServlet extends HttpServlet {
 
     @Override
     public void init() {
+        datastore = new Datastore();
+    }
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JsonArray learnUserNum = new JsonArray();
         JsonArray shareUserNum = new JsonArray();
         Gson gson = new Gson();
-        datastore = new Datastore();
         String[] skillTypes = {"Design", "Culinary", "Music", "Sports", "Photography", "Technology", "Language"};
         HashMap<String, Integer>[] arr = datastore.getSkillsUserNum();
         for (int i = 0; i < skillTypes.length; i++) {
@@ -53,10 +57,6 @@ public class ChartServlet extends HttpServlet {
         ret = new JsonObject();
         ret.add("learn", learnUserNum);
         ret.add("share", shareUserNum);
-    }
-
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
         response.getOutputStream().println(ret.toString());
     }
