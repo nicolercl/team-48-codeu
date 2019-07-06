@@ -35,6 +35,26 @@ limitations under the License
     overflow: auto;
 }
 
+.Aboutus{
+    background-color:LightBlue ;
+}
+.Aboutus_container{
+    height:500px;
+}
+#aboutus_title{
+    background-color:DarkBlue ;
+     position: absolute;
+  left: 0px;
+  top: 20px;
+  width: 250px;
+  height:50px;
+  opacity: 0.6;
+  font-family: 'Gochi Hand', cursive;
+  font-size: 28px;
+  color:white;
+  border-radius: 0px 30px 30px 0px;
+}
+
 .description{
   auto-grow:true;
   position: absolute;
@@ -65,6 +85,7 @@ width: 100%;
 width:700px;
 height:700px;
 }
+
 
 
 
@@ -147,8 +168,11 @@ height:700px;
                 </v-content>
             </main>
         </div>
-        <v-content>
-            <v-container grid-list-md text-xs-center>
+        <v-content class="Aboutus">
+            <div id="aboutus_title">
+                All about us ~
+            </div>
+            <v-container grid-list-md text-xs-center class="Aboutus_container">
                 <v-layout align-center justify-center row fill-height>
                     <v-flex v-for="i in members" :key="`3${i}`" xs3>
 
@@ -201,6 +225,25 @@ height:700px;
                 </v-layout>
             </v-container>
         </v-content>
+        <v-footer
+                dark
+                height="auto"
+        >
+            <v-card
+                    class="flex"
+                    flat
+
+
+            >
+                <v-card-title class="teal">
+                    <strong class="title justify-center">CodeU 2019 Team48 Starter Project</strong>
+                </v-card-title>
+
+                <v-card-actions class="grey darken-3 justify-center">
+                    &copy;2019 --- <strong>Vuetify</strong>
+                </v-card-actions>
+            </v-card>
+        </v-footer>
     </v-app>
 </div>
 
@@ -238,6 +281,7 @@ height:700px;
         }
       }
     })
+
 
 
 
