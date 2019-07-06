@@ -76,7 +76,7 @@ height:700px;
 
 </style>
 
-<body onload="addLoginOrLogoutLinkToNavigation();">
+<body onload="addLoginOrLogoutLinkToNavigation()">
 <div id="app">
     <v-app>
         <v-content>
@@ -161,7 +161,7 @@ height:700px;
                             >
                                 <v-img
                                         :aspect-ratio="16/9"
-                                        src={{ members.photo　}}
+                                        :src="i.photo"
                                 >
                                     <v-expand-transition>
                                         <div
@@ -169,7 +169,7 @@ height:700px;
                                                 class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
                                                 style="height: 100%;"
                                         >
-                                            Brandy
+                                            {{i.name_en}}
                                         </div>
                                     </v-expand-transition>
                                 </v-img>
@@ -185,14 +185,14 @@ height:700px;
                                             large
                                             right
                                             top
-                                            href="https://www.facebook.com/profile.php?id=100021710384904"
+                                            :href="i.facebook"
                                     >
                                         <v-icon>person_add</v-icon>
                                     </v-btn>
 
-                                    <h3 class="display-1 font-weight-light orange--text mb-2">SIN YU, HUANG</h3>
+                                    <h3 class="display-1 font-weight-light orange--text mb-2">{{i.name_ch}}</h3>
                                     <br class="font-weight-light title mb-2">
-                                    You can call me Brandy.<br>Hope to make friends with you guys!!
+                                    You can call me {{i.name_en}}.<br>Hope to make friends with you guys!!
 
                                 </v-card-text>
                             </v-card>
@@ -222,10 +222,10 @@ height:700px;
           { title: 'Translate', icon: 'translate', url: '/translate.html' }
         ],
         members: [
-          { photo: 'https://avatars2.githubusercontent.com/u/37070724?s=96&v=4', name_en: 'Alison', facebook: 'https://www.facebook.com/profile.php?id=100021710384904',name_ch='asd' },
-          { photo: 'https://avatars1.githubusercontent.com/u/48847495?s=96&v=4', name_en: 'Juno',  facebook: 'https://www.facebook.com/profile.php?id=100021710384904',name_ch='asd' },
-          { photo: 'https://avatars3.githubusercontent.com/u/22865207?s=96&v=4', name_en: 'Nicole',  facebook: 'https://www.facebook.com/profile.php?id=100021710384904',name_ch='asd' },
-          { photo: 'https://avatars0.githubusercontent.com/u/40991040?s=96&v=4', name_en: 'Brandy',  facebook: 'https://www.facebook.com/profile.php?id=100021710384904',name_ch='asd' }
+          { photo: "https://avatars0.githubusercontent.com/u/37070724?s=400&v=4", name_en: 'Alison', facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'XuanTing Zhang' },
+          { photo: "https://avatars3.githubusercontent.com/u/48847495?s=400&v=4", name_en: 'Juno',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'ChingLun Chiu' },
+          { photo: "https://avatars2.githubusercontent.com/u/22865207?s=400&v=4", name_en: 'Nicole',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'Weiwei Lin' },
+          { photo: "https://avatars1.githubusercontent.com/u/40991040?s=460&v=4", name_en: 'Brandy',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'SinYu Huang' }
         ],
         drawer: {
             open : false,
