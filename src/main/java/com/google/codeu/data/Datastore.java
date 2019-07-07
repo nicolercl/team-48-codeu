@@ -228,7 +228,7 @@ public class Datastore {
     /**
      * Returns teach & learn category num
      */
-    public HashMap<String, Integer>[] getSkillsUserNum() {
+    public List<HashMap <String, Integer> > getSkillsUserNum() {
 
         String[] skillTypes = {"Design", "Culinary", "Music", "Sports", "Photography", "Technology", "Language"};
         HashMap<String, Integer> learnUserNum = new HashMap<>();
@@ -246,9 +246,9 @@ public class Datastore {
             learnUserNum.put(learn, learnUserNum.get(learn) + 1);
             shareUserNum.put(share, shareUserNum.get(share) + 1);
         }
-        HashMap<String, Integer>[] arr = new HashMap[2];
-        arr[0] = learnUserNum;
-        arr[1] = shareUserNum;
+        List<HashMap<String, Integer> > arr = new ArrayList<>();
+        arr.add(learnUserNum);
+        arr.add(shareUserNum);
         return arr;
     }
 }
