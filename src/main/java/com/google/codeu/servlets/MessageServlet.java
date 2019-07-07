@@ -96,7 +96,6 @@ public class MessageServlet extends HttpServlet {
         Whitelist whitelist = Whitelist.basicWithImages();
         whitelist.addTags("h1", "h2", "h3", "h4", "h5", "h6");
         String userText = Jsoup.clean(text, whitelist);
-
         
 
         //add photo into message
@@ -107,7 +106,6 @@ public class MessageServlet extends HttpServlet {
 
         Message message = new Message(user, userText);
         datastore.storeMessage(message);
-
         response.sendRedirect("/user-page.html?user=" + user);
     }
 }
