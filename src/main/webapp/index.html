@@ -42,6 +42,26 @@ limitations under the License
     overflow: auto;
 }
 
+.Aboutus{
+    background-color:LightBlue ;
+}
+.Aboutus_container{
+    height:500px;
+}
+#aboutus_title{
+    background-color:DarkBlue ;
+     position: absolute;
+  left: 0px;
+  top: 20px;
+  width: 250px;
+  height:50px;
+  opacity: 0.6;
+  font-family: 'Gochi Hand', cursive;
+  font-size: 28px;
+  color:white;
+  border-radius: 0px 30px 30px 0px;
+}
+
 .description{
   auto-grow:true;
   position: absolute;
@@ -78,9 +98,11 @@ height:700px;
    opacity: 0.9;
  }
 
+
+
 </style>
 
-<body onload="addLoginOrLogoutLinkToNavigation();">
+<body onload="addLoginOrLogoutLinkToNavigation()">
 <div id="app">
     <v-app id="v-app">
         <v-content>
@@ -176,6 +198,7 @@ height:700px;
                 </v-content>
             </main>
         </div>
+
         <v-container class="chart">
             <v-card>
                 <v-layout row>
@@ -202,10 +225,15 @@ height:700px;
                 </v-layout>
             </v-card>
         </v-container>
-        <v-content>
-            <v-container grid-list-md text-xs-center>
+
+        
+        <v-content class="Aboutus">
+            <div id="aboutus_title">
+                All about us ~
+            </div>
+            <v-container grid-list-md text-xs-center class="Aboutus_container">
                 <v-layout align-center justify-center row fill-height>
-                    <v-flex v-for="i in 4" :key="`3${i}`" xs3>
+                    <v-flex v-for="i in members" :key="`3${i}`" xs3>
 
                         <v-hover>
                             <v-card
@@ -216,7 +244,7 @@ height:700px;
                             >
                                 <v-img
                                         :aspect-ratio="16/9"
-                                        src="https://avatars1.githubusercontent.com/u/40991040?s=400&u=28089b2471ddf447c12ce912fc123fc36d8c13ce&v=4"
+                                        :src="i.photo"
                                 >
                                     <v-expand-transition>
                                         <div
@@ -224,7 +252,7 @@ height:700px;
                                                 class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
                                                 style="height: 100%;"
                                         >
-                                            Brandy
+                                            {{i.name_en}}
                                         </div>
                                     </v-expand-transition>
                                 </v-img>
@@ -240,14 +268,14 @@ height:700px;
                                             large
                                             right
                                             top
-                                            href="https://www.facebook.com/profile.php?id=100021710384904"
+                                            :href="i.facebook"
                                     >
                                         <v-icon>person_add</v-icon>
                                     </v-btn>
 
-                                    <h3 class="display-1 font-weight-light orange--text mb-2">SIN YU, HUANG</h3>
+                                    <h3 class="display-1 font-weight-light orange--text mb-2">{{i.name_ch}}</h3>
                                     <br class="font-weight-light title mb-2">
-                                    You can call me Brandy.<br>Hope to make friends with you guys!!
+                                    You can call me {{i.name_en}}.<br>Hope to make friends with you guys!!
 
                                 </v-card-text>
                             </v-card>
@@ -256,6 +284,25 @@ height:700px;
                 </v-layout>
             </v-container>
         </v-content>
+        <v-footer
+                dark
+                height="auto"
+        >
+            <v-card
+                    class="flex"
+                    flat
+
+
+            >
+                <v-card-title class="teal">
+                    <strong class="title justify-center">CodeU 2019 Team48 Starter Project</strong>
+                </v-card-title>
+
+                <v-card-actions class="grey darken-3 justify-center">
+                    &copy;2019 --- <strong>Vuetify</strong>
+                </v-card-actions>
+            </v-card>
+        </v-footer>
     </v-app>
 </div>
 
@@ -274,6 +321,12 @@ height:700px;
           { title: 'Community', icon: 'mode_comment', url: '/community.html' },
           { title: 'Status', icon: 'pie_chart', url: '/stats.html' },
           { title: 'Translate', icon: 'translate', url: '/translate.html' }
+        ],
+        members: [
+          { photo: "https://avatars0.githubusercontent.com/u/37070724?s=400&v=4", name_en: 'Alison', facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'XuanTing Zhang' },
+          { photo: "https://avatars3.githubusercontent.com/u/48847495?s=400&v=4", name_en: 'Juno',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'ChingLun Chiu' },
+          { photo: "https://avatars2.githubusercontent.com/u/22865207?s=400&v=4", name_en: 'Nicole',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'Weiwei Lin' },
+          { photo: "https://avatars1.githubusercontent.com/u/40991040?s=460&v=4", name_en: 'Brandy',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'SinYu Huang' }
         ],
         drawer: {
             open : false,
@@ -302,6 +355,8 @@ height:700px;
     	getUserNameEmail();
       }
     })
+
+
 
 
 
