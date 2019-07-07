@@ -97,7 +97,7 @@ public class MessageServlet extends HttpServlet {
         whitelist.addTags("h1", "h2", "h3", "h4", "h5", "h6");
         String userText = Jsoup.clean(text, whitelist);
 
-        System.out.println(userText);
+        
 
         //add photo into message
         String regex = "(https?://\\S+\\.(png|jpg))";
