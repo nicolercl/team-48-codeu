@@ -12,6 +12,7 @@ import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
 import com.google.gson.Gson;
 
+
 /**
  * Handles fetching all messages for the public feed.
  */
@@ -33,11 +34,9 @@ public class MessageFeedServlet extends HttpServlet {
             throws IOException {
 
         response.setContentType("application/json");
-
         List<Message> messages = datastore.getAllMessages();
         Gson gson = new Gson();
         String json = gson.toJson(messages);
-
         response.getOutputStream().println(json);
     }
 }
