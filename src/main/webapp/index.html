@@ -20,6 +20,8 @@ limitations under the License
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Gochi+Hand&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="/js/chart-loader.js"></script>
     <script src="/js/navigation-loader.js"></script>
 </head>
 <style>
@@ -80,45 +82,45 @@ height:700px;
 
 <body onload="addLoginOrLogoutLinkToNavigation();">
 <div id="app">
-    <v-app>
+    <v-app id="v-app">
         <v-content>
-        <v-toolbar light color="white" class="elevation-0">
-            <v-toolbar-side-icon @click="toggleDrawer"
-            ></v-toolbar-side-icon>
+            <v-toolbar light color="white" class="elevation-0">
+                <v-toolbar-side-icon @click="toggleDrawer"
+                ></v-toolbar-side-icon>
 
-            <v-toolbar-title class="black--text">CodeU 2019 Starter Project</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-autocomplete
-                    v-model="select"
-                    :items="userData"
-                    :search-input.sync="search"
-                    cache-items
-                    class="mx-3"
-                    flat
-                    hide-no-data
-                    hide-details
-                    item-text="email"
-                    :filter="customFilter"
-                    label="Search user by name or email..."
-                    solo-inverted
-                    @change="redirectPersonalPage()"
-            >
-                <template v-slot:selection="data">
-                    {{ data.item.name }}
-                </template>
-                <template v-slot:item="data">
-                    <template>
-                        <v-list-tile-avatar>
-                            <img :src="data.item.avatar">
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                            <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-                            <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
-                        </v-list-tile-content>
+                <v-toolbar-title class="black--text">CodeU 2019 Starter Project</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-autocomplete
+                        v-model="select"
+                        :items="userData"
+                        :search-input.sync="search"
+                        cache-items
+                        class="mx-3"
+                        flat
+                        hide-no-data
+                        hide-details
+                        item-text="email"
+                        :filter="customFilter"
+                        label="Search user by name or email..."
+                        solo-inverted
+                        @change="redirectPersonalPage()"
+                >
+                    <template v-slot:selection="data">
+                        {{ data.item.name }}
                     </template>
-                </template>
-            </v-autocomplete>
-            
+                    <template v-slot:item="data">
+                        <template>
+                            <v-list-tile-avatar>
+                                <img :src="data.item.avatar">
+                            </v-list-tile-avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                                <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
+                            </v-list-tile-content>
+                        </template>
+                    </template>
+                </v-autocomplete>
+
                 <v-btn icon>
                     <v-icon>apps</v-icon>
                 </v-btn>
@@ -174,6 +176,32 @@ height:700px;
                 </v-content>
             </main>
         </div>
+        <v-container class="chart">
+            <v-card>
+                <v-layout row>
+                    <v-flex md6>
+                        <v-card flat>
+                            <v-card-title primary-title>
+                                <div>
+                                    <h3 class="headline mb-0">Skills Users Are Interested In</h3>
+                                    <div id="learn_chart"></div>
+                                </div>
+                            </v-card-title>
+                        </v-card>
+                    </v-flex>
+                    <v-flex md6>
+                        <v-card flat>
+                            <v-card-title primary-title>
+                                <div>
+                                    <h3 class="headline mb-0">Skills Shared By Users</h3>
+                                    <div id="share_chart"></div>
+                                </div>
+                            </v-card-title>
+                        </v-card>
+                    </v-flex>
+                </v-layout>
+            </v-card>
+        </v-container>
         <v-content>
             <v-container grid-list-md text-xs-center>
                 <v-layout align-center justify-center row fill-height>
@@ -243,7 +271,6 @@ height:700px;
           { title: 'My-info', icon: 'edit', url: '/user-info.html' },
           { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' },
           { title: 'Map', icon: 'place', url: '/map.html' },
-          { title: 'Chart', icon: 'bar_chart', url: '/chart.html' },
           { title: 'Community', icon: 'mode_comment', url: '/community.html' },
           { title: 'Status', icon: 'pie_chart', url: '/stats.html' },
           { title: 'Translate', icon: 'translate', url: '/translate.html' }

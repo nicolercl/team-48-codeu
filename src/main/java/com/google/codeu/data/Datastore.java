@@ -224,4 +224,31 @@ public class Datastore {
         }
         return users;
     }
+
+    /**
+     * Returns teach & learn category num
+     */
+    public HashMap<String, Integer>[] getSkillsUserNum() {
+
+        String[] skillTypes = {"Design", "Culinary", "Music", "Sports", "Photography", "Technology", "Language"};
+        HashMap<String, Integer> learnUserNum = new HashMap<>();
+        HashMap<String, Integer> shareUserNum = new HashMap<>();
+        Query query = new Query("User");
+        PreparedQuery results = datastore.prepare(query);
+        for (int i = 0; i < skillTypes.length; i++) {
+            learnUserNum.put(skillTypes[i], 0);
+            shareUserNum.put(skillTypes[i], 0);
+        }
+        for (Entity entity : results.asIterable()) {
+
+            String learn = (String) entity.getProperty("learnCategory");
+            String share = (String) entity.getProperty("teachCategory");
+            learnUserNum.put(learn, learnUserNum.get(learn) + 1);
+            shareUserNum.put(share, shareUserNum.get(share) + 1);
+        }
+        HashMap<String, Integer>[] arr = new HashMap[2];
+        arr[0] = learnUserNum;
+        arr[1] = shareUserNum;
+        return arr;
+    }
 }
