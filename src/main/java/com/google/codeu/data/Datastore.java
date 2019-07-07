@@ -25,11 +25,7 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * Provides access to the data stored in Datastore.
@@ -147,6 +143,12 @@ public class Datastore {
         Entity userEntity = new Entity("User", user.getEmail());
         userEntity.setProperty("email", user.getEmail());
         userEntity.setProperty("aboutMe", user.getAboutMe());
+        userEntity.setProperty("learnCategory", user.getLearnCategory());
+        userEntity.setProperty("teachCategory", user.getTeachCategory());
+        userEntity.setProperty("skillLevel", user.getSkillLevel());
+        userEntity.setProperty("school", user.getSchool());
+        userEntity.setProperty("name", user.getName());
+        userEntity.setProperty("age", user.getAge());
         datastore.put(userEntity);
     }
 
@@ -165,8 +167,61 @@ public class Datastore {
         }
 
         String aboutMe = (String) userEntity.getProperty("aboutMe");
-        User user = new User(email, aboutMe);
+        String learnCategory = (String) userEntity.getProperty("learnCategory");
+        String teachCategory = (String) userEntity.getProperty("teachCategory");
+        String school = (String) userEntity.getProperty("school");
+        String age = (String) userEntity.getProperty("age");
+        String name = (String) userEntity.getProperty("name");
+        String skillLevel = (String) userEntity.getProperty("skillLevel");
+        User user = new User(email, aboutMe, learnCategory, teachCategory,
+                school, age, name, skillLevel);
 
         return user;
+    }
+
+    /**
+     * Returns users with the same teaching skill, or
+     * null if no matching User was found.
+     */
+    public Set<User> getSkilledUsers(String skill) {
+        Set<User> users = new HashSet<>();
+        Query query = new Query("User").setFilter(new Query.FilterPredicate("teachCategory",
+                FilterOperator.EQUAL, skill));
+        PreparedQuery results = datastore.prepare(query);
+        for (Entity entity : results.asIterable()) {
+
+            String email = (String) entity.getProperty("email");
+            String aboutMe = (String) entity.getProperty("aboutMe");
+            String learnCategory = (String) entity.getProperty("learnCategory");
+            String school = (String) entity.getProperty("school");
+            String age = (String) entity.getProperty("age");
+            String name = (String) entity.getProperty("name");
+            String skillLevel = (String) entity.getProperty("skillLevel");
+            User user = new User(email, aboutMe, learnCategory, skill,
+                    school, age, name, skillLevel);
+
+            users.add(user);
+        }
+        return users;
+    }
+
+    /**
+     * Returns all users' name and email
+     */
+    public HashSet<HashMap<String, String>> getAllUsers() {
+
+        HashSet<HashMap<String, String>> users = new HashSet<HashMap<String, String>>();
+        Query query = new Query("User");
+        PreparedQuery results = datastore.prepare(query);
+        for (Entity entity : results.asIterable()) {
+
+            String email = (String) entity.getProperty("email");
+            String name = (String) entity.getProperty("name");
+            HashMap<String, String> tmp = new HashMap<>();
+            tmp.put("name", name);
+            tmp.put("email", email);
+            users.add(tmp);
+        }
+        return users;
     }
 }

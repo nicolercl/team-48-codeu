@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta charset="UTF-8">
+    <script src="/js/skillsearch-loader.js"></script>
+    <title>Skill Search</title>
+    <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+    <script type='text/javascript'>
+        //for geo chart
+        var schoolMap = new Map();
+        var chart;
+        var selection;
+        var carddatanum=0;
+        var index=0;
+        var shown=false;
+        function drawGeoChart()
+        {
+            google.charts.load('current', {
+           'packages': ['geochart'],
+           'mapsApiKey': 'AIzaSyCEXVLOEkX6RVDBXRRJQX4a7Ay_Uny_WZ8'
+            });
+            google.charts.setOnLoadCallback(drawMarkersMap);
+        }
+
+        function drawMarkersMap() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Number');
+            data.addColumn('number', 'Number');
+            for (var [key, value] of schoolMap.entries()) {
+                data.addRow([key, value]);
+            }
+
+            var options = {
+                sizeAxis: { minValue: 0, maxValue: 100 },
+                region: 'world',
+                displayMode: 'markers',
+                colorAxis: {colors: ['#e7711c', '#4374e0']} // orange to blue
+            };
+
+            chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+
+            google.visualization.events.addListener(chart, 'select', function() {
+                 var index;
+                 selection = chart.getSelection();
+                 if(typeof selection[0] !== "undefined") {
+                     var value = data.getValue(selection[0].row, 0);
+                     getinfobyschool(value);
+                     carddatanum = data.getValue(selection[0].row,1);
+                     index=0;
+                     loadcardinfo();
+                     vue.dialog=true;
+                 }
+
+            });
+        };
+
+
+    </script>
+</head>
+<body>
+<div id="app">
+    <v-app>
+        <v-content>
+
+
+            <v-toolbar light class="elevation-0">
+                <v-toolbar-side-icon @click="toggleDrawer" light
+                ></v-toolbar-side-icon>
+
+                <v-toolbar-title>CodeU 2019 Starter Project</v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+                <v-btn icon>
+                    <v-icon>search</v-icon>
+                </v-btn>
+
+                <v-btn icon>
+                    <v-icon>apps</v-icon>
+                </v-btn>
+
+            </v-toolbar>
+
+
+            <v-navigation-drawer permanent hide-overlay v-show="drawer.open">
+                <v-toolbar flat>
+                    <v-list>
+                        <v-list-tile>
+                            <v-list-tile-title class="title">
+                                Application
+                            </v-list-tile-title>
+                        </v-list-tile>
+                    </v-list>
+                </v-toolbar>
+
+                <v-divider></v-divider>
+
+                <v-list id="navigation" dense class="pt-0">
+                    <v-list-tile
+                            v-for="item in items"
+                            :key="item.title"
+                            :href="item.url"
+                    >
+                        <v-list-tile-action>
+                            <v-icon>{{ item.icon }}</v-icon>
+                        </v-list-tile-action>
+
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </v-list>
+            </v-navigation-drawer>
+
+
+            <v-container class="mx-8">
+                <h1 class=" display-3 font-weight-bold mu-4 mb-4 grey--text text--darken-2">Skill Search</h1>
+                <p class="subheading">choose specific category to see the result</p>
+            </v-container>
+
+
+            <v-container class="mt-20 mx-8">
+                <v-layout row wrap justify-space-around>
+                    <v-flex xs1 md1>
+                        <v-btn flat small @click="photobtnclick">Photography</v-btn>
+                    </v-flex>
+                    <v-flex xs1 md1>
+                        <v-btn flat small @click="designbtnclick">Design</v-btn>
+                    </v-flex>
+                    <v-flex xs1 md1>
+                        <v-btn flat small @click="sportbtnclick">Sports</v-btn>
+                    </v-flex>
+                    <v-flex xs1 md1>
+                        <v-btn flat small @click="musicbtnclick">Music</v-btn>
+                    </v-flex>
+                    <v-flex xs1 md1>
+                        <v-btn flat small @click="techbtnclick">Technology</v-btn>
+                    </v-flex>
+                    <v-flex xs1 md1>
+                        <v-btn flat small @click="languagebtnclick">Language</v-btn>
+                    </v-flex>
+                    <v-flex xs1 md1>
+                        <v-btn flat small @click="culinarybtnclick">Culinary</v-btn>
+                    </v-flex>
+                </v-layout>
+
+                <v-container class="mx-10">
+                    <div align="center" id="chart_div" style="width: 1100px; height: 800px;"></div>
+                </v-container>
+
+                <div class="text-xs-center">
+                    <v-dialog
+                            v-model="dialog"
+                            width="800"
+                    >
+                        <v-card>
+                            <v-card-title
+                                    class="headline grey lighten-2"
+                                    primary-title
+                            >
+                                <div>{{card_title}}</div>
+                            </v-card-title>
+
+                            <v-container grid-list-md text-xs-left>
+                                <v-layout row wrap justify-space-around>
+
+                                    <v-flex md4 class="mt-4">
+                                        <div>
+                                            <h3 class="headline mb-0">Name</h3>
+                                            <div> {{ card_name }}</div>
+                                        </div>
+                                    </v-flex>
+
+                                    <v-flex md4 class="mt-4">
+                                        <div>
+                                            <h3 class="headline mb-0">Age</h3>
+                                            <div> {{ card_age }}</div>
+                                        </div>
+                                    </v-flex>
+
+                                    <v-flex md4 class="mt-4">
+                                        <div>
+                                            <h3 class="headline mb-0">Email</h3>
+                                            <div> {{ card_email }}</div>
+                                        </div>
+                                    </v-flex>
+
+                                    <v-flex md4 class="mt-4">
+                                        <div>
+                                            <h3 class="headline mb-0">Sharing Skill</h3>
+                                            <div> {{ card_shareskill }}</div>
+                                        </div>
+                                    </v-flex>
+
+                                    <v-flex md4 class="mt-4">
+                                        <div>
+                                            <h3 class="headline mb-0">Sharing Skill level</h3>
+                                            <div> {{ card_skilllevel }}</div>
+                                        </div>
+                                    </v-flex>
+
+                                    <v-flex md4 class="mt-4">
+                                        <div>
+                                            <h3 class="headline mb-0">School</h3>
+                                            <div> {{ card_school }}</div>
+                                        </div>
+                                    </v-flex>
+
+                                    <v-flex md12 class="mt-4">
+                                        <div>
+                                            <h3 class="headline mb-0">Aboutme</h3>
+                                            <div> {{ card_aboutme }}</div>
+                                        </div>
+                                    </v-flex>
+
+                                </v-layout>
+                            </v-container>
+
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-layout row wrap justify-space-around>
+                                    <v-btn
+                                            @click="prevcard"
+                                            flat
+                                            :disabled="previsdisabled"
+                                    >
+                                        <v-icon>navigate_before</v-icon>
+                                    </v-btn>
+
+                                    <v-btn
+                                            @click="showpersonalpage"
+                                            flat
+                                    >
+                                        learn more
+                                    </v-btn>
+
+                                    <v-btn
+                                            @click="nextcard"
+                                            flat
+                                            :disabled="nextisdisabled"
+                                    >
+                                        <v-icon>navigate_next</v-icon>
+                                    </v-btn>
+                                </v-layout>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                </div>
+
+            </v-container>
+        </v-content>
+    </v-app>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+<script>
+    //for the tool bar
+    var vue = new Vue({ el: '#app',
+    data: () => ({
+        items: [
+            { title: 'Home', icon: 'dashboard', url: '/' },
+            { title: 'My-info', icon: 'edit', url: '/user-info.html' },
+            { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' },
+            { title: 'Map', icon: 'place', url: '/map.html' },
+            { title: 'Chart', icon: 'bar_chart', url: '/chart.html' },
+            { title: 'Community', icon: 'mode_comment', url: '/community.html' },
+            { title: 'Status', icon: 'pie_chart', url: '/stats.html' },
+            { title: 'Translate', icon: 'translate', url: '/translate.html' }
+        ],
+        drawer: {
+            open : false,
+        },
+        dialog: false,
+        previsdisabled: false,
+        nextisdisabled: false,
+        card_title:'',
+        card_email:'',
+        card_school:'',
+        card_age:'',
+        card_name:'',
+        card_aboutme:'',
+        card_shareskill:'',
+        card_skilllevel:''
+    }),
+    methods: {
+        toggleDrawer(){this.drawer.open = !this.drawer.open},
+        photobtnclick(){getSkillSharer("Photography");},
+        designbtnclick(){getSkillSharer("Design");},
+        sportbtnclick(){getSkillSharer("Sports");},
+        musicbtnclick(){getSkillSharer("Music");},
+        techbtnclick(){getSkillSharer("Technology");},
+        languagebtnclick(){getSkillSharer("Language");},
+        culinarybtnclick(){getSkillSharer("Culinary");},
+        prevcard()
+        {
+            if(index!=0)
+            {
+                index--;
+                loadcardinfo();
+            }
+        },
+        nextcard()
+        {
+            if(index!=carddatanum-1)
+            {
+                index++;
+                loadcardinfo();
+            }
+        },
+        showpersonalpage()
+        {
+            window.location.href = "/user-page.html?user=" + infobyschool[index].email;
+        }
+    }
+    })
+
+
+</script>
+</body>
+</html>
