@@ -32,7 +32,6 @@ function setPageTitle() {
  * Shows the message form if the user is logged in and viewing their own page.
  */
 function showMessageFormIfViewingSelf() {
-
     fetch('/login-status')
         .then((response) => {
             return response.json();
@@ -45,7 +44,6 @@ function showMessageFormIfViewingSelf() {
                 document.getElementById('about-me-form').classList.remove('hidden');
             }
         });
-
 }
 
 /** Fetches messages and add them to the page. */
@@ -106,8 +104,6 @@ function buildUI() {
     ClassicEditor.create(document.getElementById('message-input'), config );
     ClassicEditor.create(document.getElementById('about-me-textarea'),config );
 }
-
-
 
 function fetchAboutMe() {
     const url = '/about?user=' + parameterUsername;
