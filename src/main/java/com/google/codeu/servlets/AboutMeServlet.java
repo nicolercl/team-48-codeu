@@ -14,6 +14,8 @@ import com.google.codeu.data.User;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+//import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 /**
  * Handles fetching and saving user data.
@@ -35,7 +37,7 @@ public class AboutMeServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-        response.setContentType("text/html");
+        response.setContentType("application/json");
 
         String user = request.getParameter("user");
 
@@ -49,8 +51,18 @@ public class AboutMeServlet extends HttpServlet {
         if (userData == null || userData.getAboutMe() == null) {
             return;
         }
-        //System.out.println(userData.getAboutMe());
-        response.getOutputStream().println(userData.getAboutMe());
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("email", userData.getEmail());
+        jsonObject.addProperty("aboutMe", userData.getAboutMe());
+        jsonObject.addProperty("learnCate", userData.getLearnCategory());
+        jsonObject.addProperty("teachCate", userData.getTeachCategory());
+        jsonObject.addProperty("school", userData.getSchool());
+        jsonObject.addProperty("name", userData.getName());
+        jsonObject.addProperty("age", userData.getAge());
+        jsonObject.addProperty("skillLevel", userData.getSkillLevel());
+        //String json = gson.toJson(userData);
+        System.out.println(jsonObject);
+        response.getOutputStream().println(jsonObject.toString());
     }
 
     @Override
