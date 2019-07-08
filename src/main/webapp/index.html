@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License
 -->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,12 +20,20 @@ limitations under the License
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Gochi+Hand&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="/js/chart-loader.js"></script>
     <script src="/js/navigation-loader.js"></script>
 </head>
 <style>
 
 .containerBackground{
-    background: url("https://carleton.ca/studentaccounts/wp-content/uploads/studentaccountsban.jpg");
+    /* background: url("https://carleton.ca/studentaccounts/wp-content/uploads/studentaccountsban.jpg"); */
+    background: url("https://imgur.com/PpjU1up.png");
+    no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 .aboutus{
     background: #FFF !important;
@@ -35,13 +42,33 @@ limitations under the License
     overflow: auto;
 }
 
+.Aboutus{
+    background-color:LightBlue ;
+}
+.Aboutus_container{
+    height:500px;
+}
+#aboutus_title{
+    background-color:DarkBlue ;
+     position: absolute;
+  left: 0px;
+  top: 20px;
+  width: 250px;
+  height:50px;
+  opacity: 0.6;
+  font-family: 'Gochi Hand', cursive;
+  font-size: 28px;
+  color:white;
+  border-radius: 0px 30px 30px 0px;
+}
+
 .description{
   auto-grow:true;
   position: absolute;
-  right: 250px;
-  bottom: 120px;
+  right: 20px;
+  bottom: 20px;
   width: 500px;
-  background-color:yellow;
+  background-color:#F9E7E7;
   opacity: 0.6;
   font-family: 'Gochi Hand', cursive;
   font-size: 32px;
@@ -66,31 +93,55 @@ width:700px;
 height:700px;
 }
 
-
-
-
-
-
+.transparent {
+   background-color: white!important;
+   opacity: 0.9;
+ }
 
 
 
 </style>
 
-<body onload="addLoginOrLogoutLinkToNavigation();">
+<body onload="addLoginOrLogoutLinkToNavigation()">
 <div id="app">
-    <v-app>
+    <v-app id="v-app">
         <v-content>
-            <v-toolbar dark color="blue-grey lighten-5" class="elevation-0">
-                <v-toolbar-side-icon @click="toggleDrawer" light
+            <v-toolbar light color="white" class="elevation-0">
+                <v-toolbar-side-icon @click="toggleDrawer"
                 ></v-toolbar-side-icon>
 
                 <v-toolbar-title class="black--text">CodeU 2019 Starter Project</v-toolbar-title>
-
                 <v-spacer></v-spacer>
-
-                <v-btn icon>
-                    <v-icon>search</v-icon>
-                </v-btn>
+                <v-autocomplete
+                        v-model="select"
+                        :items="userData"
+                        :search-input.sync="search"
+                        cache-items
+                        class="mx-3"
+                        flat
+                        hide-no-data
+                        hide-details
+                        item-text="email"
+                        :filter="customFilter"
+                        label="Search user by name or email..."
+                        solo-inverted
+                        @change="redirectPersonalPage()"
+                >
+                    <template v-slot:selection="data">
+                        {{ data.item.name }}
+                    </template>
+                    <template v-slot:item="data">
+                        <template>
+                            <v-list-tile-avatar>
+                                <img :src="data.item.avatar">
+                            </v-list-tile-avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                                <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
+                            </v-list-tile-content>
+                        </template>
+                    </template>
+                </v-autocomplete>
 
                 <v-btn icon>
                     <v-icon>apps</v-icon>
@@ -102,7 +153,7 @@ height:700px;
             <main class="v-content  containerBackground" style="padding: 0px;" data-booted="true">
                 <div class="v-content__wrap">
                     <v-content style="height: 700px;">
-                        <v-navigation-drawer permanent hide-overlay v-show="drawer.open">
+                        <v-navigation-drawer permanent class="transparent" hide-overlay v-show="drawer.open">
                             <v-toolbar flat>
                                 <v-list>
                                     <v-list-tile>
@@ -117,7 +168,7 @@ height:700px;
 
                             <v-list id="navigation" dense class="pt-0">
                                 <v-list-tile
-                                        v-for="item in items"
+                                        v-for="item in pages"
                                         :key="item.title"
                                         :href="item.url"
                                 >
@@ -147,10 +198,42 @@ height:700px;
                 </v-content>
             </main>
         </div>
-        <v-content>
-            <v-container grid-list-md text-xs-center>
+
+        <v-container class="chart">
+            <v-card>
+                <v-layout row>
+                    <v-flex md6>
+                        <v-card flat>
+                            <v-card-title primary-title>
+                                <div>
+                                    <h3 class="headline mb-0">Skills Users Are Interested In</h3>
+                                    <div id="learn_chart"></div>
+                                </div>
+                            </v-card-title>
+                        </v-card>
+                    </v-flex>
+                    <v-flex md6>
+                        <v-card flat>
+                            <v-card-title primary-title>
+                                <div>
+                                    <h3 class="headline mb-0">Skills Shared By Users</h3>
+                                    <div id="share_chart"></div>
+                                </div>
+                            </v-card-title>
+                        </v-card>
+                    </v-flex>
+                </v-layout>
+            </v-card>
+        </v-container>
+
+        
+        <v-content class="Aboutus">
+            <div id="aboutus_title">
+                All about us ~
+            </div>
+            <v-container grid-list-md text-xs-center class="Aboutus_container">
                 <v-layout align-center justify-center row fill-height>
-                    <v-flex v-for="i in 4" :key="`3${i}`" xs3>
+                    <v-flex v-for="i in members" :key="`3${i.name_en}`" xs3>
 
                         <v-hover>
                             <v-card
@@ -161,7 +244,7 @@ height:700px;
                             >
                                 <v-img
                                         :aspect-ratio="16/9"
-                                        src="https://avatars1.githubusercontent.com/u/40991040?s=400&u=28089b2471ddf447c12ce912fc123fc36d8c13ce&v=4"
+                                        :src="i.photo"
                                 >
                                     <v-expand-transition>
                                         <div
@@ -169,7 +252,7 @@ height:700px;
                                                 class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
                                                 style="height: 100%;"
                                         >
-                                            Brandy
+                                            {{i.name_en}}
                                         </div>
                                     </v-expand-transition>
                                 </v-img>
@@ -185,14 +268,14 @@ height:700px;
                                             large
                                             right
                                             top
-                                            href="https://www.facebook.com/profile.php?id=100021710384904"
+                                            :href="i.facebook"
                                     >
                                         <v-icon>person_add</v-icon>
                                     </v-btn>
 
-                                    <h3 class="display-1 font-weight-light orange--text mb-2">SIN YU, HUANG</h3>
+                                    <h3 class="display-1 font-weight-light orange--text mb-2">{{i.name_ch}}</h3>
                                     <br class="font-weight-light title mb-2">
-                                    You can call me Brandy.<br>Hope to make friends with you guys!!
+                                    You can call me {{i.name_en}}.<br>Hope to make friends with you guys!!
 
                                 </v-card-text>
                             </v-card>
@@ -201,6 +284,25 @@ height:700px;
                 </v-layout>
             </v-container>
         </v-content>
+        <v-footer
+                dark
+                height="auto"
+        >
+            <v-card
+                    class="flex"
+                    flat
+
+
+            >
+                <v-card-title class="teal">
+                    <strong class="title justify-center">CodeU 2019 Team48 Starter Project</strong>
+                </v-card-title>
+
+                <v-card-actions class="grey darken-3 justify-center">
+                    &copy;2019 --- <strong>Vuetify</strong>
+                </v-card-actions>
+            </v-card>
+        </v-footer>
     </v-app>
 </div>
 
@@ -208,36 +310,51 @@ height:700px;
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 <script>
-    new Vue({
+    var indexVue = new Vue({
       el: '#app',
       data: () => ({
-          items: [
+          pages: [
           { title: 'Home', icon: 'dashboard', url: '/' },
           { title: 'My-info', icon: 'edit', url: '/user-info.html' },
           { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' },
           { title: 'Map', icon: 'place', url: '/map.html' },
-          { title: 'Chart', icon: 'bar_chart', url: '/chart.html' },
           { title: 'Community', icon: 'mode_comment', url: '/community.html' },
           { title: 'Status', icon: 'pie_chart', url: '/stats.html' },
           { title: 'Translate', icon: 'translate', url: '/translate.html' }
         ],
+        members: [
+          { photo: "https://avatars0.githubusercontent.com/u/37070724?s=400&v=4", name_en: 'Alison', facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'XuanTing Zhang' },
+          { photo: "https://avatars3.githubusercontent.com/u/48847495?s=400&v=4", name_en: 'Juno',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'ChingLun Chiu' },
+          { photo: "https://avatars2.githubusercontent.com/u/22865207?s=400&v=4", name_en: 'Nicole',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'Weiwei Lin' },
+          { photo: "https://avatars1.githubusercontent.com/u/40991040?s=460&v=4", name_en: 'Brandy',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'SinYu Huang' }
+        ],
         drawer: {
             open : false,
-        }
+        },
+        search: null,
+        select: null,
+        userData: [],
       }),
-
       methods: {
         toggleDrawer(){
             this.drawer.open = !this.drawer.open
+        },
+        customFilter (item, queryText, itemText) {
+            const name = item.name.toLowerCase()
+            const email = item.email.toLowerCase()
+            const searchText = queryText.toLowerCase()
+
+            return name.indexOf(searchText) > -1 ||
+              email.indexOf(searchText) > -1
+          },
+        redirectPersonalPage(){
+            window.location.href = "/user-page.html?user=" + this.select
         }
+      },
+      mounted(){
+    	getUserNameEmail();
       }
     })
-
-
-
-
-
-
 
 
 

@@ -39,7 +39,9 @@ import org.jsoup.safety.Whitelist;
  * Handles fetching and saving {@link Message} instances.
  */
 
-/** Handles fetching and saving {@link Message} instances. */
+/**
+ * Handles fetching and saving {@link Message} instances.
+ */
 
 
 @WebServlet("/messages")
@@ -60,6 +62,7 @@ public class MessageServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
 
         String user = request.getParameter("user");
 
@@ -92,14 +95,14 @@ public class MessageServlet extends HttpServlet {
 
         String text = request.getParameter("text");
         Whitelist whitelist = Whitelist.basicWithImages();
-        whitelist.addTags( "h1", "h2", "h3", "h4", "h5", "h6");
+        whitelist.addTags("h1", "h2", "h3", "h4", "h5", "h6");
         String userText = Jsoup.clean(text, whitelist);
-       // System.out.println(userText);
 
         //add photo into message
         String regex = "(https?://\\S+\\.(png|jpg))";
         String replacement = "<img src=\"$1\" />";
         userText = userText.replaceAll(regex, replacement);
+
 
         Message message = new Message(user, userText);
         datastore.storeMessage(message);

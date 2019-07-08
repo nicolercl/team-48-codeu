@@ -2,6 +2,7 @@ package com.google.codeu.servlets;
 
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,50 +11,54 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.codeu.data.Datastore;
 
 import java.util.Scanner;
 
 
-@WebServlet("/bookchart")
+@WebServlet("/webchart")
 public class ChartServlet extends HttpServlet {
 
 
-    private JsonArray bookRatingArray;
+    private JsonObject ret;
+    private Datastore datastore;
 
     // This class could be its own file if we needed it outside this servlet
-    private static class bookRating {
-        String title;
-        double rating;
+    private static class skillNum {
+        String skill;
+        int number;
 
-        private bookRating(String title, double rating) {
-            this.title = title;
-            this.rating = rating;
+        private skillNum(String skill, int number) {
+            this.skill = skill;
+            this.number = number;
         }
     }
 
-
     @Override
     public void init() {
-        bookRatingArray = new JsonArray();
-        Gson gson = new Gson();
-        Scanner scanner = new Scanner(getServletContext().getResourceAsStream("/WEB-INF/book-ratings.csv"));
-        scanner.nextLine(); //skips first line (the csv header)
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            String[] cells = line.split(",");
-
-            String curTitle = cells[5];
-            double curRating = Double.parseDouble(cells[6]);
-
-            bookRatingArray.add(gson.toJsonTree(new bookRating(curTitle, curRating)));
-        }
-        scanner.close();
+        datastore = new Datastore();
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        JsonArray learnUserNum = new JsonArray();
+        JsonArray shareUserNum = new JsonArray();
+        Gson gson = new Gson();
+        String[] skillTypes = {"Design", "Culinary", "Music", "Sports", "Photography", "Technology", "Language"};
+        List<HashMap <String, Integer> > arr = datastore.getSkillsUserNum();
+        for (int i = 0; i < skillTypes.length; i++) {
+            String skill = skillTypes[i];
+            int numL = arr.get(0).get(skill);
+            int numS = arr.get(1).get(skill);
+            learnUserNum.add(gson.toJsonTree(new skillNum(skill, numL)));
+            shareUserNum.add(gson.toJsonTree(new skillNum(skill, numS)));
+        }
+        ret = new JsonObject();
+        ret.add("learn", learnUserNum);
+        ret.add("share", shareUserNum);
         response.setContentType("application/json");
-        response.getOutputStream().println(bookRatingArray.toString());
+        response.getOutputStream().println(ret.toString());
     }
 
 

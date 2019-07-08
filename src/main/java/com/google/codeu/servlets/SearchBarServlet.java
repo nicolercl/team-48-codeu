@@ -1,23 +1,23 @@
 package com.google.codeu.servlets;
 
-import java.io.IOException;
-import java.util.List;
+import com.google.codeu.data.Datastore;
+import com.google.gson.Gson;
 
+import java.io.IOException;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.codeu.data.Datastore;
-import com.google.codeu.data.Message;
-import com.google.gson.Gson;
-
-
 /**
- * Handles fetching all messages for the public feed.
+ * Handles fetching all users for the community page.
  */
-@WebServlet("/feed")
-public class MessageFeedServlet extends HttpServlet {
+@WebServlet("/searchBar")
+public class SearchBarServlet extends HttpServlet {
 
     private Datastore datastore;
 
@@ -26,18 +26,13 @@ public class MessageFeedServlet extends HttpServlet {
         datastore = new Datastore();
     }
 
-    /**
-     * Responds with a JSON representation of Message data for all users.
-     */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-
         response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        List<Message> messages = datastore.getAllMessages();
+        HashSet<HashMap<String, String> > users = datastore.getAllUsers();
         Gson gson = new Gson();
-        String json = gson.toJson(messages);
-        response.getWriter().println(json);
+        String json = gson.toJson(users);
+        response.getOutputStream().println(json);
     }
 }

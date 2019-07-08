@@ -86,3 +86,15 @@ function createLink(url, text, iconName) {
   linkElement.appendChild(listContent);
   return linkElement;
 }
+
+function getUserNameEmail(){
+    fetch('/searchBar')
+        .then(response => response.text())
+        .then((results) => {
+            data = JSON.parse(results);
+            for (let i=0; i < data.length; i++){
+                let obj = data[i];
+                indexVue.userData.push(obj);
+            }
+        });
+}

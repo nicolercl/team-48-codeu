@@ -27,22 +27,52 @@
   }
 
    function buildMessageDiv(message){
-   const usernameDiv = document.createElement('div');
-   usernameDiv.classList.add("left-align");
-   usernameDiv.appendChild(document.createTextNode(message.user));
+       const usernameDiv = document.createElement('div');
+       usernameDiv.classList.add("left-align");
+       usernameDiv.appendChild(document.createTextNode(message.user));
 
-   const timeDiv = document.createElement('div');
-   timeDiv.classList.add('right-align');
-   timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
+       const timeDiv = document.createElement('div');
+       timeDiv.classList.add('right-align');
+       timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
 
-   const headerDiv = document.createElement('div');
-   headerDiv.classList.add('message-header');
-   headerDiv.appendChild(usernameDiv);
-   headerDiv.appendChild(timeDiv);
+       const headerDiv = document.createElement('div');
+       headerDiv.classList.add('message-header');
+       headerDiv.appendChild(usernameDiv);
+       headerDiv.appendChild(timeDiv);
 
-   const bodyDiv = document.createElement('div');
-   bodyDiv.classList.add('message-body');
-   bodyDiv.appendChild(document.createTextNode(message.text));
+       const bodyDiv = document.createElement('div');
+       bodyDiv.classList.add('message-body');
+       const messageBody = document.createElement('div');
+       messageBody.innerHTML = message.text;
+       bodyDiv.appendChild(messageBody);
+
+       //create translate button
+       bodyDiv.classList.add('translate-button');
+       const translateButton = document.createElement("input");
+       translateButton.type = "button";
+       translateButton.value = "Translate";
+       console.log(message.text);
+       translateButton.addEventListener('click', function(){
+           if (this.value === "Translate"){
+                const language = window.navigator.language;
+                const params = new URLSearchParams();
+                params.append('text', message.text);
+                params.append('languageCode', language);
+
+                fetch('/translate', {
+                  method: 'POST',
+                  body: params
+                }).then(response => response.text())
+                .then((translatedMessage) => {
+                  messageBody.innerHTML = translatedMessage;
+                  this.value = 'See Original';
+                });
+           } else {
+                messageBody.innerHTML = message.text;
+                this.value = 'Translate';
+           }
+       });
+   bodyDiv.appendChild(translateButton);
 
    const messageDiv = document.createElement('div');
    messageDiv.classList.add("message-div");

@@ -25,11 +25,7 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * Provides access to the data stored in Datastore.
@@ -207,5 +203,52 @@ public class Datastore {
             users.add(user);
         }
         return users;
+    }
+
+    /**
+     * Returns all users' name and email
+     */
+    public HashSet<HashMap<String, String>> getAllUsers() {
+
+        HashSet<HashMap<String, String>> users = new HashSet<HashMap<String, String>>();
+        Query query = new Query("User");
+        PreparedQuery results = datastore.prepare(query);
+        for (Entity entity : results.asIterable()) {
+
+            String email = (String) entity.getProperty("email");
+            String name = (String) entity.getProperty("name");
+            HashMap<String, String> tmp = new HashMap<>();
+            tmp.put("name", name);
+            tmp.put("email", email);
+            users.add(tmp);
+        }
+        return users;
+    }
+
+    /**
+     * Returns teach & learn category num
+     */
+    public List<HashMap <String, Integer> > getSkillsUserNum() {
+
+        String[] skillTypes = {"Design", "Culinary", "Music", "Sports", "Photography", "Technology", "Language"};
+        HashMap<String, Integer> learnUserNum = new HashMap<>();
+        HashMap<String, Integer> shareUserNum = new HashMap<>();
+        Query query = new Query("User");
+        PreparedQuery results = datastore.prepare(query);
+        for (int i = 0; i < skillTypes.length; i++) {
+            learnUserNum.put(skillTypes[i], 0);
+            shareUserNum.put(skillTypes[i], 0);
+        }
+        for (Entity entity : results.asIterable()) {
+
+            String learn = (String) entity.getProperty("learnCategory");
+            String share = (String) entity.getProperty("teachCategory");
+            learnUserNum.put(learn, learnUserNum.get(learn) + 1);
+            shareUserNum.put(share, shareUserNum.get(share) + 1);
+        }
+        List<HashMap<String, Integer> > arr = new ArrayList<>();
+        arr.add(learnUserNum);
+        arr.add(shareUserNum);
+        return arr;
     }
 }
