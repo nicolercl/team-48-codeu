@@ -14,7 +14,6 @@ import com.google.codeu.data.User;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
-//import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 /**
@@ -76,16 +75,12 @@ public class AboutMeServlet extends HttpServlet {
 
         String userEmail = userService.getCurrentUser().getEmail();
         User user = datastore.getUser(userEmail);
-        //System.out.println("userEmail = " + userEmail);
         String aboutMe = request.getParameter("about-me");
         Whitelist whitelist = Whitelist.basicWithImages();
         whitelist.addTags( "h1", "h2", "h3", "h4", "h5", "h6");
         aboutMe = Jsoup.clean(aboutMe, whitelist);
-        //System.out.println("aboutMe = " + aboutMe);
-        //System.out.println("user = " + user.getLearnCategory());
         user.setAboutMe(aboutMe);
         datastore.storeUser(user);
-        //System.out.println("Saving about me for " + userEmail);
         response.sendRedirect("/user-page.html?user=" + userEmail);
     }
 }
