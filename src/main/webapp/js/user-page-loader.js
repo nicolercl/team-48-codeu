@@ -25,7 +25,6 @@ if (!parameterUsername) {
 
 /** Sets the page title based on the URL parameter username. */
 function setPageTitle() {
-    document.getElementById('page-title').innerText = parameterUsername;
     document.title = parameterUsername + ' - User Page';
 }
 
@@ -33,7 +32,6 @@ function setPageTitle() {
  * Shows the message form if the user is logged in and viewing their own page.
  */
 function showMessageFormIfViewingSelf() {
-
     fetch('/login-status')
         .then((response) => {
             return response.json();
@@ -43,9 +41,9 @@ function showMessageFormIfViewingSelf() {
                 loginStatus.username == parameterUsername) {
                 const messageForm = document.getElementById('message-form');
                 messageForm.classList.remove('hidden');
+                document.getElementById('about-me-form').classList.remove('hidden');
             }
         });
-    document.getElementById('about-me-form').classList.remove('hidden');
 }
 
 /** Fetches messages and add them to the page. */
@@ -110,14 +108,17 @@ function buildUI() {
 function fetchAboutMe() {
     const url = '/about?user=' + parameterUsername;
     fetch(url).then((response) => {
-        return response.text();
-    }).then((aboutMe) => {
-        const aboutMeContainer = document.getElementById('about-me-container');
-        if (aboutMe == '') {
-            aboutMe = 'This user has not entered any information yet.';
-        }
-
-        aboutMeContainer.innerHTML = aboutMe;
-
+        return response.json();
+    }).then((info) => {
+        document.getElementById('page-title').innerText = info.name;
+        document.getElementById('name-container').innerHTML=info.name;
+        document.getElementById('age-container').innerHTML=info.age;
+        document.getElementById('email-container').innerHTML=info.email;
+        document.getElementById('learn-container').innerHTML=info.learnCate;
+        document.getElementById('teach-container').innerHTML=info.teachCate;
+        document.getElementById('level-container').innerHTML=info.skillLevel;
+        document.getElementById('school-container').innerHTML=info.school;
+        document.getElementById('about-me-container').innerHTML=info.aboutMe;
     });
 }
+
