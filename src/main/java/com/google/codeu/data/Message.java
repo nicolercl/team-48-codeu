@@ -27,20 +27,31 @@ public class Message {
     private String user;
     private String text;
     private long timestamp;
+    private String skill;
+    private String skillLevel;
+
 
     /**
      * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
      * random ID and uses the current system time for the creation time.
      */
-    public Message(String user, String text) {
-        this(UUID.randomUUID(), user, text, System.currentTimeMillis());
+    public Message(User user, String text) {
+        this.id =UUID.randomUUID();
+        this.user = user.getName();
+        this.text = text;
+        this.timestamp = System.currentTimeMillis();
+        this.skill = user.getLearnCategory();
+        this.skillLevel = user.getSkillLevel();
     }
 
-    public Message(UUID id, String user, String text, long timestamp) {
+    public Message(UUID id, User user, String text, long timestamp) {
         this.id = id;
-        this.user = user;
+        this.user = user.getName();
         this.text = text;
         this.timestamp = timestamp;
+        this.skill = user.getLearnCategory();
+        this.skillLevel = user.getSkillLevel();
+
     }
 
     public UUID getId() {
@@ -56,7 +67,19 @@ public class Message {
     }
 
     public void setText(String text) {this.text=text;}
+
     public long getTimestamp() {
         return timestamp;
     }
+
+    public String getskill() {
+        return skill;
+    }
+
+    public String getskillLevel() {
+        return skillLevel;
+    }
+
+
+
 }

@@ -26,7 +26,7 @@ if (!parameterUsername) {
 /** Sets the page title based on the URL parameter username. */
 function setPageTitle() {
     document.getElementById('page-title').innerText = parameterUsername;
-    document.title = parameterUsername + ' - User Page';
+    document.title = parameterUsername + ' - Profile ';
 }
 
 /**
@@ -45,7 +45,7 @@ function showMessageFormIfViewingSelf() {
                 messageForm.classList.remove('hidden');
             }
         });
-    document.getElementById('about-me-form').classList.remove('hidden');
+//    document.getElementById('about-me-form').classList.remove('hidden');
 }
 
 /** Fetches messages and add them to the page. */

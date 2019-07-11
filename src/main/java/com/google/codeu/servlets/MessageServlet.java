@@ -20,6 +20,7 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
+import com.google.codeu.data.User;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -71,7 +72,7 @@ public class MessageServlet extends HttpServlet {
             return;
         }
 
-        List<Message> messages = datastore.getMessages(user);
+        List<Message> messages = datastore.getMessages(datastore.getUser(user));
         Gson gson = new Gson();
         String json = gson.toJson(messages);
 
@@ -90,7 +91,7 @@ public class MessageServlet extends HttpServlet {
             return;
         }
 
-        String user = userService.getCurrentUser().getEmail();
+        User user = datastore.getUser(userService.getCurrentUser().getEmail());
 
         String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
         Whitelist whitelist = Whitelist.basicWithImages();

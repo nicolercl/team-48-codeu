@@ -16,49 +16,135 @@ limitations under the License.
 <head>
     <title>User Page</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/user-page.css">
+    <!--    <link rel="stylesheet" href="/css/main.css">-->
+    <!--    <link rel="stylesheet" href="/css/user-page.css">-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <script src="/js/user-page-loader.js"></script>
     <!--loads the JavaScript code that comprises the CKEditor library for text styling.-->
     <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
 
 </head>
 <body onload="buildUI(); ">
-<div id="content">
-    <nav id="navigation">
-        <a href="/">Home</a>
-        <a href="/aboutus.html">About Our Team</a>
-    </nav>
+<div id="app">
+    <v-app>
+        <v-content>
+            <v-toolbar light color="white" class="elevation-0">
+                <v-btn flat depressed large href="/index.html">
+                    <v-toolbar-title class="black--text">CodeU 2019 Starter Project</v-toolbar-title>
+                </v-btn>
+                <v-spacer></v-spacer>
+                <v-btn icon>
+                    <v-icon>apps</v-icon>
+                </v-btn>
+
+            </v-toolbar>
+
+            <div id="content">
+                <v-layout row>
+                    <v-flex xs12>
+                        <v-card>
+                            <v-img
+                                    src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                    height="400px"
+                            >
+                            </v-img>
+                            <v-btn
+                            absolute
+                            fab
+                            mid
+                            right>
+                            <v-avatar
+                                    :tile="tile"
+                                    :size="50"
+                                    color="grey lighten-4"
+                            >
+                                <img src="https://image.flaticon.com/icons/png/512/97/97895.png" alt="avatar">
+
+                            </v-avatar>
+                            </v-btn>
+<!--                            <v-btn-->
+<!--                                    absolute-->
+<!--                                    fab-->
+<!--                                    mid-->
+<!--                                    right-->
+<!--                                    large-->
+<!--                            >-->
+<!--                                <v-img-->
+<!--                                        src="https://image.flaticon.com/icons/png/512/97/97895.png">-->
+<!--                                </v-img>-->
+<!--                            </v-btn>-->
+
+                            <v-card-title primary-title>
+                                <div>
+                                    <div class="headline" id="page-title">My Name</div>
+                                    <span class="grey--text" id="about-me-container">Loading...</span>
+                                </div>
+                            </v-card-title>
+
+                            <v-card-actions>
+                                <v-btn flat icon large color="pink">
+                                    <v-icon>favorite</v-icon>
+                                </v-btn>
+                                <v-spacer></v-spacer>
+                                <v-btn icon href="/user-info.html">
+                                    <v-icon> edit</v-icon>
+                                </v-btn>
+                                <v-btn icon @click="show = !show">
+                                    <v-icon> {{ show ? 'keyboard_arrow_down' : 'comment ' }}</v-icon>
+                                </v-btn>
+                            </v-card-actions>
+
+                            <v-slide-y-transition>
+                                <!--for new-message box-->
+                                <div id="message-form" v-show="show">
+                                    <form  action="/messages" method="POST" class="hidden" novalidate>
+                                        <h2>Enter a new message:</h2>
+                                        <br/>
+                                        <textarea name="text"  id="message-input" rows=4 required></textarea>
+                                        <br/>
+                                        <v-btn color="primary" block dark type="submit" >Summit</v-btn>
+                                    </form>
+                                </div>
+<!--                                &lt;!&ndash;for aboutme box&ndash;&gt;-->
+<!--                                <div id="about-me-form" class="hidden" >-->
+<!--                                    <form action="/about" method="POST" novalidate>-->
+<!--                        <textarea name="about-me" placeholder="about me" id="about-me-textarea" rows=4-->
+<!--                                  required></textarea>-->
+<!--                                        <br/>-->
+<!--                                        <v-btn color="primary" block dark type="submit" >Summit</v-btn>-->
+<!--                                    </form>-->
+<!--                                </div>-->
+                            </v-slide-y-transition>
+                        </v-card>
+                    </v-flex>
+                </v-layout>
 
 
-    <div class="padded rounded panel centered">
-        <h1 id="page-title">User Page</h1>
-    </div>
 
-
-    <!--for aboutme box-->
-    <div id="about-me-container">Loading...</div>
-    <div id="about-me-form" class="hidden">
-        <form action="/about" method="POST" novalidate>
-            <textarea name="about-me" placeholder="about me" id="about-me-textarea" rows=4 required></textarea>
-            <br/>
-            <input type="submit" value="Submit">
-        </form>
-    </div>
-
-    <!--for new-message box-->
-    <div class="padded rounded panel">
-        <form id="message-form" action="/messages" method="POST" class="hidden">
-            <h2>Enter a new message:</h2>
-            <br/>
-            <textarea name="text" id="message-input" class="rounded"></textarea>
-            <br/>
-            <input type="submit" value="Submit" class="rounded">
-        </form>
-    </div>
-    <hr/>
-
-    <div id="message-container">Loading...</div>
+                <hr/>
+                <div id="message-container">Loading...</div>
+<!--                <div class="text-xs-center" id="message-container">-->
+<!--                    <v-progress-circular-->
+<!--                            indeterminate-->
+<!--                            color="primary"-->
+<!--                    ></v-progress-circular>-->
+<!--                </div>-->
+            </div>
+        </v-content>
+    </v-app>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+<script>
+    var indexVue = new Vue({
+      el: '#app',
+      data: () => ({
+    show: false
+  })
+
+    })
+
+</script>
 </body>
 </html>
