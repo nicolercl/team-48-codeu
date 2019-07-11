@@ -115,8 +115,12 @@
             </v-navigation-drawer>
 
             <div id="content">
-
-                <div id="message-container">Loading...</div>
+                <div class="text-xs-center" id="message-container">
+                <v-progress-circular
+                        indeterminate
+                        color="red"
+                ></v-progress-circular>
+                </div>
             </div>
         </v-content>
     </v-app>
