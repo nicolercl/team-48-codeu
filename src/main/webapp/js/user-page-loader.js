@@ -75,21 +75,61 @@ function fetchMessages() {
  * @return {Element}
  */
 function buildMessageDiv(message) {
-    const headerDiv = document.createElement('div');
-    headerDiv.classList.add('message-header');
-    headerDiv.classList.add('padded');
-    headerDiv.appendChild(document.createTextNode(
-        message.user + ' - ' + new Date(message.timestamp)));
+    const headerDiv = document.createElement('v-card-title');
+//    headerDiv.classList.add('message-header');
+    const img = document.createElement('v-img');
+    img.classList.add('elevation-6');
+    img.setAttribute("src","https://image.flaticon.com/icons/png/512/97/97895.png");
+    const avatar = document.createElement('v-list-tile-avatar');
+    avatar.setAttribute("color","grey darken-3");
+    avatar.appendChild(img);
+    const skill = document.createElement('span');
+    skill.classList.add('title');
+    skill.classList.add('font-weight-light');
+    skill.appendChild(document.createTextNode(message.skill));
+    headerDiv.appendChild(avatar);
+    headerDiv.appendChild(skill);
 
-    const bodyDiv = document.createElement('div');
-    bodyDiv.classList.add('message-body');
-    bodyDiv.classList.add('padded');
-    bodyDiv.innerHTML = message.text;
+    const text = document.createElement('v-card-text');
+//    text.classList.add('message-body');
+    text.classList.add('headline');
+    text.classList.add('font-weight-bold');
+    text.innerHTML = message.text;
 
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add('rounded');
-    messageDiv.classList.add('panel');
+
+    const icon1 = document.createElement('v-icon');
+    icon1.setAttribute("large","true");
+    icon1.setAttribute("left","true");
+    icon1.appendChild(document.createTextNode('mdi-twitter'));
+    const content = document.createElement('v-list-tile-content');
+    const title = document.createElement('v-list-tile-title');
+    title.appendChild(document.createTextNode(message.skill));
+    content.appendChild(title);
+    const layout = document.createElement('v-layout');
+    layout.setAttribute("align-center","true");
+    layout.setAttribute("justify-end","true");
+    const icon2 = document.createElement('v-icon');
+    icon2.classList.add("left");
+    icon2.classList.add("large");
+    icon2.appendChild(document.createTextNode('mdi-heart'));
+    const heart = document.createElement('span');
+    heart.classList.add('subheading');
+    heart.classList.add('mr-2');
+    heart.appendChild(document.createTextNode('256'));
+    layout.appendChild(icon2);
+    layout.appendChild(heart);
+    const bodyDiv = document.createElement('v-card-actions');
+    bodyDiv.appendChild(icon1);
+    bodyDiv.appendChild(content);
+    bodyDiv.appendChild(layout);
+
+
+    const messageDiv = document.createElement('v-card');
+    messageDiv.setAttribute("color","#26c6da");
+    messageDiv.setAttribute("dark","true");
+    messageDiv.setAttribute("max-width","400");
     messageDiv.appendChild(headerDiv);
+    messageDiv.appendChild(text);
     messageDiv.appendChild(bodyDiv);
 
     return messageDiv;

@@ -101,9 +101,9 @@ limitations under the License.
                                     <form  action="/messages" method="POST" class="hidden" novalidate>
                                         <h2>Enter a new message:</h2>
                                         <br/>
-                                        <textarea name="text"  id="message-input" rows=4 required></textarea>
+                                        <textarea name="text"  id="message-input" rows=14 required></textarea>
                                         <br/>
-                                        <v-btn color="primary" block dark type="submit" >Summit</v-btn>
+                                        <v-btn color="primary" block dark type="submit" >Submit</v-btn>
                                     </form>
                                 </div>
 <!--                                &lt;!&ndash;for aboutme box&ndash;&gt;-->
@@ -120,16 +120,14 @@ limitations under the License.
                     </v-flex>
                 </v-layout>
 
-
-
                 <hr/>
-                <div id="message-container">Loading...</div>
-<!--                <div class="text-xs-center" id="message-container">-->
-<!--                    <v-progress-circular-->
-<!--                            indeterminate-->
-<!--                            color="primary"-->
-<!--                    ></v-progress-circular>-->
-<!--                </div>-->
+
+                <div class="text-xs-center" id="message-container">
+                    <v-progress-circular
+                            indeterminate
+                            color="primary"
+                    ></v-progress-circular>
+                </div>
             </div>
         </v-content>
     </v-app>
