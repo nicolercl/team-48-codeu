@@ -115,12 +115,21 @@
                     <v-btn flat href="/aboutus.html">About us</v-btn>
                     <v-btn flat href="/skill-search.html">Skill Search</v-btn>
                     <v-btn flat href="/feed.html">Public Feed</v-btn>
-                    <v-avatar size='35' id="profile">
+                    <v-menu transition="slide-y-transition">
+                        <template v-slot:activator="{ on }">
+                    <v-avatar size='35' id="profile" v-on="on">
                         <img
                                 src="https://image.flaticon.com/icons/png/512/97/97895.png"
                                 alt="User"
                         >
                     </v-avatar>
+                        </template>
+                        <v-list>
+                            <v-list-tile v-for="n in item" :key="n.title" :href="n.url" @click="">
+                                <v-list-tile-title >{{n.title}}</v-list-tile-title>
+                            </v-list-tile>
+                        </v-list>
+                    </v-menu>
                 </v-toolbar-items>
 
 
@@ -137,7 +146,13 @@
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 <script>
 var indexVue = new Vue({
-      el: '#app'
+      el: '#app',
+      data:()=>({
+    item:[
+      {title: 'My info', url: '/user-info.html'},
+      {title: 'My page', url: '/user-page.html'}]
+
+  })
     })
 
 
