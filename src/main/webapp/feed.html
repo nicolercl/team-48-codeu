@@ -6,15 +6,16 @@
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <script src="/js/navigation-loader.js"></script>
     <meta charset="UTF-8">
-<!--    <link rel="stylesheet" href="/css/main.css">-->
-<!--    <link rel="stylesheet" href="/css/user-page.css">-->
-<style>
+    <!--    <link rel="stylesheet" href="/css/main.css">-->
+    <!--    <link rel="stylesheet" href="/css/user-page.css">-->
+    <style>
     #profile{
         position: relative;
         top: 10px;
         left:10px;
     }
-</style>
+
+    </style>
     <script>
     // Fetch messages and add them to the page.
    function fetchMessages(){
@@ -98,6 +99,7 @@
   }
 
 
+
     </script>
 </head>
 <body onload="buildUI()">
@@ -113,11 +115,10 @@
                     <v-btn flat href="/aboutus.html">About us</v-btn>
                     <v-btn flat href="/skill-search.html">Skill Search</v-btn>
                     <v-btn flat href="/feed.html">Public Feed</v-btn>
-                    <v-avatar size = '35' id="profile">
+                    <v-avatar size='35' id="profile">
                         <img
                                 src="https://image.flaticon.com/icons/png/512/97/97895.png"
                                 alt="User"
-
                         >
                     </v-avatar>
                 </v-toolbar-items>
@@ -138,6 +139,7 @@
 var indexVue = new Vue({
       el: '#app'
     })
+
 
 </script>
 </body>
