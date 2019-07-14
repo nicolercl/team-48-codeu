@@ -15,6 +15,7 @@
         left:10px;
     }
 
+
     </style>
     <script>
     // Fetch messages and add them to the page.
@@ -100,6 +101,7 @@
 
 
 
+
     </script>
 </head>
 <body onload="buildUI()">
@@ -117,16 +119,16 @@
                     <v-btn flat href="/feed.html">Public Feed</v-btn>
                     <v-menu transition="slide-y-transition">
                         <template v-slot:activator="{ on }">
-                    <v-avatar size='35' id="profile" v-on="on">
-                        <img
-                                src="https://image.flaticon.com/icons/png/512/97/97895.png"
-                                alt="User"
-                        >
-                    </v-avatar>
+                            <v-avatar size='35' id="profile" v-on="on">
+                                <img
+                                        src="https://image.flaticon.com/icons/png/512/97/97895.png"
+                                        alt="User"
+                                >
+                            </v-avatar>
                         </template>
                         <v-list>
                             <v-list-tile v-for="n in item" :key="n.title" :href="n.url" @click="">
-                                <v-list-tile-title >{{n.title}}</v-list-tile-title>
+                                <v-list-tile-title>{{n.title}}</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
                     </v-menu>
@@ -154,6 +156,7 @@ var indexVue = new Vue({
 
   })
     })
+
 
 
 </script>
