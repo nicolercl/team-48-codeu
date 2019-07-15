@@ -40,24 +40,24 @@ function loadcardinfo()
 {
      if(index==(carddatanum-1))
      {
-        vue.nextisdisable = true;
-        vue.isdisable = false;
+        indexVue.nextisdisable = true;
+        indexVue.isdisable = false;
      }
     else
-        vue.nextisdisable = false;
+         indexVue.nextisdisable = false;
     if(index==0)
-        vue.previsdisable = true;
+         indexVue.previsdisable = true;
     else
-        vue.previsdisable = false;
+         indexVue.previsdisable = false;
 
-    vue.card_title="information    "+(index+1)+"/"+carddatanum;
-    vue.card_shareskill=infobyschool[index].teachCategory;
-    vue.card_skilllevel=infobyschool[index].skillLevel;
-    vue.card_email=infobyschool[index].email;
-    vue.card_school=infobyschool[index].school;
-    vue.card_age=infobyschool[index].age;
-    vue.card_name=infobyschool[index].name;
-    vue.card_aboutme=infobyschool[index].aboutMe;
+     indexVue.card_title="information    "+(index+1)+"/"+carddatanum;
+     indexVue.card_shareskill=infobyschool[index].teachCategory;
+     indexVue.card_skilllevel=infobyschool[index].skillLevel;
+     indexVue.card_email=infobyschool[index].email;
+     indexVue.card_school=infobyschool[index].school;
+     indexVue.card_age=infobyschool[index].age;
+     indexVue.card_name=infobyschool[index].name;
+     indexVue.card_aboutme=infobyschool[index].aboutMe;
 }
 
 

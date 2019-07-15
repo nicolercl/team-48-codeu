@@ -6,58 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <meta charset="UTF-8">
     <script src="/js/user-info-loader.js"></script>
+    <script src="/js/navigation-loader.js"></script>
     <title>Skill Search</title>
 </head>
-<body>
+<body onload="addLoginOrLogoutLinkToNavigation();">
 <div id="app">
     <v-app>
         <v-content>
-            <v-toolbar light class="elevation-0">
-                <v-toolbar-side-icon @click="toggleDrawer" light
-                ></v-toolbar-side-icon>
-
-                <v-toolbar-title>CodeU 2019 Starter Project</v-toolbar-title>
-
+            <v-toolbar light color="white" class="elevation-2" app>
+                <v-toolbar-title class="black--text">
+                    <v-btn flat large :href="Home">Skill Sync</v-btn>
+                </v-toolbar-title>
+                <v-layout wrap>
+                    <v-flex v-for="i in pages" md3>
+                        <v-btn flat small class="grey--text" :href="i.url">{{i.title}}</v-btn>
+                    </v-flex>
+                </v-layout>
                 <v-spacer></v-spacer>
-
-                <v-btn icon>
-                    <v-icon>search</v-icon>
-                </v-btn>
-
-                <v-btn icon>
-                    <v-icon>apps</v-icon>
-                </v-btn>
-
+                <v-autocomplete
+                        v-model="select"
+                        :items="userData"
+                        :search-input.sync="search"
+                        cache-items
+                        class="mx-3"
+                        flat
+                        hide-no-data
+                        hide-details
+                        item-text="email"
+                        :filter="customFilter"
+                        label="Search user by name or email..."
+                        solo-inverted
+                        @change="redirectPersonalPage()"
+                >
+                    <template v-slot:selection="data">
+                        {{ data.item.name }}
+                    </template>
+                    <template v-slot:item="data">
+                        <template>
+                            <v-list-tile-avatar>
+                                <img :src="data.item.avatar">
+                            </v-list-tile-avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                                <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
+                            </v-list-tile-content>
+                        </template>
+                    </template>
+                </v-autocomplete>
             </v-toolbar>
-            <v-navigation-drawer permanent hide-overlay v-show="drawer.open">
-                <v-toolbar flat>
-                    <v-list>
-                        <v-list-tile>
-                            <v-list-tile-title class="title">
-                                Application
-                            </v-list-tile-title>
-                        </v-list-tile>
-                    </v-list>
-                </v-toolbar>
 
-                <v-divider></v-divider>
-
-                <v-list id="navigation" dense class="pt-0">
-                    <v-list-tile
-                            v-for="item in items"
-                            :key="item.title"
-                            :href="item.url"
-                    >
-                        <v-list-tile-action>
-                            <v-icon>{{ item.icon }}</v-icon>
-                        </v-list-tile-action>
-
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                </v-list>
-            </v-navigation-drawer>
             <v-container class="mx-8">
                 <h1 class=" display-3 font-weight-bold mu-4 mb-4 grey--text text--darken-2">User Info</h1>
                 <p class="subheading">fill in the form for adding user data</p>
@@ -113,6 +110,27 @@
                     </v-form>
                 </div>
             </v-container>
+
+            <v-footer
+                    dark
+                    height="auto"
+            >
+                <v-card
+                        class="flex"
+                        flat
+                >
+                    <v-card-title class="justify-center my-2">
+                        2019 CodeU Team48
+
+                    </v-card-title>
+                    <v-card-actions class="justify-center">
+                        <v-btn flat small round outline color="normal" @click="contactusbuttonclick">
+                            Contact Us
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-footer>
+
         </v-content>
     </v-app>
 </div>
@@ -121,21 +139,16 @@
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 <script>
     //for the tool bar
-    new Vue({ el: '#app',
+     var indexVue = new Vue({ el: '#app',
      data: () => ({
-        items: [
-          { title: 'Home', icon: 'dashboard', url: '/' },
-          { title: 'My-info', icon: 'edit', url: '/user-info.html' },
-          { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' },
-          { title: 'Map', icon: 'place', url: '/map.html' },
-          { title: 'Chart', icon: 'bar_chart', url: '/chart.html' },
-          { title: 'Community', icon: 'mode_comment', url: '/community.html' },
-          { title: 'Status', icon: 'pie_chart', url: '/stats.html' },
-          { title: 'Translate', icon: 'translate', url: '/translate.html' }
+       Home:'/',
+          pages: [
+          { title: 'Skill Search',url:'/skill-search.html'},
+          { title: 'Public Feed', url: '/feed.html' }
         ],
-        drawer: {
-            open : false,
-        },
+         search: null,
+        select: null,
+        userData: [],
         name: '',
         email:'',
         aboutme:'',
@@ -162,17 +175,31 @@
          ],
       }),
       methods: {
-        toggleDrawer(){
-            this.drawer.open = !this.drawer.open
+        customFilter (item, queryText, itemText) {
+            const name = item.name.toLowerCase()
+            const email = item.email.toLowerCase()
+            const searchText = queryText.toLowerCase()
+
+            return name.indexOf(searchText) > -1 ||
+              email.indexOf(searchText) > -1
+          },
+        redirectPersonalPage(){
+            window.location.href = "/user-page.html?user=" + this.select
         },
         submit () {
             newUser = saveUser(this.name,this.email,this.aboutme,this.learncategory
                                    ,this.sharecategory,this.shareskilllevel,
                                    this.school,this.age);
             submitData(newUser);
-        }
-      }
+        },
+         contactusbuttonclick(){
+            window.location.href = "/aboutus.html";
+         }
+      },
+      mounted(){
+       	getUserNameEmail();
+         }
     })
 </script>
 </body>
-</html>>
+</html>

@@ -18,37 +18,44 @@ limitations under the License
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Gochi+Hand&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="/js/chart-loader.js"></script>
     <script src="/js/navigation-loader.js"></script>
+   <!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script>-->
 </head>
 <style>
-
-.containerBackground{
-    /* background: url("https://carleton.ca/studentaccounts/wp-content/uploads/studentaccountsban.jpg"); */
-    background: url("https://imgur.com/PpjU1up.png");
+.coverBackground{
+    background: url("./pics/cover.jpg");
     no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
     background-size: cover;
+    height:600px;
 }
-.aboutus{
-    background: #FFF !important;
+.page1container{
+    height:500px;
+    //background-color:#EDECEC ;
 }
-.home{
-    overflow: auto;
+.page2container{
+    height:700px;
+    background-color:#EDECEC ;
+}
+.page5container{
+    height:500px;
+    background-color:#EDECEC ;
 }
 
-.Aboutus{
-    background-color:LightBlue ;
+.v-card--reveal {
+align-items: center;
+bottom: 0;
+justify-content: center;
+opacity: .5;
+position: absolute;
+width: 100%;
 }
-.Aboutus_container{
-    height:500px;
-}
-#aboutus_title{
+/*#aboutus_title{
     background-color:DarkBlue ;
      position: absolute;
   left: 0px;
@@ -56,11 +63,11 @@ limitations under the License
   width: 250px;
   height:50px;
   opacity: 0.6;
-  font-family: 'Gochi Hand', cursive;
+  font-family: 'Noto Sans TC', sans-serif;
   font-size: 28px;
   color:white;
   border-radius: 0px 30px 30px 0px;
-}
+}*/
 
 .description{
   auto-grow:true;
@@ -70,7 +77,7 @@ limitations under the License
   width: 500px;
   background-color:#F9E7E7;
   opacity: 0.6;
-  font-family: 'Gochi Hand', cursive;
+  font-family: 'Noto Sans TC', sans-serif;
   font-size: 32px;
 
 }
@@ -78,233 +85,197 @@ limitations under the License
     font-size: 24px;
     z-index: 100px;
     opacity: 1.0;<!-- Do Not Work-->
-
 }
-.v-card--reveal {
-align-items: center;
-bottom: 0;
-justify-content: center;
-opacity: .5;
-position: absolute;
-width: 100%;
-}
-.fillin{
-width:700px;
-height:700px;
-}
-
-.transparent {
-   background-color: white!important;
-   opacity: 0.9;
- }
-
-
 
 </style>
+<body onload="addLoginOrLogoutLinkToNavigation();">
+<v-app id="app" class="white">
 
-<body onload="addLoginOrLogoutLinkToNavigation()">
-<div id="app">
-    <v-app id="v-app">
-        <v-content>
-            <v-toolbar light color="white" class="elevation-0">
-                <v-toolbar-side-icon @click="toggleDrawer"
-                ></v-toolbar-side-icon>
-
-                <v-toolbar-title class="black--text">CodeU 2019 Starter Project</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-autocomplete
-                        v-model="select"
-                        :items="userData"
-                        :search-input.sync="search"
-                        cache-items
-                        class="mx-3"
-                        flat
-                        hide-no-data
-                        hide-details
-                        item-text="email"
-                        :filter="customFilter"
-                        label="Search user by name or email..."
-                        solo-inverted
-                        @change="redirectPersonalPage()"
-                >
-                    <template v-slot:selection="data">
-                        {{ data.item.name }}
-                    </template>
-                    <template v-slot:item="data">
-                        <template>
-                            <v-list-tile-avatar>
-                                <img :src="data.item.avatar">
-                            </v-list-tile-avatar>
-                            <v-list-tile-content>
-                                <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-                                <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
-                            </v-list-tile-content>
-                        </template>
-                    </template>
-                </v-autocomplete>
-
-                <v-btn icon>
-                    <v-icon>apps</v-icon>
-                </v-btn>
-
-            </v-toolbar>
-        </v-content>
-        <div>
-            <main class="v-content  containerBackground" style="padding: 0px;" data-booted="true">
-                <div class="v-content__wrap">
-                    <v-content style="height: 700px;">
-                        <v-navigation-drawer permanent class="transparent" hide-overlay v-show="drawer.open">
-                            <v-toolbar flat>
-                                <v-list>
-                                    <v-list-tile>
-                                        <v-list-tile-title class="title">
-                                            Application
-                                        </v-list-tile-title>
-                                    </v-list-tile>
-                                </v-list>
-                            </v-toolbar>
-
-                            <v-divider></v-divider>
-
-                            <v-list id="navigation" dense class="pt-0">
-                                <v-list-tile
-                                        v-for="item in pages"
-                                        :key="item.title"
-                                        :href="item.url"
-                                >
-                                    <v-list-tile-action>
-                                        <v-icon>{{ item.icon }}</v-icon>
-                                    </v-list-tile-action>
-
-                                    <v-list-tile-content>
-                                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                                    </v-list-tile-content>
-                                </v-list-tile>
-                            </v-list>
-                        </v-navigation-drawer>
-                    </v-content>
-                </div>
-                <v-content>
-                    <div class="fillin">
-                        <div class="description">
-                            Exchange - Trade Your Talent!
-                            <p class="content">Join our community and exchange your skills! Find people who have skills
-                                and
-                                talents
-                                you are interested in here. Visit your profile or look at your matches feed to get
-                                started!</p>
-                        </div>
-                    </div>
-                </v-content>
-            </main>
-        </div>
-
-        <v-container class="chart">
-            <v-card>
-                <v-layout row>
-                    <v-flex md6>
-                        <v-card flat>
-                            <v-card-title primary-title>
-                                <div>
-                                    <h3 class="headline mb-0">Skills Users Are Interested In</h3>
-                                    <div id="learn_chart"></div>
-                                </div>
-                            </v-card-title>
-                        </v-card>
-                    </v-flex>
-                    <v-flex md6>
-                        <v-card flat>
-                            <v-card-title primary-title>
-                                <div>
-                                    <h3 class="headline mb-0">Skills Shared By Users</h3>
-                                    <div id="share_chart"></div>
-                                </div>
-                            </v-card-title>
-                        </v-card>
-                    </v-flex>
-                </v-layout>
-            </v-card>
-        </v-container>
-
-        
-        <v-content class="Aboutus">
-            <div id="aboutus_title">
-                All about us ~
-            </div>
-            <v-container grid-list-md text-xs-center class="Aboutus_container">
-                <v-layout align-center justify-center row fill-height>
-                    <v-flex v-for="i in members" :key="`3${i.name_en}`" xs3>
-
-                        <v-hover>
-                            <v-card
-                                    slot-scope="{ hover }"
-                                    class="mx-auto"
-                                    color="grey lighten-4"
-                                    max-width="600"
-                            >
-                                <v-img
-                                        :aspect-ratio="16/9"
-                                        :src="i.photo"
-                                >
-                                    <v-expand-transition>
-                                        <div
-                                                v-if="hover"
-                                                class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
-                                                style="height: 100%;"
-                                        >
-                                            {{i.name_en}}
-                                        </div>
-                                    </v-expand-transition>
-                                </v-img>
-                                <v-card-text
-                                        class="pt-4"
-                                        style="position: relative;"
-                                >
-                                    <v-btn
-                                            absolute
-                                            color="orange"
-                                            class="white--text"
-                                            fab
-                                            large
-                                            right
-                                            top
-                                            :href="i.facebook"
-                                    >
-                                        <v-icon>person_add</v-icon>
-                                    </v-btn>
-
-                                    <h3 class="display-1 font-weight-light orange--text mb-2">{{i.name_ch}}</h3>
-                                    <br class="font-weight-light title mb-2">
-                                    You can call me {{i.name_en}}.<br>Hope to make friends with you guys!!
-
-                                </v-card-text>
-                            </v-card>
-                        </v-hover>
-                    </v-flex>
-                </v-layout>
-            </v-container>
-        </v-content>
-        <v-footer
-                dark
-                height="auto"
-        >
-            <v-card
-                    class="flex"
+    <!--tool bar-->
+    <v-content>
+        <v-toolbar light color="white" class="elevation-2" app>
+            <v-toolbar-title class="black--text">
+                <v-btn flat large :href="Home">Skill Sync</v-btn>
+            </v-toolbar-title>
+            <v-layout wrap>
+                <v-flex v-for="i in pages" md3>
+                    <v-btn flat small class="grey--text" :href="i.url">{{i.title}}</v-btn>
+                </v-flex>
+            </v-layout>
+            <v-spacer></v-spacer>
+            <v-autocomplete
+                    v-model="select"
+                    :items="userData"
+                    :search-input.sync="search"
+                    cache-items
+                    class="mx-3"
                     flat
-
-
+                    hide-no-data
+                    hide-details
+                    item-text="email"
+                    :filter="customFilter"
+                    label="Search user by name or email..."
+                    solo-inverted
+                    @change="redirectPersonalPage()"
             >
-                <v-card-title class="teal">
-                    <strong class="title justify-center">CodeU 2019 Team48 Starter Project</strong>
-                </v-card-title>
+                <template v-slot:selection="data">
+                    {{ data.item.name }}
+                </template>
+                <template v-slot:item="data">
+                    <template>
+                        <v-list-tile-avatar>
+                            <img :src="data.item.avatar">
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                            <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                            <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
+                        </v-list-tile-content>
+                    </template>
+                </template>
+            </v-autocomplete>
+        </v-toolbar>
+    </v-content>
 
-                <v-card-actions class="grey darken-3 justify-center">
-                    &copy;2019 --- <strong>Vuetify</strong>
-                </v-card-actions>
-            </v-card>
-        </v-footer>
+    <div class="coverBackground">
+        <v-container>
+            <v-jumbotron>
+                    <v-layout row wrap>
+                        <v-flex xs12 md12>
+                            <h3 class=" font-weight-bold display-3 accent-2 red--text " data-aos="fade-up">S K I L L S Y N C</h3>
+                        </v-flex>
+                        <v-flex md8 offset-(xs5 | md2 | lg5)>
+                            <p class="headline" data-aos="fade-up">Trade your talents</p>
+                        </v-flex>
+                    </v-layout>
+            </v-jumbotron>
+        </v-container>
+    </div>
+
+    <div data-aos="fade-up">
+        <v-container class="page1container">
+            <v-layout align-center justify-center row fill-height wrap>
+                <v-flex xs12 md12>
+                    <p class="display-3 black--text text-md-center" >Give and Take</p>
+                    <p class="subheading black--text text-md-center">Everyone knows something of value.</p>
+                    <p class="subheading text-md-center">SkillSync connects students like you </p>
+                    <p class="subheading text-md-center">who wish to offer something they're good at</p>
+                    <p class="subheading text-md-center">in exchange for developing other skills.</p>
+                </v-flex>
+            </v-layout>
+        </v-container>
+    </div>
+
+    <div class="page2container" data-aos="fade-up">
+        <v-container>
+            <v-layout align-start justify-between row fill-height wrap class="my-5">
+                <v-flex xs8 md8>
+                    <p class="display-1 black--text text-md-left">A diverse range of skills to learn</p>
+                    <p class="subheading text-md-left">Get help from SkillSync users for a skill you couldn't quite get
+                        the hang of,</p>
+                    <p class="subheading text-md-left">or pick up a new skill you've always wanted to learn!</p>
+                    <p class="subheading text-md-left">A peek at skills on offer</p>
+                </v-flex>
+                <v-flex xs5 md5>
+                    <div id="learn_chart" data-aos="zoom-in-up"></div>
+                </v-flex>
+                <v-flex xs5 md5 offset-md2>
+                    <div id="share_chart" data-aos="zoom-in-up"></div>
+                    <p class="subheading text-md-right">Skills our users are interested in.</p>
+                 </v-flex>
+                <v-flex xs8 md8 offset-md4>
+                    <p class="display-1 black--text text-md-right">Find what you're good at to share!</p>
+                    <p class="subheading text-md-right">Share your talents and passion with your fellow students.</p>
+                </v-flex>
+            </v-layout>
+
+            <v-layout align-start justify-end row fill-height wrap class="my-5">
+
+
+            </v-layout>
+        </v-container>
+    </div>
+
+
+
+    <div data-aos="fade-up">
+        <v-container>
+            <v-layout align-start justify-start row fill-height wrap>
+                <v-flex xs5 md5>
+                    <p class="display-1 black--text text-md-left">Join our young, vibrant community</p>
+                    <p class="subheading text-md-left">Being location-based and student-based, you can sync your skills with fellow students in the area. Connect and interact with the community through the public feed, where you can view swap experiences of other users.
+                    </p>
+                </v-flex>
+            </v-layout>
+        </v-container>
+    </div>
+
+    <div data-aos="fade-up">
+        <v-container>
+            <v-layout align-start justify-start row fill-height wrap>
+                <v-flex xs5 md5>
+                    <p class="display-1 black--text text-md-left">Track your Growth</p>
+                    <p class="subheading text-md-left">Post learning and sharing stories on your personal feed with skill category tags to keep track of your personal growth. Share your wins with the community!
+                    </p>
+                </v-flex>
+            </v-layout>
+        </v-container>
+    </div>
+
+    <div class="page5container" data-aos="fade-up">
+        <v-container class="my-5">
+            <v-layout align-center justify-center row fill-height wrap>
+                <v-flex xs8 md8>
+                    <p class="display-1 black--text text-md-center">Find a SkillSync Buddy now!</p>
+                </v-flex>
+                <v-flex xs8 md8>
+                    <p class="title text-md-center">Register</p>
+                    <p class="subheading text-md-center">Sign up to offer your skills in exchange.
+                    </p>
+                    <p class="title text-md-center">Skill Search</p>
+                    <p class="subheading text-md-center">Search for a skill category you're interested with the skill search page.
+                    </p>
+                    <p class="title text-md-center">Find your buddy</p>
+                    <p class="subheading text-md-center">Click the school you're located at on the skill search map to show potential buddies. Find one who's interested in your talents and meet up!
+                    </p>
+                </v-flex>
+                <v-flex md8 xs8 offset-md5>
+                    <v-btn
+                            dark
+                            round
+                            large
+                            color="indigo"
+                            :href="login"
+                    >
+                        get started!
+                    </v-btn>
+                </v-flex>
+            </v-layout>
+        </v-container>
+    </div>
+
+
+    <v-footer
+            dark
+            height="auto"
+    >
+        <v-card
+                class="flex"
+                flat
+        >
+            <v-card-title class="justify-center my-2">
+                2019 CodeU Team48
+
+            </v-card-title>
+            <v-card-actions class="justify-center">
+                <v-btn flat small round outline color="normal" @click="contactusbuttonclick">
+                    Contact Us
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-footer>
+
     </v-app>
-</div>
+</v-app>
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -313,28 +284,18 @@ height:700px;
     var indexVue = new Vue({
       el: '#app',
       data: () => ({
+      login:'/login',
+      Home:'/',
           pages: [
-          { title: 'Home', icon: 'dashboard', url: '/' },
-          { title: 'My-info', icon: 'edit', url: '/user-info.html' },
-          { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' }
+          { title: 'Skill Search',url:'/skill-search.html'},
+          { title: 'Public Feed', url: '/feed.html' }
         ],
-        members: [
-          { photo: "https://avatars0.githubusercontent.com/u/37070724?s=400&v=4", name_en: 'Alison', facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'XuanTing Zhang' },
-          { photo: "https://avatars3.githubusercontent.com/u/48847495?s=400&v=4", name_en: 'Juno',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'ChingLun Chiu' },
-          { photo: "https://avatars2.githubusercontent.com/u/22865207?s=400&v=4", name_en: 'Nicole',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'Weiwei Lin' },
-          { photo: "https://avatars1.githubusercontent.com/u/40991040?s=460&v=4", name_en: 'Brandy',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'SinYu Huang' }
-        ],
-        drawer: {
-            open : false,
-        },
         search: null,
         select: null,
         userData: [],
       }),
       methods: {
-        toggleDrawer(){
-            this.drawer.open = !this.drawer.open
-        },
+
         customFilter (item, queryText, itemText) {
             const name = item.name.toLowerCase()
             const email = item.email.toLowerCase()
@@ -345,6 +306,9 @@ height:700px;
           },
         redirectPersonalPage(){
             window.location.href = "/user-page.html?user=" + this.select
+        },
+         contactusbuttonclick(){
+            window.location.href = "/aboutus.html";
         }
       },
       mounted(){
@@ -354,9 +318,10 @@ height:700px;
 
 
 
-
-
-
+</script>
+<script>
+    AOS.init();
+    window.addEventListener('load',AOS.refresh);
 </script>
 </body>
 </html>
