@@ -1,18 +1,32 @@
 //for the tool bar
-    new Vue({ el: '#app',
-     data: () => ({
-        items: [
-          { title: 'Home', icon: 'dashboard', url: '/' },
-          { title: 'My-info', icon: 'edit', url: '/user-info.html' },
-          { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' }
-        ],
-        drawer: {
-            open : false,
-        }
-      }),
-      methods: {
-        toggleDrawer(){
-            this.drawer.open = !this.drawer.open
-        }
-      }
-    })
+    var indexVue = new Vue({
+         el: '#app',
+         data: () => ({
+         Home:'/',
+             pages: [
+             { title: 'My-info', url: '/user-info.html' },
+             { title: 'Public Feed', url: '/feed.html' },
+             { title: 'Skill Search',url:'/skill-search.html'}
+           ],
+           search: null,
+           select: null,
+           userData: [],
+         }),
+         methods: {
+
+           customFilter (item, queryText, itemText) {
+               const name = item.name.toLowerCase()
+               const email = item.email.toLowerCase()
+               const searchText = queryText.toLowerCase()
+
+               return name.indexOf(searchText) > -1 ||
+                 email.indexOf(searchText) > -1
+             },
+           redirectPersonalPage(){
+               window.location.href = "/user-page.html?user=" + this.select
+           },
+         },
+         mounted(){
+       	getUserNameEmail();
+         }
+       })

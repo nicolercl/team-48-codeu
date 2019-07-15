@@ -110,14 +110,13 @@ function fetchAboutMe() {
     fetch(url).then((response) => {
         return response.json();
     }).then((info) => {
-        document.getElementById('page-title').innerText = info.name;
-        document.getElementById('name-container').innerHTML=info.name;
-        document.getElementById('age-container').innerHTML=info.age;
-        document.getElementById('email-container').innerHTML=info.email;
-        document.getElementById('learn-container').innerHTML=info.learnCate;
-        document.getElementById('teach-container').innerHTML=info.teachCate;
-        document.getElementById('level-container').innerHTML=info.skillLevel;
-        document.getElementById('school-container').innerHTML=info.school;
+        indexVue.user_name = info.name;
+        indexVue.user_age=info.age;
+        indexVue.user_email=info.email;
+        indexVue.user_learncate=info.learnCate;
+        indexVue.user_teachcate=info.teachCate;
+        indexVue.user_level=info.skillLevel;
+        indexVue.user_school=info.school;
         document.getElementById('about-me-container').innerHTML=info.aboutMe;
     });
 }

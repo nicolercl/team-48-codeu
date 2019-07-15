@@ -17,83 +17,244 @@ limitations under the License.
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>About Us</title>
-    <link href="/css/main.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="/js/chart-loader.js"></script>
+    <script src="/js/navigation-loader.js"></script>
 </head>
-<body>
-<nav>
-    <ul id="navigation">
-        <li><a href="/">Home</a></li>
-        <li><a href="/aboutus.html">About Our Team</a></li>
-    </ul>
-</nav>
-<h1>About Our Team</h1>
-<h2>Alison Zhang</h2>
-<ul>
-    <li>Summer Feelz: Sports / Relax / Long working hours HAHAH</li>
-    <li>Aspirational Hobby: Skydiving for sure! But in a long run, it might be traveling around the world and eating
-        delicacies->especially want to go to places like North Korea, Pakistan, Uzbek, etc!
-    </li>
-    <li>Ask me About: Traveling / Cooking / Photographing / Tea</li>
-</ul>
-<h2>Brandy Huang</h2>
-<ul>
-    <li>intro:
-        So lucky to join this program and meet you guys!! I'm Sinyu Huang from Kaohsiung and now a sophomore studying
-        electrical engineering in National Cheng Kong University.
-        I'm both interest in software and hardware.
-    </li>
-    <li>interest:
-        <ol>
-            <li>Stock marketing: I was a member in stock studying club last year. We invite lecturers and discuss about
-                financial big news happening in weeks. I have interest in studying options which is a financial product
-                . I don't operate stocks ,since I'm just a collage student without lots of money.haha~ However, always
-                welcome everybody to discuss stocks with me!!
-            </li>
-            <li>Cartoon Lover: Disney movies such as minions, Toy story, Wreck-It Ralph are my favorite. There are rare
-                collage students go to theater watching cartoon, but I won't be absent in any disney movie. By the way,
-                Aladdin will be released next week, but I have an important
-                midterm exam. That's miserable.
-            </li>
-            <li>Love making friends: I'm the volunteer who helps international students in our school. I think that's a
-                meaningful jobs which really helps people really needs. Since I'm a outgoing person and won't be nervous
-                when talking strangers. The job really fits my personality.
-            </li>
-        </ol>
-    </li>
-    <li>Also a coffee lovers!! Can't wait to meet you guys!!</li>
-    <li>Summer Feelz: Exams、Rainy、"The Secret Life of Pets"</li>
-    <li>Aspirational Hobby: I think I'll learn how to fly a plane if I have unlimited time and money. Being a pilot is a
-        dream in my childhood and it sounds really cool to flying in the endless sky.
-    </li>
-    <li>Ask me About:<a href="https://movieweb.com/minions-2-the-rise-of-gru-release-date-summer-2020/">Minions 2: The
-        Rise of Gru Is Officially Coming in Summer 2020 !!</a> Oh yeah!! I love watching Minions series movies.They are
-        so cute and funny. I have blanket, dolls on my bed and bags are all Minions. Can't wait to see the movie!!
-    </li>
-</ul>
-<h2>Nicole Lin</h2>
-<ul>
-    <li>Intro: Junior majoring in EE at National Taiwan University.</li>
-    <li>Summer Feelz: novels in a cool ac room, volleyball out in the sun, coding!</li>
-    <li>Aspirational Hobby: Traveling! For both the tourist attractions, the local culture, and learning different
-        languages.
-    </li>
-    <li>Ask me About: novels, fantasy TV shows like GOT, volleyball. Stories that fascinate me are those with amazing
-        world building and interesting characters. Oh and coffee is life!
-    </li>
-</ul>
-<h2>Juno Chiu</h2>
-<ul>
-    <li>Summer Feelz: Busy,hot,super hot!(I mean the weather)</li>
-    <li>Aspirational Hobby: Definitely, travel around the world! I'm always curious about different cultures and want to
-        collect stories
-        through my practice. There's always something to be learnt in a travel! I want to go to every country, Arctic
-        (and maybe bring some penguins back as pets XD like what Mr.Popper did)
-        , and if possible, space travel!
-    </li>
-    <li>Ask me About: movies!</li>
-</ul>
-</body>
+<style>
+.aboutus{
+    background: #FFF !important;
+}
 
+.home{
+    overflow: auto;
+}
+
+.Aboutus{
+   //background-color:#F2F2F2 ;
+}
+.Aboutus_container{
+    height:500px;
+}
+
+/*#aboutus_title{
+    background-color:DarkBlue ;
+     position: absolute;
+  left: 0px;
+  top: 20px;
+  width: 250px;
+  height:50px;
+  opacity: 0.6;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 28px;
+  color:white;
+  border-radius: 0px 30px 30px 0px;
+}*/
+.v-card--reveal {
+align-items: center;
+bottom: 0;
+justify-content: center;
+opacity: .5;
+position: absolute;
+width: 100%;
+}
+.transparent {
+   background-color: white!important;
+   opacity: 0.9;
+ }
+
+
+</style>
+<body onload="addLoginOrLogoutLinkToNavigation()">
+<div id="app">
+    <v-app id="v-app">
+        <!--tool bar-->
+        <v-content>
+            <v-toolbar light color="white" class="elevation-2" app>
+                <v-toolbar-title class="black--text">
+                    <v-btn flat large :href="Home">Skill Sync</v-btn>
+                </v-toolbar-title>
+                <v-layout wrap>
+                    <v-flex v-for="i in pages" md3>
+                        <v-btn flat small class="grey--text" :href="i.url">{{i.title}}</v-btn>
+                    </v-flex>
+                </v-layout>
+                <v-spacer></v-spacer>
+                <v-autocomplete
+                        v-model="select"
+                        :items="userData"
+                        :search-input.sync="search"
+                        cache-items
+                        class="mx-3"
+                        flat
+                        hide-no-data
+                        hide-details
+                        item-text="email"
+                        :filter="customFilter"
+                        label="Search user by name or email..."
+                        solo-inverted
+                        @change="redirectPersonalPage()"
+                >
+                    <template v-slot:selection="data">
+                        {{ data.item.name }}
+                    </template>
+                    <template v-slot:item="data">
+                        <template>
+                            <v-list-tile-avatar>
+                                <img :src="data.item.avatar">
+                            </v-list-tile-avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                                <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
+                            </v-list-tile-content>
+                        </template>
+                    </template>
+                </v-autocomplete>
+            </v-toolbar>
+        </v-content>
+
+        <v-container class="mx-10">
+
+            <v-layout row wrap>
+                <v-flex xs12 md12>
+                    <h3 class="display-3 accent-2 red--text ">About us</h3>
+                </v-flex>
+            </v-layout>
+        </v-container>
+
+        <v-content class="Aboutus">
+            <v-container grid-list-md text-xs-center class="Aboutus_container">
+                <v-layout align-center justify-center row fill-height>
+                    <v-flex v-for="i in members" :key="`3${i.name_en}`" xs3>
+
+                        <v-hover>
+                            <v-card
+                                    slot-scope="{ hover }"
+                                    class="mx-auto"
+                                    color="white"
+                                    max-width="500"
+                                    width="250"
+                            >
+                                <v-img
+                                        :aspect-ratio="16/9"
+                                        :src="i.photo"
+                                >
+                                    <v-expand-transition>
+                                        <div
+                                                v-if="hover"
+                                                class="d-flex transition-fast-in-fast-out grey lighten-4 v-card--reveal display-2 grey--text"
+                                                style="height: 100%;"
+                                        >
+                                            {{i.name_en}}
+                                        </div>
+                                    </v-expand-transition>
+                                </v-img>
+                                <v-card-text
+                                        class="pt-4"
+                                        style="position: relative;"
+                                >
+                                    <v-btn
+                                            absolute
+                                            color=#FC6E51
+                                            class="white--text"
+                                            fab
+                                            small
+                                            right
+                                            top
+                                            :href="i.facebook"
+                                    >
+                                        <v-icon>person_add</v-icon>
+                                    </v-btn>
+
+                                    <h3 class="title font-weight-light orange--text mb-2">{{i.name_ch}}</h3>
+                                    <br class="font-weight-light body-1 mb-2">
+                                    You can call me {{i.name_en}}.<br>{{i.self_intro}}
+
+                                </v-card-text>
+                            </v-card>
+                        </v-hover>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </v-content>
+        <v-footer
+                dark
+                height="auto"
+        >
+            <v-card
+                    class="flex"
+                    flat
+            >
+                <v-card-title class="justify-center my-2">
+                    2019 CodeU Team48
+
+                </v-card-title>
+                <v-card-actions class="justify-center">
+                    <v-btn flat small round outline color="normal" @click="contactusbuttonclick">
+                        Contact Us
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-footer>
+
+    </v-app>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+<script>
+    var indexVue = new Vue({
+      el: '#app',
+      data: () => ({
+         Home:'/',
+          pages: [
+          { title: 'Skill Search',url:'/skill-search.html'},
+          { title: 'Public Feed', url: '/feed.html' }
+
+        ],
+        members: [
+          { photo: "https://avatars0.githubusercontent.com/u/37070724?s=400&v=4", name_en: 'Alison', facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'XuanTing Zhang',
+           self_intro:"Skydiving for sure! But in a long run, it might be traveling around the world and eating delicacies->especially want to go to places like North Korea Pakistan Uzbek etc!"},
+          { photo: "https://avatars3.githubusercontent.com/u/48847495?s=400&v=4", name_en: 'Juno',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'ChingLun Chiu',
+          self_intro:"travel around the world! I'm always curious about different cultures and want to collect stories through my practice. There's always something to be learnt in a travel! I want to go to every country, Arctic and if possible, space travel!"},
+          { photo: "https://avatars2.githubusercontent.com/u/22865207?s=400&v=4", name_en: 'Nicole',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'Weiwei Lin',
+          self_intro:"Junior majoring in EE at National Taiwan University. "},
+          { photo: "https://avatars1.githubusercontent.com/u/40991040?s=460&v=4", name_en: 'Brandy',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'SinYu Huang',
+          self_intro: "So lucky to join this program and meet you guys!! I'm Sinyu Huang from Kaohsiung and now a sophomore studying electrical engineering in National Cheng Kong University.I'm both interest in software and hardware."}
+        ],
+        search: null,
+        select: null,
+        userData: [],
+      }),
+      methods: {
+      customFilter (item, queryText, itemText) {
+               const name = item.name.toLowerCase()
+               const email = item.email.toLowerCase()
+               const searchText = queryText.toLowerCase()
+
+               return name.indexOf(searchText) > -1 ||
+                 email.indexOf(searchText) > -1
+             },
+           redirectPersonalPage(){
+               window.location.href = "/user-page.html?user=" + this.select
+           },
+
+      contactusbuttonclick(){
+        window.location.href = "/aboutus.html";
+      }
+      },
+      mounted(){
+    	getUserNameEmail();
+      }
+    })
+
+
+</script>
+</body>
 </html>
+
