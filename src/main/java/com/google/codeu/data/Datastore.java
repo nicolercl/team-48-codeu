@@ -58,12 +58,12 @@ public class Datastore {
      * @return a list of messages posted by the user, or empty list if user has never posted a
      * message. List is sorted by time descending.
      */
-    public List<Message> getMessages(String user) {
+    public List<Message> getMessages(String userEmail) {
         List<Message> messages = new ArrayList<>();
 
         Query query =
                 new Query("Message")
-                        .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
+                        .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, userEmail))
                         .addSort("timestamp", SortDirection.DESCENDING);
         PreparedQuery results = datastore.prepare(query);
 
@@ -75,6 +75,7 @@ public class Datastore {
                 long timestamp = (long) entity.getProperty("timestamp");
                 String skill =(String) entity.getProperty("skill");
                 String skillLevel =(String) entity.getProperty("skillLevel");
+                User user = getUser(userEmail);
                 Message message = new Message(id, user, text, timestamp,skill, skillLevel);
                 messages.add(message);
             } catch (Exception e) {
@@ -104,11 +105,12 @@ public class Datastore {
             try {
                 String idString = entity.getKey().getName();
                 UUID id = UUID.fromString(idString);
-                String user = (String) entity.getProperty("user");
+                String userEmail = (String) entity.getProperty("user");
                 String text = (String) entity.getProperty("text");
                 long timestamp = (long) entity.getProperty("timestamp");
                 String skill =(String) entity.getProperty("skill");
                 String skillLevel =(String) entity.getProperty("skillLevel");
+                User user = getUser(userEmail);
                 Message message = new Message(id, user, text, timestamp,skill, skillLevel);
                 messages.add(message);
             } catch (Exception e) {

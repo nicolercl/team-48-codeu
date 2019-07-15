@@ -75,7 +75,7 @@ public class MessageServlet extends HttpServlet {
         List<Message> messages = datastore.getMessages(user);
         Gson gson = new Gson();
         String json = gson.toJson(messages);
-//
+
         response.getWriter().println(json);
     }
 
@@ -107,6 +107,6 @@ public class MessageServlet extends HttpServlet {
 
         Message message = new Message(user, userText);
         datastore.storeMessage(message);
-        response.sendRedirect("/user-page.html?user=" + user);
+        response.sendRedirect("/user-page.html?user=" + user.getEmail());
     }
 }

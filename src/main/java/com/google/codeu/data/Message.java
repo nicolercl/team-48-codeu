@@ -35,34 +35,24 @@ public class Message {
      * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
      * random ID and uses the current system time for the creation time.
      */
-    public Message(String user, String text,String skill, String skillLevel ) {
-        this(UUID.randomUUID(), user, text, System.currentTimeMillis(), skill, skillLevel);
-    }
+//    public Message(User user, String text,String skill, String skillLevel ) {
+//        this(UUID.randomUUID(), user.getName(), text, System.currentTimeMillis(), skill, skillLevel);
+//    }
     public Message(User user, String text) {
-        this.id =UUID.randomUUID();
-        this.user = user.getName();
+        this.id = UUID.randomUUID();
+        this.user = user.getEmail();
         this.text = text;
         this.timestamp = System.currentTimeMillis();
         this.skill = user.getLearnCategory();
         this.skillLevel = user.getSkillLevel();
     }
-    public Message(UUID id, String user, String text, long timestamp,String skill, String skillLevel ) {
+    public Message(UUID id, User user, String text, long timestamp,String skill, String skillLevel ) {
         this.id = id;
-        this.user = user;
+        this.user = user.getEmail();
         this.text = text;
         this.timestamp = timestamp;
         this.skill = skill;
         this.skillLevel = skillLevel;
-    }
-
-    public Message(UUID id, User user, String text, long timestamp) {
-        this.id = id;
-        this.user = user.getName();
-        this.text = text;
-        this.timestamp = timestamp;
-        this.skill = user.getLearnCategory();
-        this.skillLevel = user.getSkillLevel();
-
     }
 
     public UUID getId() {
