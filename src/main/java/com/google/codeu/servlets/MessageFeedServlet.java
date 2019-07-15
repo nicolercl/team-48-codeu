@@ -34,9 +34,10 @@ public class MessageFeedServlet extends HttpServlet {
             throws IOException {
 
         response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         List<Message> messages = datastore.getAllMessages();
         Gson gson = new Gson();
         String json = gson.toJson(messages);
-        response.getOutputStream().println(json);
+        response.getWriter().println(json);
     }
 }

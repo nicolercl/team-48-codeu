@@ -46,11 +46,11 @@ public class ChartServlet extends HttpServlet {
         JsonArray shareUserNum = new JsonArray();
         Gson gson = new Gson();
         String[] skillTypes = {"Design", "Culinary", "Music", "Sports", "Photography", "Technology", "Language"};
-        HashMap<String, Integer>[] arr = datastore.getSkillsUserNum();
+        List<HashMap <String, Integer> > arr = datastore.getSkillsUserNum();
         for (int i = 0; i < skillTypes.length; i++) {
             String skill = skillTypes[i];
-            int numL = arr[0].get(skill);
-            int numS = arr[1].get(skill);
+            int numL = arr.get(0).get(skill);
+            int numS = arr.get(1).get(skill);
             learnUserNum.add(gson.toJsonTree(new skillNum(skill, numL)));
             shareUserNum.add(gson.toJsonTree(new skillNum(skill, numS)));
         }
