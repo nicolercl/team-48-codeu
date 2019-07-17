@@ -62,9 +62,9 @@
                 <div id="form">
                     <v-form>
                         <v-text-field
-                            label="Name"
-                            required
-                            v-model="name"
+                                label="Name"
+                                required
+                                v-model="name"
                         >
                         </v-text-field>
                         </v-text-field>
@@ -103,8 +103,34 @@
                         >
                         </v-textarea>
 
+
+                        <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
+
+
+                            <v-text-field label="Select Image" @click='pickFile' v-model='imageName'
+                                          prepend-icon='attach_file'></v-text-field>
+                            <!--                            <form method="POST"-->
+                            <!--                                    enctype="multipart/form-data"-->
+                            <!--                                    action="/my-form-handler">-->
+                            <input
+                                    id="image"
+                                    name="image"
+                                    type="file"
+                                    @change="onFilePicked"
+                                    style="display: none"
+                                    ref="image"
+                                    accept="image/*"
+                            >
+                            <!--                                        ref="image"-->
+                            <!--                            accept="image/*"-->
+
+
+                            <!--                            </form>-->
+                        </v-flex>
+
+
                         <v-flex class="text-xs-right">
-                            <v-btn  @click="submit">submit</v-btn>
+                            <v-btn @click="submit">submit</v-btn>
                         </v-flex>
 
                     </v-form>
@@ -138,26 +164,36 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 <script>
-    //for the tool bar
-     var indexVue = new Vue({ el: '#app',
-     data: () => ({
-       Home:'/',
-          pages: [
-          { title: 'Skill Search',url:'/skill-search.html'},
-          { title: 'Public Feed', url: '/feed.html' }
-        ],
-         search: null,
-        select: null,
-        userData: [],
-        name: '',
-        email:'',
-        aboutme:'',
-        school:'',
-        age:'',
-        learncategory: null,
-        sharecategory: null,
-        shareskilllevel:null,
-        categories: [
+  //for the tool bar
+  var indexVue = new Vue({
+    el: '#app',
+    data: () => ({
+      title: 'Image Upload',
+      dialog: false,
+      imageName: '',
+      imageUrl: '',
+      imageFile: '',
+      action: '',
+      image: null,
+      // image:null,
+
+      Home: '/',
+      pages: [
+        { title: 'Skill Search', url: '/skill-search.html' },
+        { title: 'Public Feed', url: '/feed.html' }
+      ],
+      search: null,
+      select: null,
+      userData: [],
+      name: '',
+      email: '',
+      aboutme: '',
+      school: '',
+      age: '',
+      learncategory: null,
+      sharecategory: null,
+      shareskilllevel: null,
+      categories: [
         'Photography',
         'Design',
         'Sports',
@@ -165,41 +201,69 @@
         'Technology',
         'Language',
         'Culinary'
-         ],
-        skilllevel: [
+      ],
+      skilllevel: [
         'Junior',
         'Mid-level',
         'Senior',
         'Proficient',
         'Expert'
-         ],
-      }),
-      methods: {
-        customFilter (item, queryText, itemText) {
-            const name = item.name.toLowerCase()
-            const email = item.email.toLowerCase()
-            const searchText = queryText.toLowerCase()
-
-            return name.indexOf(searchText) > -1 ||
-              email.indexOf(searchText) > -1
-          },
-        redirectPersonalPage(){
-            window.location.href = "/user-page.html?user=" + this.select
-        },
-        submit () {
-            newUser = saveUser(this.name,this.email,this.aboutme,this.learncategory
-                                   ,this.sharecategory,this.shareskilllevel,
-                                   this.school,this.age);
-            submitData(newUser);
-        },
-         contactusbuttonclick(){
-            window.location.href = "/aboutus.html";
-         }
+      ],
+    }),
+    methods: {
+      pickFile () {
+        this.$refs.image.click()
       },
-      mounted(){
-       	getUserNameEmail();
-         }
-    })
+
+      onFilePicked (e) {
+        const files = e.target.files
+        if (files[0] !== undefined) {
+          this.imageName = files[0].name
+          if (this.imageName.lastIndexOf('.') <= 0) {
+            return
+          }
+
+          const fr = new FileReader()
+          fr.readAsDataURL(files[0])
+          fr.addEventListener('load', () => {
+            // this.imageUrl = fr.result
+            // console.log(this.imageUrl)
+            this.imageFile = files[0] // this is an image file that can be sent to server...
+          })
+        } else {
+          this.imageName = ''
+          this.imageFile = ''
+          this.imageUrl = ''
+        }
+      },
+
+      customFilter (item, queryText, itemText) {
+        const name = item.name.toLowerCase()
+        const email = item.email.toLowerCase()
+        const searchText = queryText.toLowerCase()
+
+        return name.indexOf(searchText) > -1 ||
+          email.indexOf(searchText) > -1
+      },
+      redirectPersonalPage () {
+        window.location.href = '/user-page.html?user=' + this.select
+      },
+      submit () {
+        //console.log(this.imageUrl);
+        newUser = saveUser(this.name, this.email, this.aboutme, this.learncategory
+          , this.sharecategory, this.shareskilllevel,
+          this.school, this.age, this.image, this.action)
+        //getPicUrl(newUser)
+        submitData(newUser)
+      },
+      contactusbuttonclick () {
+        window.location.href = '/aboutus.html'
+      }
+    },
+    mounted () {
+      getUserNameEmail()
+    }
+  })
 </script>
 </body>
 </html>
