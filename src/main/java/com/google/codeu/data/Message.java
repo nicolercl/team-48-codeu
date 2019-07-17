@@ -39,7 +39,6 @@ public class Message {
 //    public Message(User user, String text,String skill, String skillLevel ) {
 //        this(UUID.randomUUID(), user.getName(), text, System.currentTimeMillis(), skill, skillLevel);
 //    }
-
     public Message(String user, String text) {
         this.id = UUID.randomUUID();
         this.user = user;
@@ -50,7 +49,7 @@ public class Message {
         this.likes = 0;
     }
 
-    public Message(String user, String text,String skill, String skillLevel ) {
+    public Message(String user, String text, String skill, String skillLevel) {
         this.id = UUID.randomUUID();
         this.user = user;
         this.text = text;
@@ -60,7 +59,7 @@ public class Message {
         this.likes = 0;
     }
 
-    public Message(UUID id, String user, String text, long timestamp,String skill, String skillLevel, long likes ) {
+    public Message(UUID id, String user, String text, long timestamp, String skill, String skillLevel, long likes) {
         this.id = id;
         this.user = user;
         this.text = text;
@@ -78,7 +77,8 @@ public class Message {
         this.skill = user.getLearnCategory();
         this.skillLevel = user.getSkillLevel();
     }
-    public Message(UUID id, User user, String text, long timestamp,String skill, String skillLevel ) {
+
+    public Message(UUID id, User user, String text, long timestamp, String skill, String skillLevel) {
         this.id = id;
         this.user = user.getEmail();
         this.text = text;
@@ -100,7 +100,9 @@ public class Message {
         return text;
     }
 
-    public void setText(String text) {this.text=text;}
+    public void setText(String text) {
+        this.text = text;
+    }
 
     public long getTimestamp() {
         return timestamp;
@@ -115,6 +117,11 @@ public class Message {
     }
 
     public long getLikes() {
+        return likes;
+    }
+
+    public long addLikes() {
+        likes = likes + 1;
         return likes;
     }
 

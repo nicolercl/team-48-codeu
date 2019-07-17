@@ -69,17 +69,37 @@
     layout.setAttribute("align-center","true");
     layout.setAttribute("justify-end","true");
 
-    const like = document.createElement('div');
-    like.setAttribute("class", "v-btn");
-	like.setAttribute("aria-hidden", "true");
-	like.classList.add("flat");
-	like.classList.add("left");
-    like.classList.add("large");
+<!--    //create likes button-->
+    const likeButton = document.createElement("div");
+    likeButton.setAttribute("class", 'v-btn');
+    likeButton.setAttribute("style", "color:red;");
     const icon2 = document.createElement('div');
     icon2.setAttribute("class", "material-icons");
     icon2.innerHTML = "favorite";
-    like.appendChild(icon2);
-    layout.appendChild(like);
+    likeButton.appendChild(icon2);
+    likeButton.addEventListener('click', function(){
+           if (this.style === "color:red"){
+                const language = window.navigator.language;
+                const params = new URLSearchParams();
+                params.append('text', message.text);
+                params.append('languageCode', language);
+                console.log(params);
+                fetch('/message', {
+                  method: 'PATCH',
+                  body: params
+                }).then(response => response.text())
+                .then((translatedMessage) => {
+                  text.innerHTML = translatedMessage;
+                  this.value = 'See Original';
+                });
+           } else {
+                text.innerHTML = message.text;
+                this.value = 'Translate';
+           }
+       });
+
+
+    layout.appendChild(likeButton);
     const bodyDiv = document.createElement('div');
     bodyDiv.setAttribute("class", 'v-card__actions');
     bodyDiv.appendChild(icon1);
@@ -134,6 +154,7 @@
   function buildUI(){
    fetchMessages();
   }
+
 
 
 
@@ -257,6 +278,7 @@
        	getUserNameEmail();
          }
        })
+
 
 
 
