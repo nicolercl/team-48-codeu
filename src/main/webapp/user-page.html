@@ -133,14 +133,18 @@ limitations under the License.
                 <br/>
                 <textarea name="text" id="message-input" class="rounded"></textarea>
                 <br/>
-                <!--<input type="submit" value="Submit" class="rounded">-->
-                <v-flex xs12 xs6 text-xs-center>
-                    <v-btn type="submit" name="user_skill" value="{{user_learncate}}" round outline> submit by
-                        {{user_learncate}}
-                    </v-btn>
-                    <v-btn type="submit" name="user_skill" value="{{user_teachcate}}" round outline> submit by
-                        {{user_teachcate}}
-                    </v-btn>
+                What's your post about? Choose a skill tag so others with the same interest can see your post!
+                <v-flex xs12 xs6 text-xs-left>
+                    <v-btn-toggle name="user_skill" v-model="skill_tag">
+                        <v-btn v-bind:value="user_learncate" outline round color="primary">
+                            <v-icon left>label</v-icon>{{ user_learncate }}</v-btn>
+                        <v-btn v-bind:value="user_teachcate" outline round color="red">
+                            <v-icon left>label</v-icon>{{ user_teachcate }}</v-btn>
+                    </v-btn-toggle>
+                    <input name="user_skill" v-model="skill_tag" v-show="false"></input>
+                </v-flex>
+                <v-flex xs12 xs6 text-xs-right>
+                    <v-btn type="submit" round outline>Submit</v-btn>
                 </v-flex>
             </form>
         </div>
@@ -190,7 +194,9 @@ limitations under the License.
         user_learncate:"empty",
         user_teachcate:"empty",
         user_level:"empty",
-        user_school:"empty"
+        user_school:"empty",
+        skill_tag: "",
+        messageContent: "",
       }),
       methods: {
 
@@ -210,7 +216,7 @@ limitations under the License.
         },
         profileeditclicked(){
             window.location.href = "/user-info.html";
-        }
+        },
 
       },
       mounted(){

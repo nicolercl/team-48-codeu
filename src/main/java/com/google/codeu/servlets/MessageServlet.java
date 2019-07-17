@@ -112,34 +112,4 @@ public class MessageServlet extends HttpServlet {
         datastore.storeMessage(message);
         response.sendRedirect("/user-page.html?user=" + user);
     }
-
-    public void doPatch(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        UserService userService = UserServiceFactory.getUserService();
-        if (!userService.isUserLoggedIn()) {
-            response.sendRedirect("/index.html");
-            return;
-        }
-
-        String user = userService.getCurrentUser().getEmail();
-
-        User USER = datastore.getUser(user);
-        String text = request.getParameter("text");
-        String skill = request.getParameter("user_skill");
-        String skillLevel = USER.getSkillLevel();
-        Whitelist whitelist = Whitelist.basicWithImages();
-        whitelist.addTags("h1", "h2", "h3", "h4", "h5", "h6");
-        String userText = Jsoup.clean(text, whitelist);
-
-        //add photo into message
-        String regex = "(https?://\\S+\\.(png|jpg))";
-        String replacement = "<img src=\"$1\" />";
-        userText = userText.replaceAll(regex, replacement);
-
-        System.out.print(skill);
-
-        Message message = new Message(user, userText,skill, skillLevel);
-        datastore.storeMessage(message);
-        response.sendRedirect("/user-page.html?user=" + user);
-    }
 }
