@@ -82,7 +82,36 @@
     bodyDiv.appendChild(content);
     bodyDiv.appendChild(layout);
 
-    const padding = document.createElement('div');
+
+
+       //create translate button
+       bodyDiv.classList.add('translate-button');
+       const translateButton = document.createElement("input");
+       translateButton.type = "button";
+       translateButton.value = "Translate";
+       translateButton.addEventListener('click', function(){
+           if (this.value === "Translate"){
+                const language = window.navigator.language;
+                const params = new URLSearchParams();
+                params.append('text', message.text);
+                params.append('languageCode', language);
+
+                fetch('/translate', {
+                  method: 'POST',
+                  body: params
+                }).then(response => response.text())
+                .then((translatedMessage) => {
+                  text.innerHTML = translatedMessage;
+                  this.value = 'See Original';
+                });
+           } else {
+                text.innerHTML = message.text;
+                this.value = 'Translate';
+           }
+       });
+   bodyDiv.appendChild(translateButton);
+
+   const padding = document.createElement('div');
     padding.setAttribute("class",'v-card');
     const messageDiv = document.createElement('div');
     messageDiv.setAttribute("class", 'v-card');
@@ -94,41 +123,6 @@
     messageDiv.appendChild(text);
     messageDiv.appendChild(bodyDiv);
 
-
-
-       //create translate button
-<!--       bodyDiv.classList.add('translate-button');-->
-<!--       const translateButton = document.createElement("input");-->
-<!--       translateButton.type = "button";-->
-<!--       translateButton.value = "Translate";-->
-<!--       console.log(message.text);-->
-<!--       translateButton.addEventListener('click', function(){-->
-<!--           if (this.value === "Translate"){-->
-<!--                const language = window.navigator.language;-->
-<!--                const params = new URLSearchParams();-->
-<!--                params.append('text', message.text);-->
-<!--                params.append('languageCode', language);-->
-
-<!--                fetch('/translate', {-->
-<!--                  method: 'POST',-->
-<!--                  body: params-->
-<!--                }).then(response => response.text())-->
-<!--                .then((translatedMessage) => {-->
-<!--                  messageBody.innerHTML = translatedMessage;-->
-<!--                  this.value = 'See Original';-->
-<!--                });-->
-<!--           } else {-->
-<!--                messageBody.innerHTML = message.text;-->
-<!--                this.value = 'Translate';-->
-<!--           }-->
-<!--       });-->
-<!--   bodyDiv.appendChild(translateButton);-->
-
-<!--   const messageDiv = document.createElement('div');-->
-<!--   messageDiv.classList.add("message-div");-->
-<!--   messageDiv.appendChild(headerDiv);-->
-<!--   messageDiv.appendChild(bodyDiv);-->
-
    return messageDiv;
   }
 
@@ -136,6 +130,10 @@
   function buildUI(){
    fetchMessages();
   }
+
+
+
+
 
 
 
@@ -255,6 +253,10 @@
        	getUserNameEmail();
          }
        })
+
+
+
+
 
 </script>
 </body>
