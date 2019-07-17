@@ -149,6 +149,8 @@ public class Datastore {
         userEntity.setProperty("school", user.getSchool());
         userEntity.setProperty("name", user.getName());
         userEntity.setProperty("age", user.getAge());
+        userEntity.setProperty("pic", user.getPic());
+        userEntity.setProperty("actionUrl", user.getUrl());
         datastore.put(userEntity);
     }
 
@@ -173,8 +175,10 @@ public class Datastore {
         String age = (String) userEntity.getProperty("age");
         String name = (String) userEntity.getProperty("name");
         String skillLevel = (String) userEntity.getProperty("skillLevel");
+        String pic = (String) userEntity.getProperty("pic");
+        String url = (String) userEntity.getProperty("actionUrl");
         User user = new User(email, aboutMe, learnCategory, teachCategory,
-                school, age, name, skillLevel);
+                school, age, name, skillLevel, pic, url);
 
         return user;
     }
@@ -197,8 +201,10 @@ public class Datastore {
             String age = (String) entity.getProperty("age");
             String name = (String) entity.getProperty("name");
             String skillLevel = (String) entity.getProperty("skillLevel");
+            String pic = (String) entity.getProperty("pic");
+            String url = (String) entity.getProperty("actionUrl");
             User user = new User(email, aboutMe, learnCategory, skill,
-                    school, age, name, skillLevel);
+                    school, age, name, skillLevel, pic, url);
 
             users.add(user);
         }

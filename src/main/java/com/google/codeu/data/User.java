@@ -10,9 +10,11 @@ public class User {
     private String name;
     private String age;
     private String skillLevel;
+    private String pic;
+    private String url;
 
     public User(String email, String aboutMe, String learnCategory, String teachCategory, String school,
-                String age, String name, String skillLevel) {
+                String age, String name, String skillLevel, String pic, String url) {
         this.email = email;
         this.aboutMe = aboutMe;
         this.learnCategory = learnCategory;
@@ -21,6 +23,8 @@ public class User {
         this.name = name;
         this.age = age;
         this.skillLevel = skillLevel;
+        this.pic = pic;
+        this.url = url;
     }
 
     public String getEmail() {
@@ -55,6 +59,10 @@ public class User {
         return skillLevel;
     }
 
+    public String getPic(){return pic;}
+
+    public String getUrl(){return url;}
+
     public void setEmail(String email){
         this.email = email;
     }
@@ -85,6 +93,14 @@ public class User {
 
     public void setSkillLevel(String skillLevel){
         this.skillLevel = skillLevel;
+    }
+
+    public void setPic(String pic){
+        this.pic = pic;
+    }
+
+    public void setUrl(String url){
+        this.url = url;
     }
 
 }
