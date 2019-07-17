@@ -48,6 +48,7 @@ public class Datastore {
         messageEntity.setProperty("timestamp", message.getTimestamp());
         messageEntity.setProperty("skill", message.getskill());
         messageEntity.setProperty("skillLevel", message.getskillLevel());
+        messageEntity.setProperty("likes", message.getLikes());
 
         datastore.put(messageEntity);
     }
@@ -75,8 +76,8 @@ public class Datastore {
                 long timestamp = (long) entity.getProperty("timestamp");
                 String skill =(String) entity.getProperty("skill");
                 String skillLevel =(String) entity.getProperty("skillLevel");
-                User user = getUser(userEmail);
-                Message message = new Message(id, user, text, timestamp,skill, skillLevel);
+                long likes = (long) entity.getProperty("likes");
+                Message message = new Message(id, userEmail, text, timestamp,skill, skillLevel, likes);
                 messages.add(message);
             } catch (Exception e) {
                 System.err.println("Error reading message.");
@@ -110,8 +111,8 @@ public class Datastore {
                 long timestamp = (long) entity.getProperty("timestamp");
                 String skill =(String) entity.getProperty("skill");
                 String skillLevel =(String) entity.getProperty("skillLevel");
-                User user = getUser(userEmail);
-                Message message = new Message(id, user, text, timestamp,skill, skillLevel);
+                long likes = (long) entity.getProperty("likes");
+                Message message = new Message(id, userEmail, text, timestamp,skill, skillLevel,likes);
                 messages.add(message);
             } catch (Exception e) {
                 System.err.println("Error reading message.");

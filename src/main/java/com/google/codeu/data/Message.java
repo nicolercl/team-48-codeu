@@ -29,6 +29,7 @@ public class Message {
     private long timestamp;
     private String skill;
     private String skillLevel;
+    private long likes;
 
 
     /**
@@ -38,6 +39,37 @@ public class Message {
 //    public Message(User user, String text,String skill, String skillLevel ) {
 //        this(UUID.randomUUID(), user.getName(), text, System.currentTimeMillis(), skill, skillLevel);
 //    }
+
+    public Message(String user, String text) {
+        this.id = UUID.randomUUID();
+        this.user = user;
+        this.text = text;
+        this.timestamp = System.currentTimeMillis();
+        this.skill = "undefine";
+        this.skillLevel = "undefine";
+        this.likes = 0;
+    }
+
+    public Message(String user, String text,String skill, String skillLevel ) {
+        this.id = UUID.randomUUID();
+        this.user = user;
+        this.text = text;
+        this.timestamp = System.currentTimeMillis();
+        this.skill = skill;
+        this.skillLevel = skillLevel;
+        this.likes = 0;
+    }
+
+    public Message(UUID id, String user, String text, long timestamp,String skill, String skillLevel, long likes ) {
+        this.id = id;
+        this.user = user;
+        this.text = text;
+        this.timestamp = timestamp;
+        this.skill = skill;
+        this.skillLevel = skillLevel;
+        this.likes = likes;
+    }
+
     public Message(User user, String text) {
         this.id = UUID.randomUUID();
         this.user = user.getEmail();
@@ -53,6 +85,7 @@ public class Message {
         this.timestamp = timestamp;
         this.skill = skill;
         this.skillLevel = skillLevel;
+        this.likes = likes;
     }
 
     public UUID getId() {
@@ -81,6 +114,8 @@ public class Message {
         return skillLevel;
     }
 
-
+    public long getLikes() {
+        return likes;
+    }
 
 }

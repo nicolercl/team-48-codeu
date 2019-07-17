@@ -18,6 +18,7 @@ limitations under the License.
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/user-page.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="/js/user-page-loader.js"></script>
     <script src="/js/navigation-loader.js"></script>
@@ -133,7 +134,10 @@ limitations under the License.
                 <textarea name="text" id="message-input" class="rounded"></textarea>
                 <br/>
                 <!--<input type="submit" value="Submit" class="rounded">-->
-                <v-btn type="submit" round outline> submit</v-btn>
+                <v-flex xs12 xs6 text-xs-center>
+                    <v-btn type="submit" name="user_skill" value="{{user_learncate}}" round outline> submit by {{user_learncate}}</v-btn>
+                    <v-btn type="submit" name="user_skill" value="{{user_teachcate}}" round outline> submit by {{user_teachcate}}</v-btn>
+                </v-flex>
             </form>
         </div>
         <hr/>
@@ -209,6 +213,7 @@ limitations under the License.
     	getUserNameEmail();
       }
     })
+
 
 </script>
 </body>

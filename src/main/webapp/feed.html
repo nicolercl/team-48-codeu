@@ -6,8 +6,8 @@
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <script src="/js/navigation-loader.js"></script>
     <meta charset="UTF-8">
-<!--    <link rel="stylesheet" href="/css/main.css">-->
-<!--    <link rel="stylesheet" href="/css/user-page.css">-->
+    <!--    <link rel="stylesheet" href="/css/main.css">-->
+    <!--    <link rel="stylesheet" href="/css/user-page.css">-->
 
     <script>
     // Fetch messages and add them to the page.
@@ -31,57 +31,113 @@
   }
 
    function buildMessageDiv(message){
-       const usernameDiv = document.createElement('div');
-       usernameDiv.classList.add("left-align");
-       usernameDiv.appendChild(document.createTextNode(message.user));
+   const headerDiv = document.createElement('v-card-title');
+//    headerDiv.classList.add('message-header');
+    const img = document.createElement('v-img');
+    img.classList.add('elevation-6');
+    img.setAttribute("src","https://image.flaticon.com/icons/png/512/97/97895.png");
+    const avatar = document.createElement('v-list-tile-avatar');
+    avatar.setAttribute("color","grey darken-3");
+    avatar.appendChild(img);
+    const skill = document.createElement('span');
+    skill.classList.add('title');
+    skill.classList.add('font-weight-light');
+    skill.appendChild(document.createTextNode(message.skill));
+    headerDiv.appendChild(avatar);
+    headerDiv.appendChild(skill);
 
-       const timeDiv = document.createElement('div');
-       timeDiv.classList.add('right-align');
-       timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
+    const text = document.createElement('v-card-text');
+//    text.classList.add('message-body');
+    text.classList.add('headline');
+    text.classList.add('font-weight-bold');
+    text.innerHTML = message.text;
 
-       const headerDiv = document.createElement('div');
-       headerDiv.classList.add('message-header');
-       headerDiv.appendChild(usernameDiv);
-       headerDiv.appendChild(timeDiv);
 
-       const bodyDiv = document.createElement('div');
-       bodyDiv.classList.add('message-body');
-       const messageBody = document.createElement('div');
-       messageBody.innerHTML = message.text;
-       bodyDiv.appendChild(messageBody);
+    const icon1 = document.createElement('v-icon');
+    icon1.setAttribute("large","true");
+    icon1.setAttribute("left","true");
+    icon1.appendChild(document.createTextNode('mdi-twitter'));
+    const content = document.createElement('v-list-tile-content');
+    const title = document.createElement('v-list-tile-title');
+    title.appendChild(document.createTextNode(message.skill));
+    content.appendChild(title);
+    const layout = document.createElement('v-layout');
+    layout.setAttribute("align-center","true");
+    layout.setAttribute("justify-end","true");
+    const icon2 = document.createElement('v-icon');
+    icon2.classList.add("left");
+    icon2.classList.add("large");
+    icon2.appendChild(document.createTextNode('mdi-heart'));
+    const heart = document.createElement('span');
+    heart.classList.add('subheading');
+    heart.classList.add('mr-2');
+    heart.appendChild(document.createTextNode('256'));
+    layout.appendChild(icon2);
+    layout.appendChild(heart);
+    const bodyDiv = document.createElement('v-card-actions');
+    bodyDiv.appendChild(icon1);
+    bodyDiv.appendChild(content);
+    bodyDiv.appendChild(layout);
+
+
+    const messageDiv = document.createElement('v-card');
+    messageDiv.setAttribute("color","#26c6da");
+    messageDiv.setAttribute("dark","true");
+    messageDiv.setAttribute("max-width","400");
+    messageDiv.appendChild(headerDiv);
+    messageDiv.appendChild(text);
+    messageDiv.appendChild(bodyDiv);
+<!--       const usernameDiv = document.createElement('div');-->
+<!--       usernameDiv.classList.add("left-align");-->
+<!--       usernameDiv.appendChild(document.createTextNode(message.user));-->
+
+<!--       const timeDiv = document.createElement('div');-->
+<!--       timeDiv.classList.add('right-align');-->
+<!--       timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));-->
+
+<!--       const headerDiv = document.createElement('div');-->
+<!--       headerDiv.classList.add('message-header');-->
+<!--       headerDiv.appendChild(usernameDiv);-->
+<!--       headerDiv.appendChild(timeDiv);-->
+
+<!--       const bodyDiv = document.createElement('div');-->
+<!--       bodyDiv.classList.add('message-body');-->
+<!--       const messageBody = document.createElement('div');-->
+<!--       messageBody.innerHTML = message.text;-->
+<!--       bodyDiv.appendChild(messageBody);-->
 
        //create translate button
-       bodyDiv.classList.add('translate-button');
-       const translateButton = document.createElement("input");
-       translateButton.type = "button";
-       translateButton.value = "Translate";
-       console.log(message.text);
-       translateButton.addEventListener('click', function(){
-           if (this.value === "Translate"){
-                const language = window.navigator.language;
-                const params = new URLSearchParams();
-                params.append('text', message.text);
-                params.append('languageCode', language);
+<!--       bodyDiv.classList.add('translate-button');-->
+<!--       const translateButton = document.createElement("input");-->
+<!--       translateButton.type = "button";-->
+<!--       translateButton.value = "Translate";-->
+<!--       console.log(message.text);-->
+<!--       translateButton.addEventListener('click', function(){-->
+<!--           if (this.value === "Translate"){-->
+<!--                const language = window.navigator.language;-->
+<!--                const params = new URLSearchParams();-->
+<!--                params.append('text', message.text);-->
+<!--                params.append('languageCode', language);-->
 
-                fetch('/translate', {
-                  method: 'POST',
-                  body: params
-                }).then(response => response.text())
-                .then((translatedMessage) => {
-                  messageBody.innerHTML = translatedMessage;
-                  this.value = 'See Original';
-                });
-           } else {
-                messageBody.innerHTML = message.text;
-                this.value = 'Translate';
-           }
-       });
-   bodyDiv.appendChild(translateButton);
+<!--                fetch('/translate', {-->
+<!--                  method: 'POST',-->
+<!--                  body: params-->
+<!--                }).then(response => response.text())-->
+<!--                .then((translatedMessage) => {-->
+<!--                  messageBody.innerHTML = translatedMessage;-->
+<!--                  this.value = 'See Original';-->
+<!--                });-->
+<!--           } else {-->
+<!--                messageBody.innerHTML = message.text;-->
+<!--                this.value = 'Translate';-->
+<!--           }-->
+<!--       });-->
+<!--   bodyDiv.appendChild(translateButton);-->
 
-   const messageDiv = document.createElement('div');
-   messageDiv.classList.add("message-div");
-   messageDiv.appendChild(headerDiv);
-   messageDiv.appendChild(bodyDiv);
+<!--   const messageDiv = document.createElement('div');-->
+<!--   messageDiv.classList.add("message-div");-->
+<!--   messageDiv.appendChild(headerDiv);-->
+<!--   messageDiv.appendChild(bodyDiv);-->
 
    return messageDiv;
   }
@@ -90,6 +146,7 @@
   function buildUI(){
    fetchMessages();
   }
+
 
 
     </script>
@@ -142,10 +199,10 @@
 
             <div id="content">
                 <div class="text-xs-center" id="message-container">
-                <v-progress-circular
-                        indeterminate
-                        color="red"
-                ></v-progress-circular>
+                    <v-progress-circular
+                            indeterminate
+                            color="red"
+                    ></v-progress-circular>
                 </div>
             </div>
 
@@ -208,6 +265,7 @@
        	getUserNameEmail();
          }
        })
+
 </script>
 </body>
 </html>
