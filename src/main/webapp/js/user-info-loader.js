@@ -1,4 +1,4 @@
-function saveUser(name, email,aboutme,learncategory,sharecategory,skilllevel,school,age){
+function saveUser(name, email,aboutme,learncategory,sharecategory,skilllevel,school,age,pic, url){
     let user = new Object();
     user.name = name;
     user.email = email;
@@ -8,6 +8,8 @@ function saveUser(name, email,aboutme,learncategory,sharecategory,skilllevel,sch
     user.skillLevel =skilllevel;
     user.school = school;
     user.age = age;
+    user.pic = pic;
+    user.url = url;
     return user;
 }
 
@@ -20,9 +22,9 @@ function submitData(newUser) {
         body: params,
         redirect: 'follow'
     }).then(response => response.json())
-     .then((results) => {
+      .then((results) => {
           //redirect back to personal page
           newUser.email = results.userEmail;
-          window.location.href = "/user-page.html?user=" + newUser.email;
+          window.location.href = "/user-page.html?user=" + results.userEmail;
       });
 }

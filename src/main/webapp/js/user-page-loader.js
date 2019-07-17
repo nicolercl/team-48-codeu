@@ -33,38 +33,38 @@ function setPageTitle() {
  */
 function showMessageFormIfViewingSelf() {
     fetch('/login-status')
-        .then((response) => {
-            return response.json();
-        })
-        .then((loginStatus) => {
-            if (loginStatus.isLoggedIn &&
-                loginStatus.username == parameterUsername) {
-                const messageForm = document.getElementById('message-form');
-                messageForm.classList.remove('hidden');
-                document.getElementById('about-me-form').classList.remove('hidden');
-            }
-        });
+      .then((response) => {
+          return response.json();
+      })
+      .then((loginStatus) => {
+          if (loginStatus.isLoggedIn &&
+            loginStatus.username == parameterUsername) {
+              const messageForm = document.getElementById('message-form');
+              messageForm.classList.remove('hidden');
+              document.getElementById('message-form').classList.remove('hidden');
+          }
+      });
 }
 
 /** Fetches messages and add them to the page. */
 function fetchMessages() {
     const url = '/messages?user=' + parameterUsername;
     fetch(url)
-        .then((response) => {
-            return response.json();
-        })
-        .then((messages) => {
-            const messagesContainer = document.getElementById('message-container');
-            if (messages.length == 0) {
-                messagesContainer.innerHTML = '<p>This user has no posts yet.</p>';
-            } else {
-                messagesContainer.innerHTML = '';
-            }
-            messages.forEach((message) => {
-                const messageDiv = buildMessageDiv(message);
-                messagesContainer.appendChild(messageDiv);
-            });
-        });
+      .then((response) => {
+          return response.json();
+      })
+      .then((messages) => {
+          const messagesContainer = document.getElementById('message-container');
+          if (messages.length == 0) {
+              messagesContainer.innerHTML = '<p>This user has no posts yet.</p>';
+          } else {
+              messagesContainer.innerHTML = '';
+          }
+          messages.forEach((message) => {
+              const messageDiv = buildMessageDiv(message);
+              messagesContainer.appendChild(messageDiv);
+          });
+      });
 }
 
 /**
@@ -77,7 +77,7 @@ function buildMessageDiv(message) {
     headerDiv.classList.add('message-header');
     headerDiv.classList.add('padded');
     headerDiv.appendChild(document.createTextNode(
-        message.user + ' - ' + new Date(message.timestamp)));
+      message.user + ' - ' + new Date(message.timestamp)));
 
     const bodyDiv = document.createElement('div');
     bodyDiv.classList.add('message-body');
@@ -102,7 +102,7 @@ function buildUI() {
     //blocking the image and quoting function
     const config = {removePlugins: ['ImageUpload']};
     ClassicEditor.create(document.getElementById('message-input'), config );
-    ClassicEditor.create(document.getElementById('about-me-textarea'),config );
+    ClassicEditor.create(document.getElementById('about-me-textarea'), config );
 }
 
 function fetchAboutMe() {
@@ -117,7 +117,13 @@ function fetchAboutMe() {
         indexVue.user_teachcate=info.teachCate;
         indexVue.user_level=info.skillLevel;
         indexVue.user_school=info.school;
-        document.getElementById('about-me-container').innerHTML=info.aboutMe;
+        document.getElementById('picc').src = info.pic;
+        document.getElementById('url').action = info.url;
+
     });
 }
+
+
+
+
 
