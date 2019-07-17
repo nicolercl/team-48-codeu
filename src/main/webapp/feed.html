@@ -69,13 +69,17 @@
     layout.setAttribute("align-center","true");
     layout.setAttribute("justify-end","true");
 
-    const icon2 = document.createElement('i');
+    const like = document.createElement('div');
+    like.setAttribute("class", "v-btn");
+	like.setAttribute("aria-hidden", "true");
+	like.classList.add("flat");
+	like.classList.add("left");
+    like.classList.add("large");
+    const icon2 = document.createElement('div');
     icon2.setAttribute("class", "material-icons");
-	icon2.setAttribute("aria-hidden", "true");
-	icon2.classList.add("left");
-    icon2.classList.add("large");
-    icon2.innerHTML = "favorite"
-    layout.appendChild(icon2);
+    icon2.innerHTML = "favorite";
+    like.appendChild(icon2);
+    layout.appendChild(like);
     const bodyDiv = document.createElement('div');
     bodyDiv.setAttribute("class", 'v-card__actions');
     bodyDiv.appendChild(icon1);
