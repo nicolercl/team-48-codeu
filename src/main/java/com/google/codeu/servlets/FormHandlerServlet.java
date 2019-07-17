@@ -1,5 +1,10 @@
 package com.google.codeu.servlets;
 
+import com.google.codeu.data.Datastore;
+import com.google.codeu.data.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+
 import com.google.appengine.api.blobstore.BlobInfo;
 import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobKey;
@@ -8,8 +13,16 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
+
 import java.io.IOException;
 import java.util.List;
+
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
+import com.google.gson.JsonObject;
+import com.google.gson.Gson;
 
 import java.util.Map;
 import javax.servlet.ServletOutputStream;
@@ -29,32 +42,28 @@ public class FormHandlerServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        // Get the message entered by the user.
-        String message = request.getParameter("message");
+        String userData = request.getParameter("userData");
+
 
         // Get the URL of the image that the user uploaded to Blobstore.
         String imageUrl = getUploadedFileUrl(request, "image");
 
-        // Output some HTML that shows the data the user entered.
-        // A real codebase would probably store these in Datastore.
-        ServletOutputStream out = response.getOutputStream();
-        out.println("<a href=\"" + imageUrl + "\">");
-        out.println("<img src=\"" + imageUrl + "\" />");
-        out.println("</a>");
-        out.println("<p>INTRO</p>");
-        out.println(message);
+        System.out.println(imageUrl);
+        response.getOutputStream().println(imageUrl);
+
+
     }
 
     /**
      * Returns a URL that points to the uploaded file, or null if the user didn't upload a file.
      */
-    private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName){
+    private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
         BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
         Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
         List<BlobKey> blobKeys = blobs.get("image");
 
         // User submitted form without selecting a file, so we can't get a URL. (devserver)
-        if(blobKeys == null || blobKeys.isEmpty()) {
+        if (blobKeys == null || blobKeys.isEmpty()) {
             return null;
         }
 

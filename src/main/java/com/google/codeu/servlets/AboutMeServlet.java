@@ -59,6 +59,8 @@ public class AboutMeServlet extends HttpServlet {
         jsonObject.addProperty("name", userData.getName());
         jsonObject.addProperty("age", userData.getAge());
         jsonObject.addProperty("skillLevel", userData.getSkillLevel());
+        jsonObject.addProperty("pic", userData.getPic());
+        jsonObject.addProperty("url", userData.getUrl());
         System.out.println(jsonObject);
         response.getOutputStream().println(jsonObject.toString());
     }
