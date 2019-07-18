@@ -25,7 +25,7 @@ limitations under the License
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="/js/chart-loader.js"></script>
     <script src="/js/navigation-loader.js"></script>
-   <!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script>-->
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script>-->
 </head>
 <style>
 .coverBackground{
@@ -87,6 +87,7 @@ width: 100%;
     opacity: 1.0;<!-- Do Not Work-->
 }
 
+
 </style>
 <body onload="addLoginOrLogoutLinkToNavigation();">
 <v-app id="app" class="white">
@@ -98,7 +99,7 @@ width: 100%;
                 <v-btn flat large :href="Home">Skill Sync</v-btn>
             </v-toolbar-title>
             <v-layout wrap>
-                <v-flex v-for="i in pages" md3>
+                <v-flex v-for="i in pages" md2>
                     <v-btn flat small class="grey--text" :href="i.url">{{i.title}}</v-btn>
                 </v-flex>
             </v-layout>
@@ -139,23 +140,32 @@ width: 100%;
     <div class="coverBackground">
         <v-container>
             <v-jumbotron>
-                    <v-layout row wrap>
-                        <v-flex xs12 md12>
-                            <h3 class=" font-weight-bold display-3 accent-2 red--text " data-aos="fade-up">S K I L L S Y N C</h3>
-                        </v-flex>
-                        <v-flex md8 offset-(xs5 | md2 | lg5)>
-                            <p class="headline" data-aos="fade-up">Trade your talents</p>
-                        </v-flex>
-                    </v-layout>
+                <v-layout row wrap>
+                    <v-flex xs12 md12>
+                        <h3 class=" font-weight-bold display-3 accent-2 red--text " data-aos="fade-up">S K I L L S Y N
+                            C</h3>
+                    </v-flex>
+                    <v-flex md8 offset-(xs5 | md2 | lg5)>
+                        <p class="headline" data-aos="fade-up">Trade your talents</p>
+                    </v-flex>
+                </v-layout>
+                <v-layout wrap justify-start data-aos="fade-up">
+                    <v-flex md1>
+                        <v-btn small round outline color="grey darken-2" @click="loginbuttonclick">login</v-btn>
+                    </v-flex>
+                    <v-flex md1>
+                        <v-btn small round outline color="grey darken-2" @click="$vuetify.goTo(target,option)">learn more</v-btn>
+                    </v-flex>
+                </v-layout>
             </v-jumbotron>
         </v-container>
     </div>
 
-    <div data-aos="fade-up">
+    <div id="page1" data-aos="fade-up">
         <v-container class="page1container">
             <v-layout align-center justify-center row fill-height wrap>
                 <v-flex xs12 md12>
-                    <p class="display-3 black--text text-md-center" >Give and Take</p>
+                    <p class="display-3 black--text text-md-center">Give and Take</p>
                     <p class="subheading black--text text-md-center">Everyone knows something of value.</p>
                     <p class="subheading text-md-center">SkillSync connects students like you </p>
                     <p class="subheading text-md-center">who wish to offer something they're good at</p>
@@ -181,7 +191,7 @@ width: 100%;
                 <v-flex xs5 md5 offset-md2>
                     <div id="share_chart" data-aos="zoom-in-up"></div>
                     <p class="subheading text-md-right">Skills our users are interested in.</p>
-                 </v-flex>
+                </v-flex>
                 <v-flex xs8 md8 offset-md4>
                     <p class="display-1 black--text text-md-right">Find what you're good at to share!</p>
                     <p class="subheading text-md-right">Share your talents and passion with your fellow students.</p>
@@ -196,13 +206,14 @@ width: 100%;
     </div>
 
 
-
     <div data-aos="fade-up">
         <v-container>
             <v-layout align-start justify-start row fill-height wrap>
                 <v-flex xs5 md5>
                     <p class="display-1 black--text text-md-left">Join our young, vibrant community</p>
-                    <p class="subheading text-md-left">Being location-based and student-based, you can sync your skills with fellow students in the area. Connect and interact with the community through the public feed, where you can view swap experiences of other users.
+                    <p class="subheading text-md-left">Location-based and student-based, you can sync your skills with fellow students in the area. Connect and interact with the community through the public feed, where you can view swap experiences of other users.
+
+
                     </p>
                 </v-flex>
             </v-layout>
@@ -215,6 +226,7 @@ width: 100%;
                 <v-flex xs5 md5>
                     <p class="display-1 black--text text-md-left">Track your Growth</p>
                     <p class="subheading text-md-left">Post learning and sharing stories on your personal feed with skill category tags to keep track of your personal growth. Share your wins with the community!
+
                     </p>
                 </v-flex>
             </v-layout>
@@ -232,10 +244,12 @@ width: 100%;
                     <p class="subheading text-md-center">Sign up to offer your skills in exchange.
                     </p>
                     <p class="title text-md-center">Skill Search</p>
-                    <p class="subheading text-md-center">Search for a skill category you're interested with the skill search page.
+                    <p class="subheading text-md-center">Search for a skill category you're interested in with the skill
+                        search page.
                     </p>
                     <p class="title text-md-center">Find your buddy</p>
-                    <p class="subheading text-md-center">Click the school you're located at on the skill search map to show potential buddies. Find one who's interested in your talents and meet up!
+                    <p class="subheading text-md-center">Find your school on the skill search map to show potential buddies. Connect with those who are interested in your talents and meet up!
+
                     </p>
                 </v-flex>
                 <v-flex md8 xs8 offset-md5>
@@ -266,15 +280,10 @@ width: 100%;
                 2019 CodeU Team48
 
             </v-card-title>
-            <v-card-actions class="justify-center">
-                <v-btn flat small round outline color="normal" @click="contactusbuttonclick">
-                    Contact Us
-                </v-btn>
-            </v-card-actions>
         </v-card>
     </v-footer>
 
-    </v-app>
+</v-app>
 </v-app>
 
 
@@ -288,11 +297,17 @@ width: 100%;
       Home:'/',
           pages: [
           { title: 'Skill Search',url:'/skill-search.html'},
-          { title: 'Public Feed', url: '/feed.html' }
+          { title: 'Public Feed', url: '/feed.html' },
+          { title: 'About us',url:'/aboutus.html'}
         ],
         search: null,
         select: null,
         userData: [],
+        option:{
+          duration: 500,
+          offset: 0,
+          easing: 'easeInOutCubic' },
+        target:'#page1'
       }),
       methods: {
 
@@ -307,8 +322,8 @@ width: 100%;
         redirectPersonalPage(){
             window.location.href = "/user-page.html?user=" + this.select
         },
-         contactusbuttonclick(){
-            window.location.href = "/aboutus.html";
+         loginbuttonclick(){
+            window.location.href = "/login";
         }
       },
       mounted(){
@@ -318,10 +333,12 @@ width: 100%;
 
 
 
+
 </script>
 <script>
     AOS.init();
     window.addEventListener('load',AOS.refresh);
+
 </script>
 </body>
 </html>
