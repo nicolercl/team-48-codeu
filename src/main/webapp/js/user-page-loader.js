@@ -15,12 +15,12 @@
  */
 
 // Get ?user=XYZ parameter value
-const urlParams = new URLSearchParams(window.location.search);
-const parameterUsername = urlParams.get('user');
+const urlParams = new URLSearchParams(window.location.search)
+const parameterUsername = urlParams.get('user')
 
 // URL must include ?user=XYZ parameter. If not, redirect to homepage.
 if (!parameterUsername) {
-    window.location.replace('/');
+  window.location.replace('/')
 }
 
 /** Sets the page title based on the URL parameter username. */
@@ -43,9 +43,10 @@ function showMessageFormIfViewingSelf() {
             if (loginStatus.isLoggedIn){
                 LOGIN = true;
                 if (loginStatus.username == parameterUsername) {
+                    document.getElementById('edit-button').classList.remove('hidden')
                     const messageForm = document.getElementById('message-form');
                     messageForm.classList.remove('hidden');
-                    document.getElementById('about-me-form').classList.remove('hidden');
+                    document.getElementById('about-me-container').classList.remove('hidden');
                 }
             }
         });
@@ -101,8 +102,8 @@ function fetchMessages() {
 
      const icon1 = document.createElement('i');
      icon1.setAttribute("class", "material-icons");
- 	 icon1.setAttribute("aria-hidden", "true");
- 	 icon1.setAttribute("large","true");
+ 	   icon1.setAttribute("aria-hidden", "true");
+ 	   icon1.setAttribute("large","true");
      icon1.setAttribute("left","true");
      icon1.innerHTML = "face"
      const content = document.createElement('div');
@@ -228,30 +229,30 @@ function fetchMessages() {
    }
 
 /** Fetches data and populates the UI of the page. */
-function buildUI() {
-    setPageTitle();
-    showMessageFormIfViewingSelf();
-    fetchMessages();
-    fetchAboutMe();
-    //blocking the image and quoting function
-    const config = {removePlugins: ['ImageUpload']};
-    ClassicEditor.create(document.getElementById('message-input'), config );
-    ClassicEditor.create(document.getElementById('about-me-textarea'),config );
+function buildUI () {
+  setPageTitle()
+  showMessageFormIfViewingSelf()
+  fetchMessages()
+  fetchAboutMe()
+  //blocking the image and quoting function
+  const config = { removePlugins: ['ImageUpload'] }
+  ClassicEditor.create(document.getElementById('message-input'), config)
+  ClassicEditor.create(document.getElementById('about-me-textarea'), config)
 }
 
-function fetchAboutMe() {
-    const url = '/about?user=' + parameterUsername;
-    fetch(url).then((response) => {
-        return response.json();
-    }).then((info) => {
-        indexVue.user_name = info.name;
-        indexVue.user_age=info.age;
-        indexVue.user_email=info.email;
-        indexVue.user_learncate=info.learnCate;
-        indexVue.user_teachcate=info.teachCate;
-        indexVue.user_level=info.skillLevel;
-        indexVue.user_school=info.school;
-        document.getElementById('about-me-container').innerHTML=info.aboutMe;
-    });
+function fetchAboutMe () {
+  const url = '/about?user=' + parameterUsername
+  fetch(url).then((response) => {
+    return response.json()
+  }).then((info) => {
+    indexVue.user_name = info.name
+    indexVue.user_age = info.age
+    indexVue.user_email = info.email
+    indexVue.user_learncate = info.learnCate
+    indexVue.user_teachcate = info.teachCate
+    indexVue.user_level = info.skillLevel
+    indexVue.user_school = info.school
+    document.getElementById('about-me-container').innerHTML = info.aboutMe
+  })
 }
 

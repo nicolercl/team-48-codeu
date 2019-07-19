@@ -20,6 +20,7 @@ limitations under the License
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/user-page.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -28,63 +29,70 @@ limitations under the License
     <!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script>-->
 </head>
 <style>
-.coverBackground{
-    background: url("./pics/cover.jpg");
-    no-repeat center center fixed;
-    background-size: cover;
-    height:600px;
-}
-.page1container{
-    height:500px;
-}
-.page2container{
-    height:700px;
-    background-color:#EDECEC ;
-}
-.page5container{
-    height:500px;
-    background-color:#EDECEC ;
-}
+    .coverBackground {
+        background: url("./pics/cover.jpg");
+        no-repeat center center fixed;
+        background-size: cover;
+        height: 600px;
+    }
 
-.v-card--reveal {
-align-items: center;
-bottom: 0;
-justify-content: center;
-opacity: .5;
-position: absolute;
-width: 100%;
-}
-/*#aboutus_title{
-    background-color:DarkBlue ;
-     position: absolute;
-  left: 0px;
-  top: 20px;
-  width: 250px;
-  height:50px;
-  opacity: 0.6;
-  font-family: 'Noto Sans TC', sans-serif;
-  font-size: 28px;
-  color:white;
-  border-radius: 0px 30px 30px 0px;
-}*/
+    .page1container {
+        height: 500px;
+    / / background-color: #EDECEC;
+    }
 
-.description{
-  auto-grow:true;
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
-  width: 500px;
-  background-color:#F9E7E7;
-  opacity: 0.6;
-  font-family: 'Noto Sans TC', sans-serif;
-  font-size: 32px;
+    .page2container {
+        height: 700px;
+        background-color: #EDECEC;
+    }
 
-}
-.description .content{
-    font-size: 24px;
-    z-index: 100px;
-    opacity: 1.0;
-}
+    .page5container {
+        height: 500px;
+        background-color: #EDECEC;
+    }
+
+    .v-card--reveal {
+        align-items: center;
+        bottom: 0;
+        justify-content: center;
+        opacity: .5;
+        position: absolute;
+        width: 100%;
+    }
+
+    /*#aboutus_title{
+        background-color:DarkBlue ;
+         position: absolute;
+      left: 0px;
+      top: 20px;
+      width: 250px;
+      height:50px;
+      opacity: 0.6;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 28px;
+      color:white;
+      border-radius: 0px 30px 30px 0px;
+    }*/
+
+    .description {
+        auto-grow: true;
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        width: 500px;
+        background-color: #F9E7E7;
+        opacity: 0.6;
+        font-family: 'Noto Sans TC', sans-serif;
+        font-size: 32px;
+
+    }
+
+    .description .content {
+        font-size: 24px;
+        z-index: 100px;
+        opacity: 1.0;
+    <!-- Do Not Work-- >
+    }
 
 
 </style>
@@ -149,11 +157,13 @@ width: 100%;
                     </v-flex>
                 </v-layout>
                 <v-layout wrap justify-start data-aos="fade-up">
+                    <!--                    <v-flex md1>-->
+                    <!--                        <v-btn small round outline color="grey darken-2" @click="loginbuttonclick">login</v-btn>-->
+                    <!--                    </v-flex>-->
                     <v-flex md1>
-                        <v-btn small round outline color="grey darken-2" @click="loginbuttonclick">login</v-btn>
-                    </v-flex>
-                    <v-flex md1>
-                        <v-btn small round outline color="grey darken-2" @click="$vuetify.goTo(target,option)">learn more</v-btn>
+                        <v-btn small round outline color="grey darken-2" @click="$vuetify.goTo(target,option)">learn
+                            more
+                        </v-btn>
                     </v-flex>
                 </v-layout>
             </v-jumbotron>
@@ -210,7 +220,9 @@ width: 100%;
             <v-layout align-start justify-start row fill-height wrap>
                 <v-flex xs5 md5>
                     <p class="display-1 black--text text-md-left">Join our young, vibrant community</p>
-                    <p class="subheading text-md-left">Location-based and student-based, you can sync your skills with fellow students in the area. Connect and interact with the community through the public feed, where you can view swap experiences of other users.
+                    <p class="subheading text-md-left">Location-based and student-based, you can sync your skills with
+                        fellow students in the area. Connect and interact with the community through the public feed,
+                        where you can view swap experiences of other users.
 
 
                     </p>
@@ -224,7 +236,8 @@ width: 100%;
             <v-layout align-start justify-start row fill-height wrap>
                 <v-flex xs5 md5>
                     <p class="display-1 black--text text-md-left">Track your Growth</p>
-                    <p class="subheading text-md-left">Post learning and sharing stories on your personal feed with skill category tags to keep track of your personal growth. Share your wins with the community!
+                    <p class="subheading text-md-left">Post learning and sharing stories on your personal feed with
+                        skill category tags to keep track of your personal growth. Share your wins with the community!
 
                     </p>
                 </v-flex>
@@ -247,7 +260,8 @@ width: 100%;
                         search page.
                     </p>
                     <p class="title text-md-center">Find your buddy</p>
-                    <p class="subheading text-md-center">Find your school on the skill search map to show potential buddies. Connect with those who are interested in your talents and meet up!
+                    <p class="subheading text-md-center">Find your school on the skill search map to show potential
+                        buddies. Connect with those who are interested in your talents and meet up!
 
                     </p>
                 </v-flex>
@@ -289,54 +303,53 @@ width: 100%;
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 <script>
-    var indexVue = new Vue({
-      el: '#app',
-      data: () => ({
-      login:'/login',
-      Home:'/',
-          pages: [
-          { title: 'Skill Search',url:'/skill-search.html'},
-          { title: 'Public Feed', url: '/feed.html' },
-          { title: 'About us',url:'/aboutus.html'}
-        ],
-        search: null,
-        select: null,
-        userData: [],
-        option:{
-          duration: 500,
-          offset: 0,
-          easing: 'easeInOutCubic' },
-        target:'#page1'
-      }),
-      methods: {
-
-        customFilter (item, queryText, itemText) {
-            const name = item.name.toLowerCase()
-            const email = item.email.toLowerCase()
-            const searchText = queryText.toLowerCase()
-
-            return name.indexOf(searchText) > -1 ||
-              email.indexOf(searchText) > -1
-          },
-        redirectPersonalPage(){
-            window.location.href = "/user-page.html?user=" + this.select
-        },
-         loginbuttonclick(){
-            window.location.href = "/login";
-        }
+  var indexVue = new Vue({
+    el: '#app',
+    data: () => ({
+      login: '/login',
+      Home: '/',
+      pages: [
+        { title: 'Skill Search', url: '/skill-search.html' },
+        { title: 'Public Feed', url: '/feed.html' },
+        { title: 'About us', url: '/aboutus.html' }
+      ],
+      search: null,
+      select: null,
+      userData: [],
+      option: {
+        duration: 500,
+        offset: 0,
+        easing: 'easeInOutCubic'
       },
-      mounted(){
-    	getUserNameEmail();
+      target: '#page1'
+    }),
+    methods: {
+
+      customFilter (item, queryText, itemText) {
+        const name = item.name.toLowerCase()
+        const email = item.email.toLowerCase()
+        const searchText = queryText.toLowerCase()
+
+        return name.indexOf(searchText) > -1 ||
+          email.indexOf(searchText) > -1
+      },
+      redirectPersonalPage () {
+        window.location.href = '/user-page.html?user=' + this.select
+      },
+      loginbuttonclick () {
+        window.location.href = '/login'
       }
-    })
-
-
+    },
+    mounted () {
+      getUserNameEmail()
+    }
+  })
 
 
 </script>
 <script>
-    AOS.init();
-    window.addEventListener('load',AOS.refresh);
+  AOS.init()
+  window.addEventListener('load', AOS.refresh)
 
 </script>
 </body>

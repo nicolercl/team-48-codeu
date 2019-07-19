@@ -24,10 +24,6 @@ limitations under the License.
     <script src="/js/navigation-loader.js"></script>
     <!--loads the JavaScript code that comprises the CKEditor library for text styling.-->
     <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
-    <!-- Bootstrap.css -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-           crossorigin="anonymous">-->
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
 </head>
 <body onload="buildUI();addLoginOrLogoutLinkToNavigation();">
@@ -81,7 +77,7 @@ limitations under the License.
         <v-layout row justify-start align-end wrap class="my-15">
             <v-flex md2>
                 <v-avatar size="100px">
-                    <img src="https://avatars0.githubusercontent.com/u/37070724?s=400&v=4" alt="avatar">
+                    <img src="https://upload.cc/i1/2019/07/16/vsSkH2.png" alt="avatar">
                 </v-avatar>
             </v-flex>
             <v-flex md9>
@@ -104,9 +100,14 @@ limitations under the License.
             <v-flex md4><p class="title">Skill Level: </p>
                 <p class="subheading">{{user_level}}</p></v-flex>
         </v-layout>
+    </v-container>
+
+    <v-container>
         <v-layout>
             <v-flex md4 offset-md8>
-                <v-btn round outline color="indigo" @click="profileeditclicked">edit</v-btn>
+                <form id="edit-button" class="hidden">
+                    <v-btn round outline color="indigo" @click="profileeditclicked">edit</v-btn>
+                </form>
             </v-flex>
         </v-layout>
     </v-container>
@@ -114,15 +115,8 @@ limitations under the License.
     <!--for aboutme box-->
     <v-container>
         <h3>Self Intro</h3>
-        <div id="about-me-container">Loading...</div>
+        <div id="about-me-container" class="hidden">Loading...</div>
         <br>
-        <div id="about-me-form" class="hidden">
-            <form action="/about" method="POST" novalidate>
-                <textarea name="about-me" placeholder="about me" id="about-me-textarea" rows=4 required></textarea>
-                <br/>
-                <v-btn type="submit" round outline> submit</v-btn>
-            </form>
-        </div>
     </v-container>
 
     <!--for new-message box-->
@@ -170,54 +164,53 @@ limitations under the License.
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 <script>
-    var indexVue = new Vue({
-      el: '#app',
-      data: () => ({
-      login:'/login',
-      Home:'/',
-          pages: [
-          { title: 'Skill Search',url:'/skill-search.html'},
-          { title: 'Public Feed', url: '/feed.html' },
-          { title: 'About us',url:'/aboutus.html'}
-        ],
-        search: null,
-        select: null,
-        userData: [],
-        user_name:"empty",
-        user_age:"empty",
-        user_email:"empty",
-        user_learncate:"empty",
-        user_teachcate:"empty",
-        user_level:"empty",
-        user_school:"empty",
-        skill_tag: "",
-        messageContent: "",
-      }),
-      methods: {
+  var indexVue = new Vue({
+    el: '#app',
+    data: () => ({
+      login: '/login',
+      Home: '/',
+      pages: [
+        { title: 'Skill Search', url: '/skill-search.html' },
+        { title: 'Public Feed', url: '/feed.html' },
+        { title: 'About us', url: '/aboutus.html' }
+      ],
+      search: null,
+      select: null,
+      userData: [],
+      user_name: 'empty',
+      user_age: 'empty',
+      user_email: 'empty',
+      user_learncate: 'empty',
+      user_teachcate: 'empty',
+      user_level: 'empty',
+      user_school: 'empty',
+      skill_tag: "empty",
+    }),
+    methods: {
 
-        customFilter (item, queryText, itemText) {
-            const name = item.name.toLowerCase()
-            const email = item.email.toLowerCase()
-            const searchText = queryText.toLowerCase()
+      customFilter (item, queryText, itemText) {
+        const name = item.name.toLowerCase()
+        const email = item.email.toLowerCase()
+        const searchText = queryText.toLowerCase()
 
-            return name.indexOf(searchText) > -1 ||
-              email.indexOf(searchText) > -1
-          },
-        redirectPersonalPage(){
-            window.location.href = "/user-page.html?user=" + this.select
-        },
-         contactusbuttonclick(){
-            window.location.href = "/aboutus.html";
-        },
-        profileeditclicked(){
-            window.location.href = "/user-info.html";
-        },
-
+        return name.indexOf(searchText) > -1 ||
+          email.indexOf(searchText) > -1
       },
-      mounted(){
-    	getUserNameEmail();
+      redirectPersonalPage () {
+        window.location.href = '/user-page.html?user=' + this.select
+      },
+      contactusbuttonclick () {
+        window.location.href = '/aboutus.html'
+      },
+      profileeditclicked () {
+        window.location.href = '/user-info.html'
       }
-    })
+
+    },
+    mounted () {
+      getUserNameEmail()
+    }
+  })
 
 
 
