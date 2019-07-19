@@ -75,8 +75,6 @@ public class LikeServlet extends HttpServlet {
 
             long likes = 0;
             String action = "";
-            System.out.println("Messagenum:");
-            System.out.println(message.getLikes());
             if (user.inLikedMessages(id)) {
                 likes = message.removeLikes();
                 action = "Remove";
@@ -84,7 +82,6 @@ public class LikeServlet extends HttpServlet {
                 likes = message.addLikes();
                 action = "Add";
             }
-            System.out.println(message.getLikes());
             user.updateLikedMessages(id);       //update user liked list
             datastore.storeUser(user);          //store updated user
             datastore.updateLikes(ID, likes);   //update message likes and stored

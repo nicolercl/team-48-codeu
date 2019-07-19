@@ -50,7 +50,6 @@ public class MessageFeedServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         UUID id = UUID.fromString(request.getParameter("id"));
         Message message = datastore.getSingleMessage(id);
-        System.out.println();
         Gson gson = new Gson();
         String json = gson.toJson(message);
         response.getWriter().println(json);

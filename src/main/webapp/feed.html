@@ -39,7 +39,7 @@
        messageContainer.innerHTML = '';
       }
        messages.forEach((message) => {
-       const messageDiv = buildMessageDiv(message);
+       let messageDiv = buildMessageDiv(message);
        messageDiv.id = message.id;
        messageContainer.appendChild(messageDiv);
       });
@@ -120,13 +120,12 @@
                     }).then(response => response.json())
                     .then((results) => {
                           likeNum.innerHTML = results.likes;
-                          console.log(results.action);
                           if (results.action == 'Remove'){
                             icon2.innerHTML = "favorite_border";
                           } else {
                             icon2.innerHTML = "favorite";
                           }
-                          let current = document.getElementById(message.id);
+                          let el = document.getElementById(message.id);
                           const par = new URLSearchParams();
                           par.append('id', message.id);
                           fetch('/feed', {
@@ -134,9 +133,9 @@
                                body: par,
                                }).then(response => response.json())
                                .then((newMessage) => {
-                                console.log("newmessagelike:");
-                                console.log(newMessage.like);
-                                current = buildMessageDiv(newMessage);
+                                let newEl = buildMessageDiv(newMessage);
+                                newEl.id = message.id;
+                                el.parentNode.replaceChild(newEl, el);
                           });
                     });
            } else {
@@ -154,34 +153,34 @@
 
 
 
-       //create translate button
-       bodyDiv.classList.add('translate-button');
-       const translateButton = document.createElement("input");
-       translateButton.type = "button";
-       translateButton.value = "Translate";
-       translateButton.addEventListener('click', function(){
-           if (this.value === "Translate"){
-                const language = window.navigator.language;
-                const params = new URLSearchParams();
-                params.append('text', message.text);
-                params.append('languageCode', language);
+    //create translate button
+    bodyDiv.classList.add('translate-button');
+    const translateButton = document.createElement("input");
+    translateButton.type = "button";
+    translateButton.value = "Translate";
+    translateButton.addEventListener('click', function(){
+         if (this.value === "Translate"){
+              const language = window.navigator.language;
+              const params = new URLSearchParams();
+              params.append('text', message.text);
+              params.append('languageCode', language);
 
-                fetch('/translate', {
+              fetch('/translate', {
                   method: 'POST',
                   body: params
-                }).then(response => response.text())
+              }).then(response => response.text())
                 .then((translatedMessage) => {
                   text.innerHTML = translatedMessage;
                   this.value = 'See Original';
-                });
+                 });
            } else {
                 text.innerHTML = message.text;
                 this.value = 'Translate';
            }
-       });
-   bodyDiv.appendChild(translateButton);
+    });
+    bodyDiv.appendChild(translateButton);
 
-   const padding = document.createElement('div');
+    const padding = document.createElement('div');
     padding.setAttribute("class",'v-card');
     const messageDiv = document.createElement('div');
     messageDiv.setAttribute("class", 'v-card');
