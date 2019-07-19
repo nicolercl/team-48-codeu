@@ -28,46 +28,48 @@ limitations under the License.
     <script src="/js/navigation-loader.js"></script>
 </head>
 <style>
-.aboutus{
-    background: #FFF !important;
-}
+    .aboutus {
+        background: #FFF !important;
+    }
 
-.home{
-    overflow: auto;
-}
+    .home {
+        overflow: auto;
+    }
 
-.Aboutus{
-   //background-color:#F2F2F2 ;
-}
-.Aboutus_container{
-    height:500px;
-}
+    .Aboutus {
+    / / background-color: #F2F2F2;
+    }
 
-/*#aboutus_title{
-    background-color:DarkBlue ;
-     position: absolute;
-  left: 0px;
-  top: 20px;
-  width: 250px;
-  height:50px;
-  opacity: 0.6;
-  font-family: 'Noto Sans TC', sans-serif;
-  font-size: 28px;
-  color:white;
-  border-radius: 0px 30px 30px 0px;
-}*/
-.v-card--reveal {
-align-items: center;
-bottom: 0;
-justify-content: center;
-opacity: .5;
-position: absolute;
-width: 100%;
-}
-.transparent {
-   background-color: white!important;
-   opacity: 0.9;
- }
+    .Aboutus_container {
+        height: 500px;
+    }
+
+    /*#aboutus_title{
+        background-color:DarkBlue ;
+         position: absolute;
+      left: 0px;
+      top: 20px;
+      width: 250px;
+      height:50px;
+      opacity: 0.6;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 28px;
+      color:white;
+      border-radius: 0px 30px 30px 0px;
+    }*/
+    .v-card--reveal {
+        align-items: center;
+        bottom: 0;
+        justify-content: center;
+        opacity: .5;
+        position: absolute;
+        width: 100%;
+    }
+
+    .transparent {
+        background-color: white !important;
+        opacity: 0.9;
+    }
 
 
 </style>
@@ -120,16 +122,17 @@ width: 100%;
         </v-content>
 
         <v-container class="mx-10">
-                <v-layout fill-height wrap justify-start align-center data-aos="fade-up">
-                    <v-flex md12 xs12>
-                        <p class=" display-3 text-md-left ">About us</p>
-                        <p class="subheading text-md-left ">Hi! We are codeU team48! We are four girls from Taiwan. </p>
-                        <p class="subheading text-md-left ">Welcome to SkillSync!</p>
-                        <p class="subheading text-md-left ">"SkillSync" is a project intend to build connections between students.</p>
-                        <p class="subheading text-md-left ">Here, we exchanges talents and ideas!</p>
-                        <p class="subheading text-md-left ">Hope you enjoy our community!</p>
-                    </v-flex>
-                </v-layout>
+            <v-layout fill-height wrap justify-start align-center data-aos="fade-up">
+                <v-flex md12 xs12>
+                    <p class=" display-3 text-md-left ">About us</p>
+                    <p class="subheading text-md-left ">Hi! We are codeU team48! We are four girls from Taiwan. </p>
+                    <p class="subheading text-md-left ">Welcome to SkillSync!</p>
+                    <p class="subheading text-md-left ">"SkillSync" is a project intend to build connections between
+                        students.</p>
+                    <p class="subheading text-md-left ">Here, we exchanges talents and ideas!</p>
+                    <p class="subheading text-md-left ">Hope you enjoy our community!</p>
+                </v-flex>
+            </v-layout>
         </v-container>
 
         <v-content class="Aboutus">
@@ -211,57 +214,77 @@ width: 100%;
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 <script>
-    var indexVue = new Vue({
-      el: '#app',
-      data: () => ({
-         Home:'/',
-          pages: [
-          { title: 'Skill Search',url:'/skill-search.html'},
-          { title: 'Public Feed', url: '/feed.html' },
-          { title: 'About us',url:'/aboutus.html'}
+  var indexVue = new Vue({
+    el: '#app',
+    data: () => ({
+      Home: '/',
+      pages: [
+        { title: 'Skill Search', url: '/skill-search.html' },
+        { title: 'Public Feed', url: '/feed.html' },
+        { title: 'About us', url: '/aboutus.html' }
 
-        ],
-        members: [
-          { photo: "https://avatars0.githubusercontent.com/u/37070724?s=400&v=4", name_en: 'Alison', facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'XuanTing Zhang',
-           self_intro:"Hello! My name is Alison~ I'm currently now a sophomore student studying in Tsinghua University and I major in software engineering. Nice to meet you all:)"},
-          { photo: "https://avatars3.githubusercontent.com/u/48847495?s=400&v=4", name_en: 'Juno',  facebook: "https://www.facebook.com/juno.chiu.52",name_ch:'ChingLun Chiu',
-          self_intro:"Hi guys! I'm Juno from Kaohsiung, Taiwan studying ECE in NCTU. I have a really broad interest, and I am always excited to try out new things:) See you guys at the retreat!"},
-          { photo: "https://avatars2.githubusercontent.com/u/22865207?s=400&v=4", name_en: 'Nicole',  facebook: "https://www.facebook.com/NLCat",name_ch:'Weiwei Lin',
-          self_intro:"Hi guys, I'm a junior studying EE at NTU. I love reading novels, playing volleyball and building fun projects. It's been great working with Team48, can't wait to see you guys:)"},
-          { photo: "https://avatars1.githubusercontent.com/u/40991040?s=460&v=4", name_en: 'Brandy',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'SinYu Huang',
-          self_intro: "I love coding and doing teamwork with others. It's my honor to join this project, which is both challenging and exciting. Hope to see you guys soon. "}
-        ],
-        search: null,
-        select: null,
-        userData: [],
-      }),
-      methods: {
+      ],
+      members: [
+        {
+          photo: 'https://avatars0.githubusercontent.com/u/37070724?s=400&v=4',
+          name_en: 'Alison',
+          facebook: 'https://www.facebook.com/alison880222',
+          name_ch: 'XuanTing Zhang',
+          self_intro: 'Hello! My name is Alison~ I\'m currently now a sophomore student studying in Tsinghua University and I major in software engineering. Nice to meet you all:)'
+        },
+        {
+          photo: 'https://avatars3.githubusercontent.com/u/48847495?s=400&v=4',
+          name_en: 'Juno',
+          facebook: 'https://www.facebook.com/juno.chiu.52',
+          name_ch: 'ChingLun Chiu',
+          self_intro: 'Hi guys! I\'m Juno from Kaohsiung, Taiwan studying ECE in NCTU. I have a really broad interest, and I am always excited to try out new things:) See you guys at the retreat!'
+        },
+        {
+          photo: 'https://avatars2.githubusercontent.com/u/22865207?s=400&v=4',
+          name_en: 'Nicole',
+          facebook: 'https://www.facebook.com/NLCat',
+          name_ch: 'Weiwei Lin',
+          self_intro: 'Hi guys, I\'m a junior studying EE at NTU. I love reading novels, playing volleyball and building fun projects. It\'s been great working with Team48, can\'t wait to see you guys:)'
+        },
+        {
+          photo: 'https://avatars1.githubusercontent.com/u/40991040?s=460&v=4',
+          name_en: 'Brandy',
+          facebook: 'https://www.facebook.com/profile.php?id=100021710384904',
+          name_ch: 'SinYu Huang',
+          self_intro: 'I love coding and doing teamwork with others. It\'s my honor to join this project, which is both challenging and exciting. Hope to see you guys soon. '
+        }
+      ],
+      search: null,
+      select: null,
+      userData: [],
+    }),
+    methods: {
       customFilter (item, queryText, itemText) {
-               const name = item.name.toLowerCase()
-               const email = item.email.toLowerCase()
-               const searchText = queryText.toLowerCase()
+        const name = item.name.toLowerCase()
+        const email = item.email.toLowerCase()
+        const searchText = queryText.toLowerCase()
 
-               return name.indexOf(searchText) > -1 ||
-                 email.indexOf(searchText) > -1
-             },
-           redirectPersonalPage(){
-               window.location.href = "/user-page.html?user=" + this.select
-           },
-
-      contactusbuttonclick(){
-        window.location.href = "/aboutus.html";
-      }
+        return name.indexOf(searchText) > -1 ||
+          email.indexOf(searchText) > -1
       },
-      mounted(){
-    	getUserNameEmail();
+      redirectPersonalPage () {
+        window.location.href = '/user-page.html?user=' + this.select
+      },
+
+      contactusbuttonclick () {
+        window.location.href = '/aboutus.html'
       }
-    })
+    },
+    mounted () {
+      getUserNameEmail()
+    }
+  })
 
 
 </script>
 <script>
-    AOS.init();
-    window.addEventListener('load',AOS.refresh);
+  AOS.init()
+  window.addEventListener('load', AOS.refresh)
 </script>
 </body>
 </html>
