@@ -2,6 +2,7 @@ package com.google.codeu.servlets;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,6 +39,19 @@ public class MessageFeedServlet extends HttpServlet {
         List<Message> messages = datastore.getAllMessages();
         Gson gson = new Gson();
         String json = gson.toJson(messages);
+        response.getWriter().println(json);
+    }
+
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        UUID id = UUID.fromString(request.getParameter("id"));
+        Message message = datastore.getSingleMessage(id);
+        Gson gson = new Gson();
+        String json = gson.toJson(message);
         response.getWriter().println(json);
     }
 }

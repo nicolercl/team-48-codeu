@@ -1,4 +1,5 @@
 package com.google.codeu.data;
+import java.util.HashSet;
 
 public class User {
 
@@ -10,6 +11,7 @@ public class User {
     private String name;
     private String age;
     private String skillLevel;
+    private HashSet<String> likedMessages;
 
     public User(String email, String aboutMe, String learnCategory, String teachCategory, String school,
                 String age, String name, String skillLevel) {
@@ -21,6 +23,21 @@ public class User {
         this.name = name;
         this.age = age;
         this.skillLevel = skillLevel;
+        this.likedMessages = new HashSet<String>();
+    }
+
+    public User(String email, String aboutMe, String learnCategory, String teachCategory, String school,
+                String age, String name, String skillLevel, HashSet<String> likedMessages) {
+        this.email = email;
+        this.aboutMe = aboutMe;
+        this.learnCategory = learnCategory;
+        this.teachCategory = teachCategory;
+        this.school = school;
+        this.name = name;
+        this.age = age;
+        this.skillLevel = skillLevel;
+        this.likedMessages = new HashSet<String>();
+        this.likedMessages.addAll(likedMessages);
     }
 
     public String getEmail() {
@@ -55,6 +72,14 @@ public class User {
         return skillLevel;
     }
 
+    public HashSet<String> getLikedMessages(){
+        return this.likedMessages;
+    }
+
+    public Boolean inLikedMessages(String id) {
+        return this.likedMessages.contains(id);
+    }
+
     public void setEmail(String email){
         this.email = email;
     }
@@ -85,6 +110,20 @@ public class User {
 
     public void setSkillLevel(String skillLevel){
         this.skillLevel = skillLevel;
+    }
+
+    public void setLikedMessages(HashSet<String> likedMessages){
+        this.likedMessages = new HashSet<String>();
+        this.likedMessages.addAll(likedMessages);
+    }
+
+    public void updateLikedMessages(String id) {
+        if (this.likedMessages.contains(id)){
+            this.likedMessages.remove(id);
+        }
+        else {
+            this.likedMessages.add(id);
+        }
     }
 
 }

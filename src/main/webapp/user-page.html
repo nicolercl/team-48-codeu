@@ -18,6 +18,7 @@ limitations under the License.
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/user-page.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="/js/user-page-loader.js"></script>
     <script src="/js/navigation-loader.js"></script>
@@ -33,7 +34,7 @@ limitations under the License.
                 <v-btn flat large :href="Home">Skill Sync</v-btn>
             </v-toolbar-title>
             <v-layout wrap>
-                <v-flex v-for="i in pages" md2>
+                <v-flex v-for="i in pages" :key="i.title" md3>
                     <v-btn flat small class="grey--text" :href="i.url">{{i.title}}</v-btn>
                 </v-flex>
             </v-layout>
@@ -114,7 +115,7 @@ limitations under the License.
     <!--for aboutme box-->
     <v-container>
         <h3>Self Intro</h3>
-        <div id="about-me-container">Loading...</div>
+        <div id="about-me-container" class="hidden">Loading...</div>
         <br>
     </v-container>
 
@@ -126,8 +127,19 @@ limitations under the License.
                 <br/>
                 <textarea name="text" id="message-input" class="rounded"></textarea>
                 <br/>
-                <!--<input type="submit" value="Submit" class="rounded">-->
-                <v-btn type="submit" round outline> submit</v-btn>
+                What's your post about? Choose a skill tag so others with the same interest can see your post!
+                <v-flex xs12 xs6 text-xs-left>
+                    <v-btn-toggle name="user_skill" v-model="skill_tag">
+                        <v-btn v-bind:value="user_learncate" outline round color="primary">
+                            <v-icon left>label</v-icon>{{ user_learncate }}</v-btn>
+                        <v-btn v-bind:value="user_teachcate" outline round color="red">
+                            <v-icon left>label</v-icon>{{ user_teachcate }}</v-btn>
+                    </v-btn-toggle>
+                    <input name="user_skill" v-model="skill_tag" v-show="false"></input>
+                </v-flex>
+                <v-flex xs12 xs6 text-xs-right>
+                    <v-btn type="submit" round outline>Submit</v-btn>
+                </v-flex>
             </form>
         </div>
         <hr/>
@@ -171,7 +183,8 @@ limitations under the License.
       user_learncate: 'empty',
       user_teachcate: 'empty',
       user_level: 'empty',
-      user_school: 'empty'
+      user_school: 'empty',
+      skill_tag: "empty",
     }),
     methods: {
 
@@ -198,6 +211,8 @@ limitations under the License.
       getUserNameEmail()
     }
   })
+
+
 
 </script>
 </body>

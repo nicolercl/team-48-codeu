@@ -20,6 +20,7 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
+import com.google.codeu.data.User;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -93,7 +94,10 @@ public class MessageServlet extends HttpServlet {
 
         String user = userService.getCurrentUser().getEmail();
 
+        User USER = datastore.getUser(user);
         String text = request.getParameter("text");
+        String skill = request.getParameter("user_skill");
+        String skillLevel = USER.getSkillLevel();
         Whitelist whitelist = Whitelist.basicWithImages();
         whitelist.addTags("h1", "h2", "h3", "h4", "h5", "h6");
         String userText = Jsoup.clean(text, whitelist);
@@ -104,7 +108,7 @@ public class MessageServlet extends HttpServlet {
         userText = userText.replaceAll(regex, replacement);
 
 
-        Message message = new Message(user, userText);
+        Message message = new Message(user, userText,skill, skillLevel);
         datastore.storeMessage(message);
         response.sendRedirect("/user-page.html?user=" + user);
     }
