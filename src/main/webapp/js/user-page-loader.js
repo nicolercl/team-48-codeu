@@ -220,10 +220,13 @@ function fetchMessages() {
      messageDiv.setAttribute("color","#26c6da");
      messageDiv.setAttribute("light","true");
      messageDiv.setAttribute("max-width","400");
-     messageDiv.classList.add('elevation-5');
+     messageDiv.classList.add('elevation-0');
      messageDiv.appendChild(headerDiv);
      messageDiv.appendChild(text);
      messageDiv.appendChild(bodyDiv);
+     const divide = document.createElement('div');
+     divide.setAttribute("class", 'v-divider');
+     messageDiv.appendChild(divide);
 
      return messageDiv;
    }

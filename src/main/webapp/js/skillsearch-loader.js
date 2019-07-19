@@ -58,6 +58,7 @@ function loadcardinfo()
      indexVue.card_age=infobyschool[index].age;
      indexVue.card_name=infobyschool[index].name;
      indexVue.card_aboutme=infobyschool[index].aboutMe;
+     cardaboutme.innerHTML=infobyschool[index].aboutMe;
 }
 
 
