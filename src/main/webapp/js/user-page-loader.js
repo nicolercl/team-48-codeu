@@ -130,12 +130,10 @@ function buildMessageDiv(message) {
     messageDiv.setAttribute("class", 'v-card');
     messageDiv.setAttribute("color","#26c6da");
     messageDiv.setAttribute("light","true");
-    messageDiv.setAttribute("max-width","400");
-    messageDiv.classList.add('elevation-5');
+    messageDiv.classList.add('round');
     messageDiv.appendChild(headerDiv);
     messageDiv.appendChild(text);
     messageDiv.appendChild(bodyDiv);
-
     return messageDiv;
 }
 

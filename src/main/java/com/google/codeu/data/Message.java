@@ -76,6 +76,7 @@ public class Message {
         this.timestamp = System.currentTimeMillis();
         this.skill = user.getLearnCategory();
         this.skillLevel = user.getSkillLevel();
+        this.likes = 0;
     }
 
     public Message(UUID id, User user, String text, long timestamp, String skill, String skillLevel) {
@@ -121,8 +122,14 @@ public class Message {
     }
 
     public long addLikes() {
-        likes = likes + 1;
-        return likes;
+        this.likes = this.likes + 1;
+        return this.likes;
+    }
+    public long removeLikes() {
+        if (this.likes > 0) {
+            this.likes = this.likes - 1;
+        }
+        return this.likes;
     }
 
 }

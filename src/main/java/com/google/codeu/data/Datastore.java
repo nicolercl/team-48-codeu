@@ -24,6 +24,8 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 import java.util.*;
 
@@ -53,6 +55,44 @@ public class Datastore {
         datastore.put(messageEntity);
     }
 
+    /**
+     * Stores the Message in Datastore.
+     */
+    public Message getSingleMessage(UUID id) {
+
+        Key msgKey = KeyFactory.createKey("Message", id.toString());
+        try {
+            Entity messageEntity = datastore.get(msgKey);
+            String userEmail = (String) messageEntity.getProperty("user");
+            String text = (String) messageEntity.getProperty("text");
+            long timestamp = (long) messageEntity.getProperty("timestamp");
+            String skill =(String) messageEntity.getProperty("skill");
+            String skillLevel =(String) messageEntity.getProperty("skillLevel");
+            long likes = (long) messageEntity.getProperty("likes");
+            Message message = new Message(id, userEmail, text, timestamp,skill, skillLevel,likes);
+            return message;
+        } catch (Exception e) {
+            System.err.println("Entity not found exception.");
+            e.printStackTrace();
+            return new Message("", "");
+        }
+    }
+    /**
+     * Updates message like by id
+     *
+     * @return a messages with the same id.
+     */
+    public void updateLikes(UUID id, long likes) {
+        Key msgKey = KeyFactory.createKey("Message", id.toString());
+        try {
+            Entity messageEntity = datastore.get(msgKey);
+            messageEntity.setProperty("likes", likes);
+            datastore.put(messageEntity);
+        } catch (Exception e) {
+            System.err.println("Entity not found exception.");
+            e.printStackTrace();
+        }
+    }
 
 
     /**
@@ -158,6 +198,14 @@ public class Datastore {
         userEntity.setProperty("school", user.getSchool());
         userEntity.setProperty("name", user.getName());
         userEntity.setProperty("age", user.getAge());
+        if (user.getLikedMessages() == null){
+            HashSet<String> newSet = new HashSet<String>();
+            newSet.add("  ");
+            userEntity.setProperty("likedMessages", newSet);
+        }
+        else {
+            userEntity.setProperty("likedMessages", user.getLikedMessages());
+        }
         datastore.put(userEntity);
     }
 
@@ -182,10 +230,18 @@ public class Datastore {
         String age = (String) userEntity.getProperty("age");
         String name = (String) userEntity.getProperty("name");
         String skillLevel = (String) userEntity.getProperty("skillLevel");
-        User user = new User(email, aboutMe, learnCategory, teachCategory,
-                school, age, name, skillLevel);
-
-        return user;
+        if (userEntity.getProperty("likedMessages") == null){
+            User user = new User(email, aboutMe, learnCategory, teachCategory,
+                    school, age, name, skillLevel);
+            return user;
+        }
+        else {
+            HashSet<String> likedMessages = new HashSet<String>();
+            likedMessages.addAll((ArrayList<String>)userEntity.getProperty("likedMessages"));
+            User user = new User(email, aboutMe, learnCategory, teachCategory,
+                    school, age, name, skillLevel, likedMessages);
+            return user;
+        }
     }
 
     /**

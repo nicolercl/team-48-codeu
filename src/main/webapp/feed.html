@@ -11,6 +11,21 @@
 
     <script>
     // Fetch messages and add them to the page.
+
+   let LOGIN = false;
+   function fetchLoginStatus(){
+     fetch('/login-status')
+      .then((response) => {
+        return response.json();
+      })
+      .then((loginStatus) => {
+        if (loginStatus.isLoggedIn) {
+            LOGIN = true;
+        } else {
+            LOGIN = false;
+        }
+      });
+   }
    function fetchMessages(){
      const url = '/feed';
      fetch(url).then((response) => {
@@ -25,13 +40,14 @@
       }
        messages.forEach((message) => {
        const messageDiv = buildMessageDiv(message);
+       messageDiv.id = message.id;
        messageContainer.appendChild(messageDiv);
       });
     });
   }
 
    function buildMessageDiv(message){
-   const headerDiv = document.createElement('div');
+    const headerDiv = document.createElement('div');
     headerDiv.setAttribute("class", "v-card__title")
 
     const img = document.createElement('div');
@@ -69,32 +85,62 @@
     layout.setAttribute("align-center","true");
     layout.setAttribute("justify-end","true");
 
-<!--    //create likes button-->
+    //create likes button
     const likeButton = document.createElement("div");
     likeButton.setAttribute("class", 'v-btn');
-    likeButton.setAttribute("style", "color:red;");
     const icon2 = document.createElement('div');
     icon2.setAttribute("class", "material-icons");
-    icon2.innerHTML = "favorite";
+    icon2.setAttribute("style", "color:red");
+    const p = new URLSearchParams();
+    p.append('message', JSON.stringify(message));
+    p.append('action', 'get');
+    fetch('/like', {
+       method: 'POST',
+       body: p,
+       }).then(response => response.json())
+       .then((liked) => {
+            if (liked == "true"){
+                icon2.innerHTML = "favorite";
+            } else {
+                icon2.innerHTML = "favorite_border";
+            }
+        });
+    const likeNum = document.createElement('div');
+    likeNum.innerHTML = message.likes;
     likeButton.appendChild(icon2);
+    likeButton.appendChild(likeNum);
     likeButton.addEventListener('click', function(){
-           if (this.style === "color:red"){
-                const language = window.navigator.language;
-                const params = new URLSearchParams();
-                params.append('text', message.text);
-                params.append('languageCode', language);
-                console.log(params);
-                fetch('/message', {
-                  method: 'PATCH',
-                  body: params
-                }).then(response => response.text())
-                .then((translatedMessage) => {
-                  text.innerHTML = translatedMessage;
-                  this.value = 'See Original';
-                });
+           if (LOGIN){
+               const params = new URLSearchParams();
+               params.append('message', JSON.stringify(message));
+               params.append('action', 'change');
+               fetch('/like', {
+                      method: 'POST',
+                      body: params
+                    }).then(response => response.json())
+                    .then((results) => {
+                          likeNum.innerHTML = results.likes;
+                          console.log(results.action);
+                          if (results.action == 'Remove'){
+                            icon2.innerHTML = "favorite_border";
+                          } else {
+                            icon2.innerHTML = "favorite";
+                          }
+                          let current = document.getElementById(message.id);
+                          const par = new URLSearchParams();
+                          par.append('id', message.id);
+                          fetch('/feed', {
+                               method: 'POST',
+                               body: par,
+                               }).then(response => response.json())
+                               .then((newMessage) => {
+                                console.log("newmessagelike:");
+                                console.log(newMessage.like);
+                                current = buildMessageDiv(newMessage);
+                          });
+                    });
            } else {
-                text.innerHTML = message.text;
-                this.value = 'Translate';
+                alert("Please log in to like messages!")
            }
        });
 
@@ -152,6 +198,7 @@
 
   // Fetch data and populate the UI of the page.
   function buildUI(){
+   fetchLoginStatus();
    fetchMessages();
   }
 
