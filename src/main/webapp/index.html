@@ -29,70 +29,71 @@ limitations under the License
     <!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script>-->
 </head>
 <style>
-    .coverBackground {
-        background: url("./pics/cover.jpg");
-        no-repeat center center fixed;
-        background-size: cover;
-        height: 600px;
-    }
+.coverBackground{
+    background: url("./pics/cover.jpg");
+    no-repeat center center fixed;
+    background-size: cover;
+    height:600px;
+}
+.page1container{
+    height:400px;
+    background: url("./pics/page1.jpg");
+    no-repeat center center fixed;
+    background-size: cover;
+    //background-color:#EDECEC ;
+}
+.page2container{
+    height:700px;
+    background-color:#EDECEC ;
+}
+.page5container{
+    opacity:0.8;
+    background-color:#EDECEC ;
+    background: url("./pics/passion1.jpg");
+    no-repeat center center fixed;
+    background-size: cover;
+    height:600px;
+}
 
-    .page1container {
-        height: 500px;
-    / / background-color: #EDECEC;
-    }
+.v-card--reveal {
+align-items: center;
+bottom: 0;
+justify-content: center;
+opacity: .5;
+position: absolute;
+width: 100%;
+}
+/*#aboutus_title{
+    background-color:DarkBlue ;
+     position: absolute;
+  left: 0px;
+  top: 20px;
+  width: 250px;
+  height:50px;
+  opacity: 0.6;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 28px;
+  color:white;
+  border-radius: 0px 30px 30px 0px;
+}*/
 
-    .page2container {
-        height: 700px;
-        background-color: #EDECEC;
-    }
+.description{
+  auto-grow:true;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 500px;
+  background-color:#F9E7E7;
+  opacity: 0.6;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 32px;
 
-    .page5container {
-        height: 500px;
-        background-color: #EDECEC;
-    }
-
-    .v-card--reveal {
-        align-items: center;
-        bottom: 0;
-        justify-content: center;
-        opacity: .5;
-        position: absolute;
-        width: 100%;
-    }
-
-    /*#aboutus_title{
-        background-color:DarkBlue ;
-         position: absolute;
-      left: 0px;
-      top: 20px;
-      width: 250px;
-      height:50px;
-      opacity: 0.6;
-      font-family: 'Noto Sans TC', sans-serif;
-      font-size: 28px;
-      color:white;
-      border-radius: 0px 30px 30px 0px;
-    }*/
-
-    .description {
-        auto-grow: true;
-        position: absolute;
-        right: 20px;
-        bottom: 20px;
-        width: 500px;
-        background-color: #F9E7E7;
-        opacity: 0.6;
-        font-family: 'Noto Sans TC', sans-serif;
-        font-size: 32px;
-
-    }
-
-    .description .content {
-        font-size: 24px;
-        z-index: 100px;
-        opacity: 1.0;
-    <!-- Do Not Work-- >
-    }
+}
+.description .content{
+    font-size: 24px;
+    z-index: 100px;
+    opacity: 1.0;<!-- Do Not Work-->
+}
 
 
 </style>
@@ -217,7 +218,7 @@ limitations under the License
 
     <div data-aos="fade-up">
         <v-container>
-            <v-layout align-start justify-start row fill-height wrap>
+            <v-layout align-start justify-space-around row fill-height wrap>
                 <v-flex xs5 md5>
                     <p class="display-1 black--text text-md-left">Join our young, vibrant community</p>
                     <p class="subheading text-md-left">Location-based and student-based, you can sync your skills with
@@ -227,13 +228,6 @@ limitations under the License
 
                     </p>
                 </v-flex>
-            </v-layout>
-        </v-container>
-    </div>
-
-    <div data-aos="fade-up">
-        <v-container>
-            <v-layout align-start justify-start row fill-height wrap>
                 <v-flex xs5 md5>
                     <p class="display-1 black--text text-md-left">Track your Growth</p>
                     <p class="subheading text-md-left">Post learning and sharing stories on your personal feed with
@@ -248,18 +242,21 @@ limitations under the License
     <div class="page5container" data-aos="fade-up">
         <v-container class="my-5">
             <v-layout align-center justify-center row fill-height wrap>
-                <v-flex xs8 md8>
+                <v-flex xs12 md12>
                     <p class="display-1 black--text text-md-center">Find a SkillSync Buddy now!</p>
                 </v-flex>
-                <v-flex xs8 md8>
-                    <p class="title text-md-center">Register</p>
+                <v-divider inset></v-divider>
+            </v-layout>
+            <v-layout align-center justify-center row fill-height wrap class="my-5">
+                <v-flex xs12 md12>
+                    <p class="title text-md-center indigo--text">Register</p>
                     <p class="subheading text-md-center">Sign up to offer your skills in exchange.
                     </p>
-                    <p class="title text-md-center">Skill Search</p>
+                    <p class="title text-md-center indigo--text">Skill Search</p>
                     <p class="subheading text-md-center">Search for a skill category you're interested in with the skill
                         search page.
                     </p>
-                    <p class="title text-md-center">Find your buddy</p>
+                    <p class="title text-md-center indigo--text">Find your buddy</p>
                     <p class="subheading text-md-center">Find your school on the skill search map to show potential
                         buddies. Connect with those who are interested in your talents and meet up!
 

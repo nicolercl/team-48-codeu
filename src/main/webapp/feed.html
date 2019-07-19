@@ -4,7 +4,9 @@
     <title>Message Feed</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="/js/navigation-loader.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <meta charset="UTF-8">
     <!--    <link rel="stylesheet" href="/css/main.css">-->
     <!--    <link rel="stylesheet" href="/css/user-page.css">-->
@@ -88,6 +90,7 @@
     //create likes button
     const likeButton = document.createElement("div");
     likeButton.setAttribute("class", 'v-btn');
+    likeButton.setAttribute("flat", 'true');
     const icon2 = document.createElement('div');
     icon2.setAttribute("class", "material-icons");
     icon2.setAttribute("style", "color:red");
@@ -184,14 +187,17 @@
     padding.setAttribute("class",'v-card');
     const messageDiv = document.createElement('div');
     messageDiv.setAttribute("class", 'v-card');
+    messageDiv.setAttribute("class", 'my-3');
     messageDiv.setAttribute("color","#26c6da");
     messageDiv.setAttribute("light","true");
     messageDiv.setAttribute("max-width","400");
-    messageDiv.classList.add('elevation-5');
+    //messageDiv.classList.add('elevation-2');
     messageDiv.appendChild(headerDiv);
     messageDiv.appendChild(text);
     messageDiv.appendChild(bodyDiv);
-
+    const divide = document.createElement('div');
+    divide.setAttribute("class", 'v-divider');
+    messageDiv.appendChild(divide);
    return messageDiv;
   }
 
@@ -201,15 +207,22 @@
    fetchMessages();
   }
 
-
-
-
-
-
-
-
     </script>
 </head>
+<style>
+    .titlecontainer{
+        background:url("./pics/feed.jpg");
+        no-repeat center center fixed;
+        background-size:cover;
+        height:400px;
+    }
+    #content
+    {
+        max-width: 1100px;
+        transform: translateX(6%);
+    }
+
+</style>
 <body onload="buildUI(); addLoginOrLogoutLinkToNavigation();">
 <div id="app">
     <v-app>
@@ -256,7 +269,18 @@
                 </v-autocomplete>
             </v-toolbar>
 
-            <div id="content">
+            <div>
+                <v-container class="mx-8 titlecontainer">
+                    <v-layout fill-height wrap justify-start align-center data-aos="fade-up">
+                        <v-flex md12 xs12>
+                            <p class=" display-3 text-md-left ">Public Feed</p>
+                            <p class="subheading text-md-left ">See what others are thinking about</p>
+                        </v-flex>
+                    </v-layout>
+                </v-container>
+            </div>
+
+            <div id="content" >
                 <div class="text-xs-center" id="message-container">
                     <v-progress-circular
                             indeterminate
@@ -326,6 +350,10 @@
 
 
 
+</script>
+<script>
+    AOS.init();
+    window.addEventListener('load',AOS.refresh);
 </script>
 </body>
 </html>
