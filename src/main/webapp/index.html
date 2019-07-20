@@ -313,44 +313,6 @@ width: 100%;
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 <script>
-<<<<<<< HEAD
-    var indexVue = new Vue({
-      el: '#app',
-      data: () => ({
-          pages: [
-          { title: 'Home', icon: 'dashboard', url: '/' },
-          { title: 'Skill Search', icon: 'search', url: '/skill-search.html'},
-          { title: 'Public Feed', icon: 'question_answer', url: '/feed.html' }
-        ],
-        members: [
-          { photo: "https://avatars0.githubusercontent.com/u/37070724?s=400&v=4", name_en: 'Alison', facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'XuanTing Zhang' },
-          { photo: "https://avatars3.githubusercontent.com/u/48847495?s=400&v=4", name_en: 'Juno',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'ChingLun Chiu' },
-          { photo: "https://avatars2.githubusercontent.com/u/22865207?s=400&v=4", name_en: 'Nicole',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'Weiwei Lin' },
-          { photo: "https://avatars1.githubusercontent.com/u/40991040?s=460&v=4", name_en: 'Brandy',  facebook: "https://www.facebook.com/profile.php?id=100021710384904",name_ch:'SinYu Huang' }
-        ],
-        drawer: {
-            open : false,
-        },
-        search: null,
-        select: null,
-        userData: [],
-      }),
-      methods: {
-        toggleDrawer(){
-            this.drawer.open = !this.drawer.open
-        },
-        customFilter (item, queryText, itemText) {
-            const name = item.name.toLowerCase()
-            const email = item.email.toLowerCase()
-            const searchText = queryText.toLowerCase()
-
-            return name.indexOf(searchText) > -1 ||
-              email.indexOf(searchText) > -1
-          },
-        redirectPersonalPage(){
-            window.location.href = "/user-page.html?user=" + this.select
-        }
-=======
   var indexVue = new Vue({
     el: '#app',
     data: () => ({
@@ -368,7 +330,6 @@ width: 100%;
         duration: 500,
         offset: 0,
         easing: 'easeInOutCubic'
->>>>>>> master
       },
       target: '#page1'
     }),

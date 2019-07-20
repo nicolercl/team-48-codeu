@@ -48,36 +48,6 @@
     });
   }
 
-<<<<<<< HEAD
-   function buildMessageDiv(message){
-       const usernameDiv = document.createElement('div');
-       usernameDiv.classList.add("left-align");
-       usernameDiv.appendChild(document.createTextNode(message.user));
-
-       const timeDiv = document.createElement('div');
-       timeDiv.classList.add('right-align');
-       timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
-
-       const headerDiv = document.createElement('div');
-       headerDiv.classList.add('message-header');
-       headerDiv.appendChild(usernameDiv);
-       headerDiv.appendChild(timeDiv);
-
-       const bodyDiv = document.createElement('div');
-       bodyDiv.classList.add('message-body');
-       const messageBody = document.createElement('div');
-       messageBody.innerHTML = message.text;
-       bodyDiv.appendChild(messageBody);
-
-       //create translate button
-       bodyDiv.classList.add('translate-button');
-       const translateButton = document.createElement("input");
-       translateButton.type = "button";
-       translateButton.value = "Translate";
-       translateButton.addEventListener('click', function(){
-           if (this.value === "Translate"){
-                const language = window.navigator.language;
-=======
   function buildMessageDiv(message){
      const headerDiv = document.createElement('div');
      headerDiv.setAttribute("class", "v-card__title")
@@ -147,7 +117,6 @@
      likeButton.appendChild(likeNum);
      likeButton.addEventListener('click', function(){
             if (LOGIN){
->>>>>>> master
                 const params = new URLSearchParams();
                 params.append('message', JSON.stringify(message));
                 params.append('action', 'change');
@@ -240,17 +209,7 @@
 
     </script>
 </head>
-<<<<<<< HEAD
-<body onload="buildUI(); addLoginOrLogoutLinkToNavigation();">
-<div id="app">
-    <v-app>
-        <v-content>
-            <v-toolbar light class="elevation-0">
-                <v-toolbar-side-icon @click="toggleDrawer" light
-                ></v-toolbar-side-icon>
-=======
 <style>
->>>>>>> master
 
 	[v-cloak] {
 	  display: none;
