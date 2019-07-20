@@ -27,6 +27,9 @@ limitations under the License.
     <script src="/js/navigation-loader.js"></script>
 </head>
 <style>
+    [v-cloak] {
+	    display: none;
+    }      
     .aboutus {
         background: #FFF !important;
     }
@@ -73,7 +76,7 @@ limitations under the License.
 
 </style>
 <body onload="addLoginOrLogoutLinkToNavigation()">
-<div id="app">
+<div id="app" v-cloak>
     <v-app id="v-app">
         <!--tool bar-->
         <v-content>

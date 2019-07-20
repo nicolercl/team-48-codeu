@@ -9,8 +9,13 @@
     <script src="/js/navigation-loader.js"></script>
     <title>Skill Search</title>
 </head>
+<style>
+	[v-cloak] {
+	  display: none;
+	}
+</style>
 <body onload="addLoginOrLogoutLinkToNavigation();">
-<div id="app">
+<div id="app" v-cloak>
     <v-app>
         <v-content>
             <v-toolbar light color="white" class="elevation-2" app>

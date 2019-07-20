@@ -121,23 +121,27 @@ function fetchMessages() {
      //create likes button
      const likeButton = document.createElement("div");
      likeButton.setAttribute("class", 'v-btn');
+     likeButton.classList.add('v-btn--flat');
      const icon2 = document.createElement('div');
      icon2.setAttribute("class", "material-icons");
      icon2.setAttribute("style", "color:red");
-     const p = new URLSearchParams();
-     p.append('message', JSON.stringify(message));
-     p.append('action', 'get');
-     fetch('/like', {
-        method: 'POST',
-        body: p,
-        }).then(response => response.json())
-        .then((liked) => {
-             if (liked == "true"){
-                 icon2.innerHTML = "favorite";
-             } else {
-                 icon2.innerHTML = "favorite_border";
-             }
-         });
+     icon2.innerHTML = "favorite_border";
+     if (LOGIN){
+        const p = new URLSearchParams();
+        p.append('message', JSON.stringify(message));
+        p.append('action', 'get');
+        fetch('/like', {
+            method: 'POST',
+            body: p,
+            }).then(response => response.json())
+            .then((liked) => {
+                if (liked == "true"){
+                    icon2.innerHTML = "favorite";
+                } else {
+                    icon2.innerHTML = "favorite_border";
+                }
+            });
+    }
      const likeNum = document.createElement('div');
      likeNum.innerHTML = message.likes;
      likeButton.appendChild(icon2);
@@ -187,7 +191,6 @@ function fetchMessages() {
 
 
      //create translate button
-     bodyDiv.classList.add('translate-button');
      const translateButton = document.createElement("input");
      translateButton.type = "button";
      translateButton.value = "Translate";
@@ -213,22 +216,20 @@ function fetchMessages() {
      });
      bodyDiv.appendChild(translateButton);
 
-     const padding = document.createElement('div');
-     padding.setAttribute("class",'v-card');
+     const padded = document.createElement('div');
+     padded.setAttribute("class", "flex");
      const messageDiv = document.createElement('div');
      messageDiv.setAttribute("class", 'v-card');
-     messageDiv.setAttribute("color","#26c6da");
+     messageDiv.classList.add("white");
      messageDiv.setAttribute("light","true");
      messageDiv.setAttribute("max-width","400");
      messageDiv.classList.add('elevation-0');
      messageDiv.appendChild(headerDiv);
      messageDiv.appendChild(text);
      messageDiv.appendChild(bodyDiv);
-     const divide = document.createElement('div');
-     divide.setAttribute("class", 'v-divider');
-     messageDiv.appendChild(divide);
+     padded.appendChild(messageDiv);
 
-     return messageDiv;
+     return padded;
    }
 
 /** Fetches data and populates the UI of the page. */
