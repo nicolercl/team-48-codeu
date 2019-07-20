@@ -3,8 +3,10 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <meta charset="UTF-8">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="/js/skillsearch-loader.js"></script>
     <script src="/js/navigation-loader.js"></script>
     <title>Skill Search</title>
@@ -53,99 +55,289 @@
                      carddatanum = data.getValue(selection[0].row,1);
                      index=0;
                      loadcardinfo();
-                     vue.dialog=true;
+                     indexVue.dialog=true;
                  }
 
             });
         };
 
 
+
+
     </script>
 </head>
+<style>
+	[v-cloak] {
+	  display: none;
+	}
+    .titlecontainer{
+        background:url("./pics/search2.jpg");
+        no-repeat center center fixed;
+        background-size:cover;
+        height:400px;
+    }
+    .scroll {
+      overflow-y: auto;
+    }
+
+
+</style>
 <body onload="addLoginOrLogoutLinkToNavigation()">
-<div id="app">
-    <v-app>
+<div id="app" v-cloak>
+    <v-app class="white">
         <v-content>
-
-
-            <v-toolbar light class="elevation-0">
-                <v-toolbar-side-icon @click="toggleDrawer" light
-                ></v-toolbar-side-icon>
-
-                <v-toolbar-title>CodeU 2019 Starter Project</v-toolbar-title>
-
+            <v-toolbar light color="white" class="elevation-2" app>
+                <v-toolbar-title class="black--text">
+                    <v-btn flat large :href="Home">Skill Sync</v-btn>
+                </v-toolbar-title>
+                <v-layout wrap>
+                    <v-flex v-for="i in pages" md2>
+                        <v-btn flat small class="grey--text" :href="i.url">{{i.title}}</v-btn>
+                    </v-flex>
+                </v-layout>
                 <v-spacer></v-spacer>
-
-                <v-btn icon>
-                    <v-icon>search</v-icon>
-                </v-btn>
-
-                <v-btn icon>
-                    <v-icon>apps</v-icon>
-                </v-btn>
-
+                <v-autocomplete
+                        v-model="select"
+                        :items="userData"
+                        :search-input.sync="search"
+                        cache-items
+                        class="mx-3"
+                        flat
+                        hide-no-data
+                        hide-details
+                        item-text="email"
+                        :filter="customFilter"
+                        label="Search user by name or email..."
+                        solo-inverted
+                        @change="redirectPersonalPage()"
+                >
+                    <template v-slot:selection="data">
+                        {{ data.item.name }}
+                    </template>
+                    <template v-slot:item="data">
+                        <template>
+                            <v-list-tile-avatar>
+                                <img :src="data.item.avatar">
+                            </v-list-tile-avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                                <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
+                            </v-list-tile-content>
+                        </template>
+                    </template>
+                </v-autocomplete>
             </v-toolbar>
 
+            <div>
+                <v-container class="mx-8 titlecontainer">
+                    <v-layout fill-height wrap justify-start align-center data-aos="fade-up">
+                        <v-flex md12 xs12>
+                            <p class=" display-3 text-md-left ">Skill Search</p>
+                            <p class="subheading text-md-left ">choose specific category to see the result</p>
+                        </v-flex>
+                    </v-layout>
+                </v-container>
+            </div>
 
-            <v-navigation-drawer permanent hide-overlay v-show="drawer.open">
-                <v-toolbar flat>
-                    <v-list>
-                        <v-list-tile>
-                            <v-list-tile-title class="title">
-                                Application
-                            </v-list-tile-title>
-                        </v-list-tile>
-                    </v-list>
-                </v-toolbar>
-
-                <v-divider></v-divider>
-
-                <v-list id="navigation" dense class="pt-0">
-                    <v-list-tile
-                            v-for="item in items"
-                            :key="item.title"
-                            :href="item.url"
-                    >
-                        <v-list-tile-action>
-                            <v-icon>{{ item.icon }}</v-icon>
-                        </v-list-tile-action>
-
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                </v-list>
-            </v-navigation-drawer>
+            <div>
+                <v-dialog
+                        v-model="tutorial"
+                        width="700"
+                        height="700"
+                        scrollable
+                >
+                    <v-card>
 
 
-            <v-container class="mx-8">
-                <h1 class=" display-3 font-weight-bold mu-4 mb-4 grey--text text--darken-2">Skill Search</h1>
-                <p class="subheading">choose specific category to see the result</p>
-            </v-container>
+                        <v-stepper v-model="e1">
+                            <v-stepper-header>
+                                <v-stepper-step :complete="e1 > 1" step="1" color="indigo">select category
+                                </v-stepper-step>
+
+                                <v-divider></v-divider>
+
+                                <v-stepper-step :complete="e1 > 2" step="2" color="indigo">click on a spot
+                                </v-stepper-step>
+
+                                <v-divider></v-divider>
+
+                                <v-stepper-step step="3" color="indigo">TADA!</v-stepper-step>
+                            </v-stepper-header>
+
+                            <v-stepper-items>
+                                <v-stepper-content step="1">
+                                    <v-card
+                                            class="mb-5 scroll"
+                                            color="white"
+                                            height="200px"
+                                            flat
+                                    >
+                                        <v-card-title primary-title>
+                                            <div>
+                                                <h3 class="headline mb-0">select category</h3>
+                                            </div>
+                                        </v-card-title>
+                                        <v-card-text>
+                                            <div> Choose the category you're interested in! Click on the button to load
+                                                a skill map of it!
+                                            </div>
+                                        </v-card-text>
+                                        <v-img
+                                                src=".\pics\skillsearch1.png"
+                                                aspect-ratio="17.2"
+                                        ></v-img>
+                                    </v-card>
+                                    <v-layout justify-end>
+                                        <v-flex md2 xs2>
+                                            <v-btn
+                                                    dark
+                                                    color="indigo"
+                                                    round
+                                                    small
+                                                    @click="e1 = 2"
+                                            >
+                                                Continue
+                                            </v-btn>
+                                        </v-flex>
+                                        <v-flex md2 xs2>
+                                            <v-btn
+                                                    dark
+                                                    color="indigo"
+                                                    round
+                                                    small
+                                                    @click="tutorial = false"
+                                            >
+                                                close
+                                            </v-btn>
+                                        </v-flex>
+                                    </v-layout>
 
 
+                                </v-stepper-content>
+
+                                <v-stepper-content step="2">
+                                    <v-card
+                                            class="mb-5 scroll"
+                                            color="white"
+                                            height="200px"
+                                            flat
+                                    >
+                                        <v-card-title primary-title>
+                                            <div>
+                                                <h3 class="headline mb-0">click on a spot</h3>
+
+                                            </div>
+                                        </v-card-title>
+                                        <v-card-text>
+                                            <div>You can hover on the spot on the map for some school-based information, or click
+                                                on it for the sharers' information!
+                                            </div>
+                                        </v-card-text>
+                                        <v-img
+                                                src=".\pics\skillsearch2.png"
+                                                aspect-ratio="2.3"
+                                        ></v-img>
+
+
+                                    </v-card>
+                                    <v-layout justify-end>
+                                        <v-flex md2 xs2>
+                                            <v-btn
+                                                    dark
+                                                    color="indigo"
+                                                    round
+                                                    small
+                                                    @click="e1 = 3"
+                                            >
+                                                Continue
+                                            </v-btn>
+                                        </v-flex>
+                                        <v-flex md2 xs2>
+                                            <v-btn
+                                                    dark
+                                                    color="indigo"
+                                                    round
+                                                    small
+                                                    @click="tutorial = false"
+                                            >
+                                                close
+                                            </v-btn>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-stepper-content>
+
+                                <v-stepper-content step="3">
+                                    <v-card
+                                            class="mb-5 scroll"
+                                            color="white"
+                                            height="200px"
+                                            flat
+                                    >
+                                        <v-card-title primary-title>
+                                            <div>
+                                                <h3 class="headline mb-0">TADA!</h3>
+                                                <div>Here's what you get! Click on "learn more" to view the user's
+                                                    personal page !
+                                                </div>
+                                            </div>
+                                        </v-card-title>
+                                        <v-img
+                                                src=".\pics\skillsearch3.png"
+                                                aspect-ratio="1.82"
+                                        ></v-img>
+                                    </v-card>
+                                    <v-layout justify-end>
+                                        <v-flex md2 xs2>
+                                            <v-btn
+                                                    dark
+                                                    color="indigo"
+                                                    round
+                                                    small
+                                                    @click="e1 = 1"
+                                            >
+                                                Continue
+                                            </v-btn>
+                                        </v-flex>
+                                        <v-flex md2 xs2>
+                                            <v-btn
+                                                    dark
+                                                    color="indigo"
+                                                    round
+                                                    small
+                                                    @click="tutorial = false"
+                                            >
+                                                close
+                                            </v-btn>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-stepper-content>
+                            </v-stepper-items>
+                        </v-stepper>
+                    </v-card>
+                </v-dialog>
+            </div>
             <v-container class="mt-20 mx-8">
                 <v-layout row wrap justify-space-around>
                     <v-flex xs1 md1>
-                        <v-btn flat small @click="photobtnclick">Photography</v-btn>
+                        <v-btn round outline small color="indigo" @click="photobtnclick">Photography</v-btn>
                     </v-flex>
                     <v-flex xs1 md1>
-                        <v-btn flat small @click="designbtnclick">Design</v-btn>
+                        <v-btn round outline small color="indigo" @click="designbtnclick">Design</v-btn>
                     </v-flex>
                     <v-flex xs1 md1>
-                        <v-btn flat small @click="sportbtnclick">Sports</v-btn>
+                        <v-btn round outline small color="indigo" @click="sportbtnclick">Sports</v-btn>
                     </v-flex>
                     <v-flex xs1 md1>
-                        <v-btn flat small @click="musicbtnclick">Music</v-btn>
+                        <v-btn round outline small color="indigo" @click="musicbtnclick">Music</v-btn>
                     </v-flex>
                     <v-flex xs1 md1>
-                        <v-btn flat small @click="techbtnclick">Technology</v-btn>
+                        <v-btn round outline small color="indigo" @click="techbtnclick">Technology</v-btn>
                     </v-flex>
                     <v-flex xs1 md1>
-                        <v-btn flat small @click="languagebtnclick">Language</v-btn>
+                        <v-btn round outline small color="indigo" @click="languagebtnclick">Language</v-btn>
                     </v-flex>
                     <v-flex xs1 md1>
-                        <v-btn flat small @click="culinarybtnclick">Culinary</v-btn>
+                        <v-btn round outline small color="indigo" @click="culinarybtnclick">Culinary</v-btn>
                     </v-flex>
                 </v-layout>
 
@@ -214,7 +406,7 @@
                                     <v-flex md12 class="mt-4">
                                         <div>
                                             <h3 class="headline mb-0">Aboutme</h3>
-                                            <div> {{ card_aboutme }}</div>
+                                            <div id=cardaboutme></div>
                                         </div>
                                     </v-flex>
 
@@ -253,6 +445,23 @@
                 </div>
 
             </v-container>
+
+            <v-footer
+                    dark
+                    height="auto"
+            >
+                <v-card
+                        class="flex"
+                        flat
+                >
+                    <v-card-title class="justify-center my-2">
+                        2019 CodeU Team48
+
+                    </v-card-title>
+                </v-card>
+            </v-footer>
+
+
         </v-content>
     </v-app>
 </div>
@@ -261,8 +470,9 @@
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 <script>
     //for the tool bar
-    var vue = new Vue({ el: '#app',
+    var indexVue = new Vue({ el: '#app',
     data: () => ({
+<<<<<<< HEAD
         items: [
             { title: 'Home', icon: 'dashboard', url: '/' },
             { title: 'Skill Search', icon: 'search', url: '/skill-search.html'},
@@ -271,6 +481,17 @@
         drawer: {
             open : false,
         },
+=======
+        Home:'/',
+             pages: [
+             { title: 'Skill Search',url:'/skill-search.html'},
+             { title: 'Public Feed', url: '/feed.html' },
+             { title: 'About us',url:'/aboutus.html'}
+           ],
+           search: null,
+           select: null,
+           userData: [],
+>>>>>>> master
         dialog: false,
         previsdisabled: false,
         nextisdisabled: false,
@@ -281,9 +502,22 @@
         card_name:'',
         card_aboutme:'',
         card_shareskill:'',
-        card_skilllevel:''
+        card_skilllevel:'',
+        tutorial:true,
+        e1:0
     }),
     methods: {
+         customFilter (item, queryText, itemText) {
+               const name = item.name.toLowerCase()
+               const email = item.email.toLowerCase()
+               const searchText = queryText.toLowerCase()
+
+               return name.indexOf(searchText) > -1 ||
+                 email.indexOf(searchText) > -1
+             },
+           redirectPersonalPage(){
+               window.location.href = "/user-page.html?user=" + this.select
+           },
         toggleDrawer(){this.drawer.open = !this.drawer.open},
         photobtnclick(){getSkillSharer("Photography");},
         designbtnclick(){getSkillSharer("Design");},
@@ -311,11 +545,23 @@
         showpersonalpage()
         {
             window.location.href = "/user-page.html?user=" + infobyschool[index].email;
-        }
-    }
+        },
+         contactusbuttonclick(){
+            window.location.href = "/aboutus.html";
+         }
+    },
+       mounted(){
+       	getUserNameEmail();
+         }
     })
 
 
+
+
+</script>
+<script>
+    AOS.init();
+    window.addEventListener('load',AOS.refresh);
 </script>
 </body>
 </html>

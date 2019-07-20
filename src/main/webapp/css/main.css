@@ -14,33 +14,20 @@
  * limitations under the License.
  */
 
-/* Prevent the page from becoming too wide. */
+/* Prevent the page from becoming too wide.
 body {
   max-width: 600px;
 }
-
-/* Remove bullet points from navigation bar. */
+*/
+/* Remove bullet points from navigation bar.
 nav ul {
   list-style-type: none;
   padding-left: 0;
 }
-
-/* Keep navigation menu on one line. */
+*/
+/* Keep navigation menu on one line.
 nav li {
   display: inline-block;
   margin-right: 10px
 }
-
-/* noto-serif-tc-regular - latin */
-@font-face {
-  font-family: 'Noto Serif TC';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../fonts/noto-serif-tc-v5-latin-regular.eot'); /* IE9 Compat Modes */
-  src: local('Noto Serif TC'), local('NotoSerifTC-Regular'),
-       url('../fonts/noto-serif-tc-v5-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-serif-tc-v5-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('../fonts/noto-serif-tc-v5-latin-regular.woff') format('woff'), /* Modern Browsers */
-       url('../fonts/noto-serif-tc-v5-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('../fonts/noto-serif-tc-v5-latin-regular.svg#NotoSerifTC') format('svg'); /* Legacy iOS */
-}
+*/

@@ -27,20 +27,66 @@ public class Message {
     private String user;
     private String text;
     private long timestamp;
+    private String skill;
+    private String skillLevel;
+    private long likes;
+
 
     /**
      * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
      * random ID and uses the current system time for the creation time.
      */
+//    public Message(User user, String text,String skill, String skillLevel ) {
+//        this(UUID.randomUUID(), user.getName(), text, System.currentTimeMillis(), skill, skillLevel);
+//    }
     public Message(String user, String text) {
-        this(UUID.randomUUID(), user, text, System.currentTimeMillis());
+        this.id = UUID.randomUUID();
+        this.user = user;
+        this.text = text;
+        this.timestamp = System.currentTimeMillis();
+        this.skill = "undefine";
+        this.skillLevel = "undefine";
+        this.likes = 0;
     }
 
-    public Message(UUID id, String user, String text, long timestamp) {
+    public Message(String user, String text, String skill, String skillLevel) {
+        this.id = UUID.randomUUID();
+        this.user = user;
+        this.text = text;
+        this.timestamp = System.currentTimeMillis();
+        this.skill = skill;
+        this.skillLevel = skillLevel;
+        this.likes = 0;
+    }
+
+    public Message(UUID id, String user, String text, long timestamp, String skill, String skillLevel, long likes) {
         this.id = id;
         this.user = user;
         this.text = text;
         this.timestamp = timestamp;
+        this.skill = skill;
+        this.skillLevel = skillLevel;
+        this.likes = likes;
+    }
+
+    public Message(User user, String text) {
+        this.id = UUID.randomUUID();
+        this.user = user.getEmail();
+        this.text = text;
+        this.timestamp = System.currentTimeMillis();
+        this.skill = user.getLearnCategory();
+        this.skillLevel = user.getSkillLevel();
+        this.likes = 0;
+    }
+
+    public Message(UUID id, User user, String text, long timestamp, String skill, String skillLevel) {
+        this.id = id;
+        this.user = user.getEmail();
+        this.text = text;
+        this.timestamp = timestamp;
+        this.skill = skill;
+        this.skillLevel = skillLevel;
+        this.likes = likes;
     }
 
     public UUID getId() {
@@ -55,8 +101,35 @@ public class Message {
         return text;
     }
 
-    public void setText(String text) {this.text=text;}
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public long getTimestamp() {
         return timestamp;
     }
+
+    public String getskill() {
+        return skill;
+    }
+
+    public String getskillLevel() {
+        return skillLevel;
+    }
+
+    public long getLikes() {
+        return likes;
+    }
+
+    public long addLikes() {
+        this.likes = this.likes + 1;
+        return this.likes;
+    }
+    public long removeLikes() {
+        if (this.likes > 0) {
+            this.likes = this.likes - 1;
+        }
+        return this.likes;
+    }
+
 }

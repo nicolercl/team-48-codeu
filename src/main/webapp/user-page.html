@@ -16,83 +16,221 @@ limitations under the License.
 <head>
     <title>User Page</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user-page.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="/js/user-page-loader.js"></script>
+    <script src="/js/navigation-loader.js"></script>
     <!--loads the JavaScript code that comprises the CKEditor library for text styling.-->
     <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
-    <!-- Bootstrap.css -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous">
-
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
 </head>
-<body onload="buildUI(); ">
-<div id="content">
-    <nav id="navigation">
-        <a href="/">Home</a>
-        <a href="/aboutus.html">About Our Team</a>
-    </nav>
+<style>
+	[v-cloak] {
+	  display: none;
+	}
+</style>
+<body onload="buildUI();addLoginOrLogoutLinkToNavigation();">
+<div id="app" v-cloak>
+<v-app class="white">
+    <v-content>
+        <v-toolbar light color="white" class="elevation-2" app>
+            <v-toolbar-title class="black--text">
+                <v-btn flat large :href="Home">Skill Sync</v-btn>
+            </v-toolbar-title>
+            <v-layout wrap>
+                <v-flex v-for="i in pages" :key="i.title" md2>
+                    <v-btn flat small class="grey--text" :href="i.url">{{i.title}}</v-btn>
+                </v-flex>
+            </v-layout>
+            <v-spacer></v-spacer>
+            <v-autocomplete
+                    v-model="select"
+                    :items="userData"
+                    :search-input.sync="search"
+                    cache-items
+                    class="mx-3"
+                    flat
+                    hide-no-data
+                    hide-details
+                    item-text="email"
+                    :filter="customFilter"
+                    label="Search user by name or email..."
+                    solo-inverted
+                    @change="redirectPersonalPage()"
+            >
+                <template v-slot:selection="data">
+                    {{ data.item.name }}
+                </template>
+                <template v-slot:item="data">
+                    <template>
+                        <v-list-tile-avatar>
+                            <img :src="data.item.avatar">
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                            <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                            <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
+                        </v-list-tile-content>
+                    </template>
+                </template>
+            </v-autocomplete>
+        </v-toolbar>
+    </v-content>
 
+    <!--    intro section-->
+    <v-container>
+        <v-layout row justify-start align-end wrap class="my-15">
+            <v-flex md2>
+                <v-avatar size="100px">
+                    <img src="https://upload.cc/i1/2019/07/16/vsSkH2.png" alt="avatar">
+                </v-avatar>
+            </v-flex>
+            <v-flex md9>
+                <p class="title">{{user_name}}</p>
+            </v-flex>
+        </v-layout>
+    </v-container>
+    <v-container>
+        <v-layout row justify-center align-center wrap>
+            <v-flex md4><p class="title">Age: </p>
+                <p class="subheading">{{user_age}}</p></v-flex>
+            <v-flex md4><p class="title">School: </p>
+                <p class="subheading">{{user_school}}</p></v-flex>
+            <v-flex md4><p class="title">Email: </p>
+                <p class="subheading">{{user_email}}</p></v-flex>
+            <v-flex md4><p class="title">Learning Category: </p>
+                <p class="subheading">{{user_learncate}}</p></v-flex>
+            <v-flex md4><p class="title">Teaching Category: </p>
+                <p class="subheading">{{user_teachcate}}</p></v-flex>
+            <v-flex md4><p class="title">Skill Level: </p>
+                <p class="subheading">{{user_level}}</p></v-flex>
+        </v-layout>
+    </v-container>
 
-    <div class="padded rounded panel centered">
-        <h1 id="page-title" class="inline"> User Page</h1>
-    </div>
-
-<!--    intro section-->
-    <section class="px-5">
-        <h1 class="section-title text-center text-secondary mb-5">Profile</h1>
-        <div class="container">
-            <div class="row">
-                <div class="row justify-content-center">
-                    <div class="col-md-4">
-                        <img class="img-responsive rounded-circle" src="https://avatars0.githubusercontent.com/u/37070724?s=400&v=4" alt="">
-                    </div>
-                    <div class="col-md-6">
-                        <h6 class="inline" >Name: </h6><h6 id="name-container" class="inline">name not filled </h6>
-                        <br>
-                        <h6 class="inline" >Age: </h6><h6 id="age-container" class="inline">age not filled</h6>
-                        <br>
-                        <h6 class="inline" >School: </h6><h6 id="school-container" class="inline">school not filled</h6>
-                        <br>
-                        <h6 class="inline" >Email: </h6><h6 id="email-container" class="inline">email not filled</h6>
-                        <br>
-                        <h6 class="inline" >Learning Category: </h6><h6 id="learn-container" class="inline">learning cat not filled</h6>
-                        <br>
-                        <h6 class="inline" >Teaching Category: </h6><h6 id="teach-container" class="inline">teaching cat not filled</h6>
-                        <br>
-                        <h6 class="inline" >Skill Level: </h6><h6 id="level-container" class="inline">level not filled</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <v-container>
+        <v-layout>
+            <v-flex md4 offset-md8>
+                <form id="edit-button" class="hidden">
+                    <v-btn round outline color="indigo" @click="profileeditclicked">edit</v-btn>
+                </form>
+            </v-flex>
+        </v-layout>
+    </v-container>
 
     <!--for aboutme box-->
-    <h3>Self Intro</h3>
-    <div id="about-me-container">Loading...</div>
-    <br>
-    <div id="about-me-form" class="hidden">
-        <form action="/about" method="POST" novalidate>
-            <textarea name="about-me" placeholder="about me" id="about-me-textarea" rows=4 required></textarea>
-            <br/>
-            <input type="submit" value="Submit">
-        </form>
-    </div>
+    <v-container>
+        <h3>Self Intro</h3>
+        <div id="about-me-container" class="hidden">Loading...</div>
+        <br>
+    </v-container>
 
     <!--for new-message box-->
-    <div class="padded rounded panel">
-        <form id="message-form" action="/messages" method="POST" class="hidden">
-            <h2>Enter a new message:</h2>
-            <br/>
-            <textarea name="text" id="message-input" class="rounded"></textarea>
-            <br/>
-            <input type="submit" value="Submit" class="rounded">
-        </form>
-    </div>
-    <hr/>
+    <v-container>
+        <div class="padded rounded panel">
+            <form id="message-form" action="/messages" method="POST" class="hidden">
+                <h2>Enter a new message:</h2>
+                <br/>
+                <textarea name="text" id="message-input" class="rounded"></textarea>
+                <br/>
+                What's your post about? Choose a skill tag so others with the same interest can see your post!
+                <v-flex xs12 xs6 text-xs-left>
+                    <v-btn-toggle name="user_skill" v-model="skill_tag">
+                        <v-btn v-bind:value="user_learncate" outline round color="primary">
+                            <v-icon left>label</v-icon>{{ user_learncate }}</v-btn>
+                        <v-btn v-bind:value="user_teachcate" outline round color="red">
+                            <v-icon left>label</v-icon>{{ user_teachcate }}</v-btn>
+                    </v-btn-toggle>
+                    <input name="user_skill" v-model="skill_tag" v-show="false"></input>
+                </v-flex>
+                <v-flex xs12 xs6 text-xs-right>
+                    <v-btn type="submit" round outline>Submit</v-btn>
+                </v-flex>
+            </form>
+        </div>
+        <hr/>
+        <div>
+            <v-card color="grey lighten-4">
+                    <v-container
+                    fluid
+                    grid-list-lg
+                >
+                    <v-layout>
+                        <v-flex id="message-container">Loading...</v-flex></v-layout>
+                    </v-container>
+            </v-card>
+        </div>
+    </v-container>
 
-    <div id="message-container">Loading...</div>
+
+    <v-footer
+            dark
+            height="auto"
+    >
+        <v-card
+                class="flex"
+                flat
+        >
+            <v-card-title class="justify-center my-2">
+                2019 CodeU Team48
+            </v-card-title>
+        </v-card>
+    </v-footer>
+</v-app>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+<script>
+  var indexVue = new Vue({
+    el: '#app',
+    data: () => ({
+      login: '/login',
+      Home: '/',
+      pages: [
+        { title: 'Skill Search', url: '/skill-search.html' },
+        { title: 'Public Feed', url: '/feed.html' },
+        { title: 'About us', url: '/aboutus.html' }
+      ],
+      search: null,
+      select: null,
+      userData: [],
+      user_name: 'empty',
+      user_age: 'empty',
+      user_email: 'empty',
+      user_learncate: 'empty',
+      user_teachcate: 'empty',
+      user_level: 'empty',
+      user_school: 'empty',
+      skill_tag: "empty",
+    }),
+    methods: {
+
+      customFilter (item, queryText, itemText) {
+        const name = item.name.toLowerCase()
+        const email = item.email.toLowerCase()
+        const searchText = queryText.toLowerCase()
+
+        return name.indexOf(searchText) > -1 ||
+          email.indexOf(searchText) > -1
+      },
+      redirectPersonalPage () {
+        window.location.href = '/user-page.html?user=' + this.select
+      },
+      contactusbuttonclick () {
+        window.location.href = '/aboutus.html'
+      },
+      profileeditclicked () {
+        window.location.href = '/user-info.html'
+      }
+
+    },
+    mounted () {
+      getUserNameEmail()
+    }
+  })
+
+
+
+</script>
 </body>
 </html>
