@@ -67,6 +67,9 @@
     </script>
 </head>
 <style>
+	[v-cloak] {
+	  display: none;
+	}
     .titlecontainer{
         background:url("./pics/search2.jpg");
         no-repeat center center fixed;
@@ -80,7 +83,7 @@
 
 </style>
 <body onload="addLoginOrLogoutLinkToNavigation()">
-<div id="app">
+<div id="app" v-cloak>
     <v-app class="white">
         <v-content>
             <v-toolbar light color="white" class="elevation-2" app>

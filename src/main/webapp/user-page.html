@@ -26,8 +26,14 @@ limitations under the License.
     <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
 </head>
+<style>
+	[v-cloak] {
+	  display: none;
+	}
+</style>
 <body onload="buildUI();addLoginOrLogoutLinkToNavigation();">
-<v-app id="app" class="white">
+<div id="app" v-cloak>
+<v-app class="white">
     <v-content>
         <v-toolbar light color="white" class="elevation-2" app>
             <v-toolbar-title class="black--text">
@@ -143,7 +149,17 @@ limitations under the License.
             </form>
         </div>
         <hr/>
-        <div id="message-container">Loading...</div>
+        <div>
+            <v-card color="grey lighten-4">
+                    <v-container
+                    fluid
+                    grid-list-lg
+                >
+                    <v-layout>
+                        <v-flex id="message-container">Loading...</v-flex></v-layout>
+                    </v-container>
+            </v-card>
+        </div>
     </v-container>
 
 
@@ -161,6 +177,7 @@ limitations under the License.
         </v-card>
     </v-footer>
 </v-app>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 <script>

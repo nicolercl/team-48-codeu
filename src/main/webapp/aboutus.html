@@ -27,6 +27,9 @@ limitations under the License.
     <script src="/js/navigation-loader.js"></script>
 </head>
 <style>
+    [v-cloak] {
+	    display: none;
+    }      
     .aboutus {
         background: #FFF !important;
     }
@@ -73,7 +76,7 @@ limitations under the License.
 
 </style>
 <body onload="addLoginOrLogoutLinkToNavigation()">
-<div id="app">
+<div id="app" v-cloak>
     <v-app id="v-app">
         <!--tool bar-->
         <v-content>
@@ -126,9 +129,9 @@ limitations under the License.
                     <p class=" display-3 text-md-left ">About us</p>
                     <p class="subheading text-md-left ">Hi! We are codeU team48! We are four girls from Taiwan. </p>
                     <p class="subheading text-md-left ">Welcome to SkillSync!</p>
-                    <p class="subheading text-md-left ">"SkillSync" is a project intend to build connections between
-                        students.</p>
-                    <p class="subheading text-md-left ">Here, we exchanges talents and ideas!</p>
+                    <p class="subheading text-md-left ">"SkillSync" is a project aiming to build connections between
+                        students for skill exchange.</p>
+                    <p class="subheading text-md-left ">Here, we exchange talents and ideas!</p>
                     <p class="subheading text-md-left ">Hope you enjoy our community!</p>
                 </v-flex>
             </v-layout>
