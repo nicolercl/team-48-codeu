@@ -148,17 +148,21 @@
 
                         <v-stepper v-model="e1">
                             <v-stepper-header>
-                                <v-stepper-step :complete="e1 > 1" step="1" color="indigo">select category
+                                <v-stepper-step :complete="e1 > 1" step="1" color="indigo">welcome!
+                                </v-stepper-step>
+
+                                <v-divider></v-divider>
+                                <v-stepper-step :complete="e1 > 2" step="2" color="indigo">select category
                                 </v-stepper-step>
 
                                 <v-divider></v-divider>
 
-                                <v-stepper-step :complete="e1 > 2" step="2" color="indigo">click on a spot
+                                <v-stepper-step :complete="e1 > 3" step="3" color="indigo">click on a spot
                                 </v-stepper-step>
 
                                 <v-divider></v-divider>
 
-                                <v-stepper-step step="3" color="indigo">TADA!</v-stepper-step>
+                                <v-stepper-step step="4" color="indigo">TADA!</v-stepper-step>
                             </v-stepper-header>
 
                             <v-stepper-items>
@@ -171,18 +175,13 @@
                                     >
                                         <v-card-title primary-title>
                                             <div>
-                                                <h3 class="headline mb-0">select category</h3>
+                                                <h3 class="headline mb-0">New to SkillSync?</h3>
                                             </div>
                                         </v-card-title>
                                         <v-card-text>
-                                            <div> Choose the category you're interested in! Click on the button to load
-                                                a skill map of it!
+                                            <div> Here's the tutorial! <br> Click continue to learn more, and close to leave.
                                             </div>
                                         </v-card-text>
-                                        <v-img
-                                                src=".\pics\skillsearch1.png"
-                                                aspect-ratio="17.2"
-                                        ></v-img>
                                     </v-card>
                                     <v-layout justify-end>
                                         <v-flex md2 xs2>
@@ -211,8 +210,57 @@
 
 
                                 </v-stepper-content>
-
                                 <v-stepper-content step="2">
+                                    <v-card
+                                            class="mb-5 scroll"
+                                            color="white"
+                                            height="200px"
+                                            flat
+                                    >
+                                        <v-card-title primary-title>
+                                            <div>
+                                                <h3 class="headline mb-0">select category</h3>
+                                            </div>
+                                        </v-card-title>
+                                        <v-card-text>
+                                            <div> Choose the category you're interested in!<br> Click on the button to load
+                                                a skill map of it!
+                                            </div>
+                                        </v-card-text>
+                                        <v-img
+                                                src=".\pics\skillsearch1.png"
+                                                aspect-ratio="2.89"
+                                        ></v-img>
+                                    </v-card>
+                                    <v-layout justify-end>
+                                        <v-flex md2 xs2>
+                                            <v-btn
+                                                    dark
+                                                    color="indigo"
+                                                    round
+                                                    small
+                                                    @click="e1 = 3"
+                                            >
+                                                Continue
+                                            </v-btn>
+                                        </v-flex>
+                                        <v-flex md2 xs2>
+                                            <v-btn
+                                                    dark
+                                                    color="indigo"
+                                                    round
+                                                    small
+                                                    @click="tutorial = false"
+                                            >
+                                                close
+                                            </v-btn>
+                                        </v-flex>
+                                    </v-layout>
+
+
+                                </v-stepper-content>
+
+                                <v-stepper-content step="3">
                                     <v-card
                                             class="mb-5 scroll"
                                             color="white"
@@ -244,7 +292,7 @@
                                                     color="indigo"
                                                     round
                                                     small
-                                                    @click="e1 = 3"
+                                                    @click="e1 = 4"
                                             >
                                                 Continue
                                             </v-btn>
@@ -263,7 +311,7 @@
                                     </v-layout>
                                 </v-stepper-content>
 
-                                <v-stepper-content step="3">
+                                <v-stepper-content step="4">
                                     <v-card
                                             class="mb-5 scroll"
                                             color="white"
