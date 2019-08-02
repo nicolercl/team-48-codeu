@@ -1,4 +1,6 @@
 function saveUser(name, email,aboutme,learncategory,sharecategory,skilllevel,school,age){
+    UserService userService = UserServiceFactory.getUserService();
+    String email = userService.getCurrentUser().getEmail();
     let user = new Object();
     user.name = name;
     user.email = email;
@@ -26,3 +28,4 @@ function submitData(newUser) {
           window.location.href = "/user-page.html?user=" + newUser.email;
       });
 }
+

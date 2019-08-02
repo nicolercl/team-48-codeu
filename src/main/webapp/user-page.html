@@ -16,6 +16,8 @@ limitations under the License.
 <head>
     <title>User Page</title>
     <meta charset="UTF-8">
+    <!--    bootstrap-->
+    <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
     <link rel="stylesheet" href="/css/user-page.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@1.x/dist/vuetify.min.css" rel="stylesheet">
@@ -27,155 +29,170 @@ limitations under the License.
     <link href="https://cdn.jsdelivr.net/npm/vuetify@1.x/dist/vuetify.min.css" rel="stylesheet">
 </head>
 <style>
-	[v-cloak] {
-	  display: none;
-	}
+    [v-cloak] {
+        display: none;
+    }
 </style>
 <body onload="buildUI();addLoginOrLogoutLinkToNavigation();">
 <div id="app" v-cloak>
-<v-app class="white">
-    <v-content>
-        <v-toolbar light color="white" class="elevation-2" app>
-            <v-toolbar-title class="black--text">
-                <v-btn flat large :href="Home">Skill Sync</v-btn>
-            </v-toolbar-title>
-            <v-layout wrap>
-                <v-flex v-for="i in pages" :key="i.title" md2>
-                    <v-btn flat small class="grey--text" :href="i.url">{{i.title}}</v-btn>
-                </v-flex>
-            </v-layout>
-            <v-spacer></v-spacer>
-            <v-autocomplete
-                    v-model="select"
-                    :items="userData"
-                    :search-input.sync="search"
-                    cache-items
-                    class="mx-3"
-                    flat
-                    hide-no-data
-                    hide-details
-                    item-text="email"
-                    :filter="customFilter"
-                    label="Search user by name or email..."
-                    solo-inverted
-                    @change="redirectPersonalPage()"
-            >
-                <template v-slot:selection="data">
-                    {{ data.item.name }}
-                </template>
-                <template v-slot:item="data">
-                    <template>
-                        <v-list-tile-avatar>
-                            <img :src="data.item.avatar">
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                            <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-                            <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
-                        </v-list-tile-content>
-                    </template>
-                </template>
-            </v-autocomplete>
-        </v-toolbar>
-    </v-content>
-
-    <!--    intro section-->
-    <v-container>
-        <v-layout row justify-start align-end wrap class="my-15">
-            <v-flex md2>
-                <v-avatar size="100px">
-                </v-avatar>
-            </v-flex>
-            <v-flex md9>
-                <p class="title">{{user_name}}</p>
-            </v-flex>
-        </v-layout>
-    </v-container>
-    <v-container>
-        <v-layout row justify-center align-center wrap>
-            <v-flex md4><p class="title">Age: </p>
-                <p class="subheading">{{user_age}}</p></v-flex>
-            <v-flex md4><p class="title">School: </p>
-                <p class="subheading">{{user_school}}</p></v-flex>
-            <v-flex md4><p class="title">Email: </p>
-                <p class="subheading">{{user_email}}</p></v-flex>
-            <v-flex md4><p class="title">Learning Category: </p>
-                <p class="subheading">{{user_learncate}}</p></v-flex>
-            <v-flex md4><p class="title">Teaching Category: </p>
-                <p class="subheading">{{user_teachcate}}</p></v-flex>
-            <v-flex md4><p class="title">Skill Level: </p>
-                <p class="subheading">{{user_level}}</p></v-flex>
-        </v-layout>
-    </v-container>
-
-    <v-container>
-        <v-layout>
-            <v-flex md4 offset-md8>
-                <form id="edit-button" class="hidden">
-                    <v-btn round outline color="indigo" @click="profileeditclicked">edit</v-btn>
-                </form>
-            </v-flex>
-        </v-layout>
-    </v-container>
-
-    <!--for aboutme box-->
-    <v-container>
-        <h3>Self Intro</h3>
-        <div id="about-me-container" class="hidden">Loading...</div>
-        <br>
-    </v-container>
-
-    <!--for new-message box-->
-    <v-container>
-        <div class="padded rounded panel">
-            <form id="message-form" action="/messages" method="POST" class="hidden">
-                <h2>Enter a new message:</h2>
-                <br/>
-                <textarea name="text" id="message-input" class="rounded"></textarea>
-                <br/>
-                What's your post about? Choose a skill tag so others with the same interest can see your post!
-                <v-flex xs12 xs6 text-xs-left>
-                    <v-btn-toggle name="user_skill" v-model="skill_tag">
-                        <v-btn v-bind:value="user_learncate" outline round color="primary">
-                            <v-icon left>label</v-icon>{{ user_learncate }}</v-btn>
-                        <v-btn v-bind:value="user_teachcate" outline round color="red">
-                            <v-icon left>label</v-icon>{{ user_teachcate }}</v-btn>
-                    </v-btn-toggle>
-                    <input name="user_skill" v-model="skill_tag" v-show="false"></input>
-                </v-flex>
-                <v-flex xs12 xs6 text-xs-right>
-                    <v-btn type="submit" round outline>Submit</v-btn>
-                </v-flex>
-            </form>
-        </div>
-        <hr/>
-        <div>
-            <v-card color="grey lighten-4">
-                    <v-container
-                    fluid
-                    grid-list-lg
+    <v-app class="white">
+        <v-content>
+            <v-toolbar light color="white" class="elevation-2" app>
+                <v-toolbar-title class="black--text">
+                    <v-btn flat large :href="Home">Skill Sync</v-btn>
+                </v-toolbar-title>
+                <v-layout wrap>
+                    <v-flex v-for="i in pages" :key="i.title" md2>
+                        <v-btn flat small class="grey--text" :href="i.url">{{i.title}}</v-btn>
+                    </v-flex>
+                </v-layout>
+                <v-spacer></v-spacer>
+                <v-autocomplete
+                        v-model="select"
+                        :items="userData"
+                        :search-input.sync="search"
+                        cache-items
+                        class="mx-3"
+                        flat
+                        hide-no-data
+                        hide-details
+                        item-text="email"
+                        :filter="customFilter"
+                        label="Search user by name or email..."
+                        solo-inverted
+                        @change="redirectPersonalPage()"
                 >
-                    <v-layout>
-                        <v-flex id="message-container">Loading...</v-flex></v-layout>
-                    </v-container>
-            </v-card>
-        </div>
-    </v-container>
+                    <template v-slot:selection="data">
+                        {{ data.item.name }}
+                    </template>
+                    <template v-slot:item="data">
+                        <template>
+                            <v-list-tile-avatar>
+                                <img :src="data.item.avatar">
+                            </v-list-tile-avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                                <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
+                            </v-list-tile-content>
+                        </template>
+                    </template>
+                </v-autocomplete>
+            </v-toolbar>
 
 
-    <v-footer
-            dark
-            height="auto"
-    >
-        <v-card
-                class="flex"
-                flat
-        >
-            <v-card-title class="justify-center my-2">
-                2019 CodeU Team48
-            </v-card-title>
-        </v-card>
-    </v-footer>
-</v-app>
+            <v-container>
+                <v-layout row justify-start align-end wrap class="my-15">
+                    <v-flex md5>
+                        <div id="profile-pic-container">Loading...</div>
+
+                        <div id="profile-pic-form">
+                            <form id="upload-dp" class="hidden" method="POST" enctype="multipart/form-data">
+                                <input type="file" name="image">
+                                <br/><br/>
+                                <button>Submit</button>
+                            </form>
+                        </div>
+                    </v-flex>
+
+                    <v-flex md5>
+                        <p class="title">{{user_name}}</p>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+
+
+            <v-container>
+                <v-layout row justify-center align-center wrap>
+                    <v-flex md4><p class="title">Age: </p>
+                        <p class="subheading">{{user_age}}</p></v-flex>
+                    <v-flex md4><p class="title">School: </p>
+                        <p class="subheading">{{user_school}}</p></v-flex>
+                    <v-flex md4><p class="title">Email: </p>
+                        <p class="subheading">{{user_email}}</p></v-flex>
+                    <v-flex md4><p class="title">Learning Category: </p>
+                        <p class="subheading">{{user_learncate}}</p></v-flex>
+                    <v-flex md4><p class="title">Teaching Category: </p>
+                        <p class="subheading">{{user_teachcate}}</p></v-flex>
+                    <v-flex md4><p class="title">Skill Level: </p>
+                        <p class="subheading">{{user_level}}</p></v-flex>
+                </v-layout>
+            </v-container>
+
+            <v-container>
+                <v-layout>
+                    <v-flex md4 offset-md8>
+                        <form id="edit-button" class="hidden">
+                            <v-btn round outline color="indigo" @click="profileeditclicked">edit</v-btn>
+                        </form>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+
+            <!--for aboutme box-->
+            <v-container>
+                <h3>Self Intro</h3>
+                <div id="about-me-container" class="hidden">Loading...</div>
+                <br>
+            </v-container>
+
+
+            <!--for new-message box-->
+            <v-container>
+                <div class="padded rounded panel">
+                    <form id="message-form" action="/messages" method="POST" class="hidden">
+                        <h2>Enter a new message:</h2>
+                        <br/>
+                        <textarea name="text" id="message-input" class="rounded"></textarea>
+                        <br/>
+                        What's your post about? Choose a skill tag so others with the same interest can see your post!
+                        <v-flex xs12 xs6 text-xs-left>
+                            <v-btn-toggle name="user_skill" v-model="skill_tag">
+                                <v-btn v-bind:value="user_learncate" outline round color="primary">
+                                    <v-icon left>label</v-icon>
+                                    {{ user_learncate }}
+                                </v-btn>
+                                <v-btn v-bind:value="user_teachcate" outline round color="red">
+                                    <v-icon left>label</v-icon>
+                                    {{ user_teachcate }}
+                                </v-btn>
+                            </v-btn-toggle>
+                            <input name="user_skill" v-model="skill_tag" v-show="false"></input>
+                        </v-flex>
+                        <v-flex xs12 xs6 text-xs-right>
+                            <v-btn type="submit" round outline>Submit</v-btn>
+                        </v-flex>
+                    </form>
+                </div>
+                <hr/>
+                <div>
+                    <v-card color="grey lighten-4">
+                        <v-container
+                                fluid
+                                grid-list-lg
+                        >
+                            <v-layout>
+                                <v-flex id="message-container">Loading...</v-flex>
+                            </v-layout>
+                        </v-container>
+                    </v-card>
+                </div>
+            </v-container>
+
+            <v-footer
+                    dark
+                    height="auto"
+            >
+                <v-card
+                        class="flex"
+                        flat
+                >
+                    <v-card-title class="justify-center my-2">
+                        2019 CodeU Team48
+                    </v-card-title>
+                </v-card>
+            </v-footer>
+        </v-content>
+    </v-app>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify@1.x/dist/vuetify.js"></script>
@@ -200,7 +217,7 @@ limitations under the License.
       user_teachcate: 'empty',
       user_level: 'empty',
       user_school: 'empty',
-      skill_tag: "empty",
+      skill_tag: 'empty',
     }),
     methods: {
 
@@ -227,7 +244,6 @@ limitations under the License.
       getUserNameEmail()
     }
   })
-
 
 
 </script>

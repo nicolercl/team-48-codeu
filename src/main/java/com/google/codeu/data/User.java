@@ -11,10 +11,11 @@ public class User {
     private String name;
     private String age;
     private String skillLevel;
+    private String profilePicUrl;
     private HashSet<String> likedMessages;
 
     public User(String email, String aboutMe, String learnCategory, String teachCategory, String school,
-                String age, String name, String skillLevel) {
+                String age, String name, String skillLevel, String profilePicUrl) {
         this.email = email;
         this.aboutMe = aboutMe;
         this.learnCategory = learnCategory;
@@ -23,11 +24,12 @@ public class User {
         this.name = name;
         this.age = age;
         this.skillLevel = skillLevel;
+        this.profilePicUrl = profilePicUrl;
         this.likedMessages = new HashSet<String>();
     }
 
     public User(String email, String aboutMe, String learnCategory, String teachCategory, String school,
-                String age, String name, String skillLevel, HashSet<String> likedMessages) {
+                String age, String name, String skillLevel, String profilePicUrl, HashSet<String> likedMessages) {
         this.email = email;
         this.aboutMe = aboutMe;
         this.learnCategory = learnCategory;
@@ -36,6 +38,7 @@ public class User {
         this.name = name;
         this.age = age;
         this.skillLevel = skillLevel;
+        this.profilePicUrl = profilePicUrl;
         this.likedMessages = new HashSet<String>();
         this.likedMessages.addAll(likedMessages);
     }
@@ -71,6 +74,8 @@ public class User {
     public String getSkillLevel() {
         return skillLevel;
     }
+
+    public String getProfilePicUrl() { return profilePicUrl; }
 
     public HashSet<String> getLikedMessages(){
         return this.likedMessages;
@@ -111,6 +116,8 @@ public class User {
     public void setSkillLevel(String skillLevel){
         this.skillLevel = skillLevel;
     }
+
+    public void setProfilePicUrl(String profilePicUrl){ this.profilePicUrl = profilePicUrl; }
 
     public void setLikedMessages(HashSet<String> likedMessages){
         this.likedMessages = new HashSet<String>();
