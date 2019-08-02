@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Locale;
+//import java.util.Locale;
 
 @WebServlet("/translate")
 public class TranslationServlet extends HttpServlet {
@@ -18,13 +18,12 @@ public class TranslationServlet extends HttpServlet {
         // Get the request parameters.
         String originalText = request.getParameter("text");
         String languageCode = request.getParameter("languageCode");
-        Locale loc = new Locale(languageCode);
-        String isoLocale = Locale.getDefault().getLanguage();
+        if (!languageCode.equals("zh-TW")) languageCode = languageCode.substring(0, 2);
 
         // Do the translation.
         Translate translate = TranslateOptions.getDefaultInstance().getService();
         Translation translation =
-                translate.translate(originalText, Translate.TranslateOption.targetLanguage(isoLocale));
+                translate.translate(originalText, Translate.TranslateOption.targetLanguage(languageCode));
         String translatedText = translation.getTranslatedText();
 
         // Output the translation.
