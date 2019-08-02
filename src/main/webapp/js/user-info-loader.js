@@ -1,4 +1,4 @@
-function saveUser(name, email,aboutme,learncategory,sharecategory,skilllevel,school,age){
+function saveUser(name, email,aboutme,learncategory,sharecategory,skilllevel,school,age,actUrl,picUrl){
     let user = new Object();
     user.name = name;
     user.email = email;
@@ -8,6 +8,8 @@ function saveUser(name, email,aboutme,learncategory,sharecategory,skilllevel,sch
     user.skillLevel =skilllevel;
     user.school = school;
     user.age = age;
+    user.actUrl = actUrl;
+    user.picUrl = picUrl;
     return user;
 }
 
@@ -25,4 +27,18 @@ function submitData(newUser) {
           newUser.email = results.userEmail;
           window.location.href = "/user-page.html?user=" + newUser.email;
       });
+}
+
+function fetchProfilePicUrl() {
+  fetch('/profilepic-upload-url')
+    .then((response) => {
+      return response.text();
+    })
+    .then((profilePicUploadUrl) => {
+      //console.log(profilePicUploadUrl)
+
+      // const profilepicForm = document.getElementById('profilepic-form');
+      // profilepicForm.action = profilePicUploadUrl;
+      // profilepicForm.classList.remove('hidden');
+    });
 }

@@ -11,10 +11,12 @@ public class User {
     private String name;
     private String age;
     private String skillLevel;
+    private String actUrl;
+    private String picUrl;
     private HashSet<String> likedMessages;
 
     public User(String email, String aboutMe, String learnCategory, String teachCategory, String school,
-                String age, String name, String skillLevel) {
+                String age, String name, String skillLevel, String actUrl, String picUrl) {
         this.email = email;
         this.aboutMe = aboutMe;
         this.learnCategory = learnCategory;
@@ -23,11 +25,13 @@ public class User {
         this.name = name;
         this.age = age;
         this.skillLevel = skillLevel;
+        this.actUrl = actUrl;
+        this.picUrl = picUrl;
         this.likedMessages = new HashSet<String>();
     }
 
     public User(String email, String aboutMe, String learnCategory, String teachCategory, String school,
-                String age, String name, String skillLevel, HashSet<String> likedMessages) {
+                String age, String name, String skillLevel, String actUrl, String picUrl, HashSet<String> likedMessages) {
         this.email = email;
         this.aboutMe = aboutMe;
         this.learnCategory = learnCategory;
@@ -36,6 +40,8 @@ public class User {
         this.name = name;
         this.age = age;
         this.skillLevel = skillLevel;
+        this.actUrl = actUrl;
+        this.picUrl = picUrl;
         this.likedMessages = new HashSet<String>();
         this.likedMessages.addAll(likedMessages);
     }
@@ -70,6 +76,14 @@ public class User {
 
     public String getSkillLevel() {
         return skillLevel;
+    }
+
+    public String getActUrl() {
+        return actUrl;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
     }
 
     public HashSet<String> getLikedMessages(){
@@ -110,6 +124,14 @@ public class User {
 
     public void setSkillLevel(String skillLevel){
         this.skillLevel = skillLevel;
+    }
+
+    public void setActUrl(String actUrl){
+        this.actUrl = actUrl;
+    }
+
+    public void setPicUrl(String picUrl){
+        this.picUrl = picUrl;
     }
 
     public void setLikedMessages(HashSet<String> likedMessages){

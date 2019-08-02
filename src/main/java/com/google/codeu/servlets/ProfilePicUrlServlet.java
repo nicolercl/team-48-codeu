@@ -1,5 +1,15 @@
 package com.google.codeu.servlets;
 
+import java.io.IOException;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 import com.google.appengine.api.blobstore.BlobInfo;
 import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobKey;
@@ -8,54 +18,79 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
-import java.io.IOException;
-import java.util.List;
-
-import java.util.Map;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.google.codeu.data.Datastore;
-import com.google.codeu.data.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
-import com.google.gson.JsonObject;
-import com.google.gson.Gson;
+import com.google.codeu.data.Datastore;
+import com.google.codeu.data.Message;
+import com.google.codeu.data.User;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
+@WebServlet("/profilePic")
+public class ProfilePicUrlServlet extends HttpServlet {
 
+    private Datastore datastore;
 
-/**
- * When the user submits the form, Blobstore processes the file upload
- * and then forwards the request to this servlet. This servlet can then
- * process the request using the file URL we get from Blobstore.
- */
-@WebServlet("/my-form-handler")
-public class FormHandlerServlet extends HttpServlet {
+    @Override
+    public void init() {
+        datastore = new Datastore();
+    }
 
+    /**
+     * Responds with the profile picture Url for a particular user.
+     */
+//    @Override
+//    public void doGet(HttpServletRequest request, HttpServletResponse response)
+//            throws IOException {
+//
+//        response.setContentType("text/html");
+//
+//        String user = request.getParameter("user");
+//
+//        if(user == null || user.equals("")) {
+//            // Request is invalid, return empty response
+//            return;
+//        }
+//
+//        User userData = datastore.getUser(user);
+//
+//        if(userData == null || userData.getPicUrl() == null) {
+//            return;
+//        }
+//
+//        response.getOutputStream().println(userData.getPicUrl());
+//    }
+
+    /** Stores a new profile picture */
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        // Get the message entered by the user.
-        //String message = request.getParameter("message");
+        UserService userService = UserServiceFactory.getUserService();
+        if (!userService.isUserLoggedIn()) {
+            response.sendRedirect("/index.html");
+            return;
+        }
 
-        // Get the URL of the image that the user uploaded to Blobstore.
+        //get email of current user
+        String userEmail = userService.getCurrentUser().getEmail();
+
         //String imageUrl = getUploadedFileUrl(request, "image");
 
-        // Output some HTML that shows the data the user entered.
-        // A real codebase would probably store these in Datastore.
-//        ServletOutputStream out = response.getOutputStream();
-//        out.println("<a href=\"" + imageUrl + "\">");
-//        out.println("<img src=\"" + imageUrl + "\" />");
-//        out.println("</a>");
-//        out.println("<p>INTRO</p>");
-//        out.println(message);
-        System.out.println("ininini");
+        //get current user by querying the email
+        User user = datastore.getUser(userEmail);
+
+
+        //user.setPicUrl(imageUrl);
+        //store the user
+        datastore.storeUser(user);
+        System.out.println("i'm hhhhhhhhere");
+        //System.out.println(imageUrl);
+
+        //response.sendRedirect("/user-page.html?user=" + userEmail);
+
     }
 
     /**

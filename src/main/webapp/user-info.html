@@ -15,7 +15,7 @@
 	  display: none;
 	}
 </style>
-<body onload="addLoginOrLogoutLinkToNavigation();">
+<body onload="addLoginOrLogoutLinkToNavigation();fetchProfilePicUrl();">
 <div id="app" v-cloak>
     <v-app>
         <v-content>
@@ -109,9 +109,27 @@
                         >
                         </v-textarea>
 
+                        <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
+
+
+                            <v-text-field label="Select Image" @click='pickFile' v-model='imageName'
+                                          prepend-icon='attach_file'></v-text-field>
+                            <input
+                                    id="image"
+                                    name="image"
+                                    type="file"
+                                    @change="onFilePicked"
+                                    style="display: none"
+                                    ref="image"
+                                    accept="image/*"
+                            >
+                        </v-flex>
+
                         <v-flex class="text-xs-right">
                             <v-btn  @click="submit">submit</v-btn>
                         </v-flex>
+
+
 
                     </v-form>
                 </div>
@@ -142,6 +160,14 @@
     //for the tool bar
      var indexVue = new Vue({ el: '#app',
      data: () => ({
+       title: 'Image Upload',
+       dialog: false,
+       imageName: '',
+       imageUrl: '',
+       imageFile: '',
+       action: '',
+       image: null,
+
        Home:'/',
           pages: [
           { title: 'Skill Search',url:'/skill-search.html'},
@@ -177,6 +203,30 @@
          ],
       }),
       methods: {
+        pickFile () {
+          this.$refs.image.click()
+        },
+        onFilePicked (e) {
+          const files = e.target.files
+          if (files[0] !== undefined) {
+            this.imageName = files[0].name
+            if (this.imageName.lastIndexOf('.') <= 0) {
+              return
+            }
+            const fr = new FileReader()
+            fr.readAsDataURL(files[0])
+            fr.addEventListener('load', () => {
+              // this.imageUrl = fr.result
+              // console.log(this.imageUrl)
+              this.imageFile = files[0] // this is an image file that can be sent to server...
+            })
+          } else {
+            this.imageName = ''
+            this.imageFile = ''
+            this.imageUrl = ''
+          }
+        },
+
         customFilter (item, queryText, itemText) {
             const name = item.name.toLowerCase()
             const email = item.email.toLowerCase()
@@ -191,8 +241,9 @@
         submit () {
             newUser = saveUser(this.name,this.email,this.aboutme,this.learncategory
                                    ,this.sharecategory,this.shareskilllevel,
-                                   this.school,this.age);
-            submitData(newUser);
+                                   this.school,this.age, '', '');
+
+          submitData(newUser);
         },
          contactusbuttonclick(){
             window.location.href = "/aboutus.html";
