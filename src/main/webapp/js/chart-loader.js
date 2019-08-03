@@ -34,6 +34,10 @@ function drawChart(){
            colors:['#FFB300','#FFC107','#FFCA28','#FFD54F','#FFE082','#FFECB3','#FFF8E1'],
             backgroundColor: {
                    fill: '#EDECEC'
+            },
+            pieSliceTextStyle:
+            {
+                   color: 'black'
             }
        };
        var shareOptions = {
@@ -41,7 +45,10 @@ function drawChart(){
            height: 300,
            legend: { position: 'left'},
            colors:['#3949ab','#3f51b5','#5c6bc0','#7986cb','#9fa8da','#c5cae9','#e8eaf6'],
-           backgroundColor: '#EDECEC'
+           backgroundColor: '#EDECEC',
+           pieSliceTextStyle: {
+                  color: 'black'
+           }
        };
        var learnChart = new google.visualization.PieChart(document.getElementById('learn_chart'));
        learnChart.draw(learnData, learnOptions);
