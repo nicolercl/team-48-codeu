@@ -198,6 +198,8 @@ public class Datastore {
         userEntity.setProperty("school", user.getSchool());
         userEntity.setProperty("name", user.getName());
         userEntity.setProperty("age", user.getAge());
+        userEntity.setProperty("profilePicUrl", user.getProfilePicUrl());
+        //userEntity.setProperty("age", user.getAge());
         if (user.getLikedMessages() == null){
             HashSet<String> newSet = new HashSet<String>();
             newSet.add("  ");
@@ -230,16 +232,17 @@ public class Datastore {
         String age = (String) userEntity.getProperty("age");
         String name = (String) userEntity.getProperty("name");
         String skillLevel = (String) userEntity.getProperty("skillLevel");
+        String profilePicUrl = (String) userEntity.getProperty("profilePicUrl");
         if (userEntity.getProperty("likedMessages") == null){
             User user = new User(email, aboutMe, learnCategory, teachCategory,
-                    school, age, name, skillLevel);
+                    school, age, name, skillLevel, profilePicUrl);
             return user;
         }
         else {
             HashSet<String> likedMessages = new HashSet<String>();
             likedMessages.addAll((ArrayList<String>)userEntity.getProperty("likedMessages"));
             User user = new User(email, aboutMe, learnCategory, teachCategory,
-                    school, age, name, skillLevel, likedMessages);
+                    school, age, name, skillLevel, profilePicUrl, likedMessages);
             return user;
         }
     }
@@ -262,8 +265,9 @@ public class Datastore {
             String age = (String) entity.getProperty("age");
             String name = (String) entity.getProperty("name");
             String skillLevel = (String) entity.getProperty("skillLevel");
+            String profilePicUrl = (String) entity.getProperty("profilePicUrl");
             User user = new User(email, aboutMe, learnCategory, skill,
-                    school, age, name, skillLevel);
+                    school, age, name, skillLevel, profilePicUrl);
 
             users.add(user);
         }

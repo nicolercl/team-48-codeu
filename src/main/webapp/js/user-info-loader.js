@@ -1,4 +1,4 @@
-function saveUser(name, email,aboutme,learncategory,sharecategory,skilllevel,school,age){
+function saveUser(name, email,aboutme,learncategory,sharecategory,skilllevel,school,age,profilePicUrl){
     let user = new Object();
     user.name = name;
     user.email = email;
@@ -8,6 +8,7 @@ function saveUser(name, email,aboutme,learncategory,sharecategory,skilllevel,sch
     user.skillLevel =skilllevel;
     user.school = school;
     user.age = age;
+    user.profilePicUrl = '';
     return user;
 }
 
@@ -26,3 +27,4 @@ function submitData(newUser) {
           window.location.href = "/user-page.html?user=" + newUser.email;
       });
 }
+

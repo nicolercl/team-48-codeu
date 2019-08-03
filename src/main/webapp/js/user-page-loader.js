@@ -47,10 +47,30 @@ function showMessageFormIfViewingSelf() {
                     const messageForm = document.getElementById('message-form');
                     messageForm.classList.remove('hidden');
                     document.getElementById('about-me-container').classList.remove('hidden');
+                    document.getElementById('profile-pic-form').classList.remove('hidden');
+
                 }
             }
         });
 }
+
+/**Fetches profile pic of user**/
+function fetchProfilePic(){
+  const url = '/image-form-handler?user=' + parameterUsername;
+  fetch(url).then((response) => {
+    return response.text();
+  }).then((profilePicUrl) => {
+    const profilePicContainer = document.getElementById('profile-pic-container');
+    if(profilePicUrl == ''){
+      profilePicUrl = 'This user has not uploaded any profile picture yet.';
+    }else{
+      profilePicUrl = '<img class=\"rounded\" style=\"width:160px; height:160px; border-radius:50%;\" src=\"' + profilePicUrl + '\" />';
+    }
+    profilePicContainer.innerHTML = profilePicUrl;
+
+  });
+}
+
 
 /** Fetches messages and add them to the page. */
 function fetchMessages() {
@@ -238,6 +258,8 @@ function buildUI () {
   showMessageFormIfViewingSelf()
   fetchMessages()
   fetchAboutMe()
+  fetchBlobstoreUrlAndShowForm()
+  fetchProfilePic();
   //blocking the image and quoting function
   const config = { removePlugins: ['ImageUpload'] }
   ClassicEditor.create(document.getElementById('message-input'), config)
@@ -259,4 +281,17 @@ function fetchAboutMe () {
     document.getElementById('about-me-container').innerHTML = info.aboutMe
   })
 }
+
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/blobstore-upload-url')
+    .then((response) => {
+      return response.text();
+    })
+    .then((imageUploadUrl) => {
+      const messageForm = document.getElementById('upload-dp');
+      messageForm.action = imageUploadUrl;
+      messageForm.classList.remove('hidden');
+    });
+}
+
 
