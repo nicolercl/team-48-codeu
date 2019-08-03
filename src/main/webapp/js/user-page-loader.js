@@ -47,8 +47,8 @@ function showMessageFormIfViewingSelf() {
                     const messageForm = document.getElementById('message-form');
                     messageForm.classList.remove('hidden');
                     document.getElementById('about-me-container').classList.remove('hidden');
-                    //document.getElementById('upload-dp').classList.remove('hidden');
-                    fetchProfilePic();
+                    document.getElementById('profile-pic-form').classList.remove('hidden');
+
                 }
             }
         });
@@ -64,7 +64,7 @@ function fetchProfilePic(){
     if(profilePicUrl == ''){
       profilePicUrl = 'This user has not uploaded any profile picture yet.';
     }else{
-      profilePicUrl = '<img class=\"rounded\" style=\"width:160px; height:160px; border-radius:50%;\" src=\"' + profilePicUrl + '\" />';  //style="object-fit: cover;"
+      profilePicUrl = '<img class=\"rounded\" style=\"width:160px; height:160px; border-radius:50%;\" src=\"' + profilePicUrl + '\" />';
     }
     profilePicContainer.innerHTML = profilePicUrl;
 
@@ -259,6 +259,7 @@ function buildUI () {
   fetchMessages()
   fetchAboutMe()
   fetchBlobstoreUrlAndShowForm()
+  fetchProfilePic();
   //blocking the image and quoting function
   const config = { removePlugins: ['ImageUpload'] }
   ClassicEditor.create(document.getElementById('message-input'), config)

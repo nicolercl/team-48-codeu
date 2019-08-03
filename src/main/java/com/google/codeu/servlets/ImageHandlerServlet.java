@@ -81,7 +81,7 @@ public class ImageHandlerServlet extends HttpServlet {
         String aboutMe = "";
 
         userData.setProfilePicUrl(imageUrl);
-        
+
         datastore.storeUser(userData);
 
         response.sendRedirect("/user-page.html?user=" + userEmail);
